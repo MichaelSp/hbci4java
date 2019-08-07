@@ -19,7 +19,7 @@ Seither wurden umfangreiche neue Features hinzugefügt wie etwa:
 - Unterstützung von PC/SC-Kartenlesern via javax.smartcardio API
 - Eine aktuelle Bankenliste (mit BLZ, Server-Adresse, HBCI-Version,...)
 - Support für alle aktuellen SEPA-PAIN-Versionen
-- SEPA-Überweisungen und -Lastschriften (jeweils Einzel- und Sammelaufträge) sowie SEPA-Daueraufträge 
+- SEPA-Überweisungen und -Lastschriften (jeweils Einzel- und Sammelaufträge) sowie SEPA-Daueraufträge
 - Abruf des elektronischen Kontoauszuges (HKEKA und HKEKP)
 - Unterstützung für chipTAN USB
 - Abruf von Umsätzen im CAMT-Format (HKCAZ)

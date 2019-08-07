@@ -1,0 +1,36 @@
+plugins {
+    id "java"
+    id "idea"
+    id "eclipse"
+    id "com.intershop.gradle.jaxb" version "3.0.4"
+}
+
+group "com.github.hbci4j"
+version "3.0.25"
+
+sourceCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+jaxb {
+    javaGen {
+        fileTree(dir: 'src/main/resources', include: '**/*.xsd', exclude: "**/container.nnn.*.xsd").each { File file ->
+            def cleanName = file.name.replaceAll("\\.", "_").replace("_xsd", "")
+            delegate."${cleanName}"() {
+                schema = file
+                packageName = "org.kapott.hbci.sepa.jaxb.${cleanName}"
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+    // test dependencies
+    testImplementation "junit:junit:4.12"
+}

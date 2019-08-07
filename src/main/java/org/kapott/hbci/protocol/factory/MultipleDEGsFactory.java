@@ -20,44 +20,40 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.MultipleDEGs;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class MultipleDEGsFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class MultipleDEGsFactory
+        extends ObjectFactory {
     private static MultipleDEGsFactory instance;
-    
-    public static synchronized MultipleDEGsFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new MultipleDEGsFactory();
+
+    private MultipleDEGsFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DEG", "512")));
+    }
+
+    public static synchronized MultipleDEGsFactory getInstance() {
+        if (instance == null) {
+            instance = new MultipleDEGsFactory();
         }
         return instance;
     }
-    
-    private MultipleDEGsFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DEG","512")));
-    }
-    
-    public MultipleDEGs createMultipleDEGs(Node sfref, char delimiter, String path, char predelim0, char predelim1, StringBuffer res, int fullResLen,Document syntax, Hashtable<String, String> predefs,Hashtable<String, String> valids)
-    {
-        MultipleDEGs ret=(MultipleDEGs)getFreeObject();
-        
-        if (ret==null) {
+
+    public MultipleDEGs createMultipleDEGs(Node sfref, char delimiter, String path, char predelim0, char predelim1, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        MultipleDEGs ret = (MultipleDEGs) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new multi DEG object",HBCIUtils.LOG_DEBUG);
-            ret=new MultipleDEGs(sfref,delimiter,path,predelim0,predelim1,res,fullResLen,syntax,predefs,valids);
+            ret = new MultipleDEGs(sfref, delimiter, path, predelim0, predelim1, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing multi DEG object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(sfref,delimiter,path,predelim0,predelim1,res,fullResLen,syntax,predefs,valids);
+                ret.init(sfref, delimiter, path, predelim0, predelim1, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -68,18 +64,17 @@ public class MultipleDEGsFactory
         return ret;
     }
 
-    public MultipleDEGs createMultipleDEGs(Node sfref, char delimiter,String path, Document syntax)
-    {
-        MultipleDEGs ret=(MultipleDEGs)getFreeObject();
-        
-        if (ret==null) {
+    public MultipleDEGs createMultipleDEGs(Node sfref, char delimiter, String path, Document syntax) {
+        MultipleDEGs ret = (MultipleDEGs) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new multi DEG object",HBCIUtils.LOG_DEBUG);
-            ret=new MultipleDEGs(sfref,delimiter,path,syntax);
+            ret = new MultipleDEGs(sfref, delimiter, path, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing multi DEG object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(sfref,delimiter,path,syntax);
+                ret.init(sfref, delimiter, path, syntax);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -90,10 +85,9 @@ public class MultipleDEGsFactory
         return ret;
     }
 
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((MultipleDEGs)o).destroy();
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((MultipleDEGs) o).destroy();
             super.unuseObject(o);
         }
     }

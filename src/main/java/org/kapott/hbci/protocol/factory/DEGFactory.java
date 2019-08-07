@@ -1,4 +1,3 @@
-
 /*  $Id: DEGFactory.java,v 1.1 2011/05/04 22:37:49 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,43 +20,39 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.DEG;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 
-public class DEGFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class DEGFactory
+        extends ObjectFactory {
     private static DEGFactory instance;
-    
-    public static synchronized DEGFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new DEGFactory();
+
+    private DEGFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DEG", "512")));
+    }
+
+    public static synchronized DEGFactory getInstance() {
+        if (instance == null) {
+            instance = new DEGFactory();
         }
         return instance;
     }
-    
-    private DEGFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DEG","512")));
-    }
-    
-    public DEG createDEG(String type, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs,Hashtable<String, String> valids)
-    {
-        DEG ret=(DEG)getFreeObject();
-        
-        if (ret==null) {
+
+    public DEG createDEG(String type, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        DEG ret = (DEG) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new DEG object",HBCIUtils.LOG_DEBUG);
-            ret=new DEG(type,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+            ret = new DEG(type, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing DEG object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(type,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+                ret.init(type, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -67,14 +62,13 @@ public class DEGFactory
 
         return ret;
     }
-    
-    public DEG createDEG(String type, String name, String path, int idx, Document syntax)
-    {
-        DEG ret=(DEG)getFreeObject();
-        
-        if (ret==null) {
+
+    public DEG createDEG(String type, String name, String path, int idx, Document syntax) {
+        DEG ret = (DEG) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new DEG object",HBCIUtils.LOG_DEBUG);
-            ret=new DEG(type, name, path, idx, syntax);
+            ret = new DEG(type, name, path, idx, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing DEG object",HBCIUtils.LOG_DEBUG);
@@ -89,11 +83,10 @@ public class DEGFactory
 
         return ret;
     }
-    
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((DEG)o).destroy();
+
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((DEG) o).destroy();
             super.unuseObject(o);
         }
     }

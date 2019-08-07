@@ -4,8 +4,7 @@ package org.kapott.hbci.passport;
  * Gemeinsames Interface fuer chipkarten-basiere Passports.
  * Derzeit sind das HBCIPassportDDV, HBCIPassportDDVPCSC und HBCIPassportRSA.
  */
-public interface HBCIPassportChipcard extends HBCIPassport
-{
+public interface HBCIPassportChipcard extends HBCIPassport {
     /**
      * Schreiben der aktuellen Zugangsdaten auf die Chipkarte. Werden Zugangsdaten
      * des Passport verändert (z.B. mit {@link org.kapott.hbci.passport.HBCIPassport#setHost(String)},
@@ -17,7 +16,7 @@ public interface HBCIPassportChipcard extends HBCIPassport
      * HBCI-Server.
      */
     public void saveBankData();
-    
+
     /**
      * Gibt den Dateinamen für die zusätzliche Schlüsseldatei zurück.
      * Diese Datei enthält gecachte Daten, um das Initialisieren eines
@@ -29,12 +28,14 @@ public interface HBCIPassportChipcard extends HBCIPassport
      * bzw. beim Erzeugen dieser Datei wird deshalb via Callback-Mechanismus
      * nach einem Passwort gefragt, das zur Erzeugung des kryptografischen
      * Schlüssels für die Verschlüsselung benutzt wird.
+     *
      * @return Dateiname der Cache-Datei
      */
     public String getFileName();
 
     /**
      * Legt den Dateinamen fuer die zusaetzliche Schluesseldatei fest.
+     *
      * @param filename
      */
     public void setFileName(String filename);

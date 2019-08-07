@@ -1,4 +1,3 @@
-
 /*  $Id: GVRDauerNew.java,v 1.1 2011/05/04 22:37:47 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -23,30 +22,31 @@ package org.kapott.hbci.GV_Result;
 
 import org.kapott.hbci.manager.HBCIUtilsInternal;
 
-/** Ergebnis einer Dauerauftragseinreichung. Falls die Bank die Vergabe von
-    Auftrags-Identifikationsnummern unterstützt, wird die ID für den neuen
-    Dauerauftrag hier bereitgestellt. */
+/**
+ * Ergebnis einer Dauerauftragseinreichung. Falls die Bank die Vergabe von
+ * Auftrags-Identifikationsnummern unterstützt, wird die ID für den neuen
+ * Dauerauftrag hier bereitgestellt.
+ */
 public class GVRDauerNew
-    extends HBCIJobResultImpl
-{
+        extends HBCIJobResultImpl {
     private String orderid;
-    
-    public void setOrderId(String orderid)
-    {
-        this.orderid=orderid;
+
+    public String toString() {
+        return HBCIUtilsInternal.getLocMsg("ORDERID") + ": " + getOrderId();
     }
 
-    /** Gibt die Auftragsnummer zurück, unter der der eingereichte Dauerauftrag
-        bei der Bank registriert ist 
-        @return die Auftragsidentifikationsnummer oder <code>null</code>, wenn die
-                Bank das nicht unterstützt. */
-    public String getOrderId()
-    {
+    /**
+     * Gibt die Auftragsnummer zurück, unter der der eingereichte Dauerauftrag
+     * bei der Bank registriert ist
+     *
+     * @return die Auftragsidentifikationsnummer oder <code>null</code>, wenn die
+     * Bank das nicht unterstützt.
+     */
+    public String getOrderId() {
         return orderid;
     }
-    
-    public String toString()
-    {
-        return HBCIUtilsInternal.getLocMsg("ORDERID")+": "+getOrderId();
+
+    public void setOrderId(String orderid) {
+        this.orderid = orderid;
     }
 }

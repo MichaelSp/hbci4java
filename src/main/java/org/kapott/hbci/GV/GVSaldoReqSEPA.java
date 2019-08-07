@@ -1,4 +1,3 @@
-
 /*  $Id: GVSaldoReqSEPA.java,v 1.1 2011/05/04 22:37:53 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -24,22 +23,10 @@ package org.kapott.hbci.GV;
 import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.LogFilter;
 
-public class GVSaldoReqSEPA 
-	extends GVSaldoReq 
-{
-    public static String getLowlevelName()
-    {
-        return "SaldoSEPA";
-    }
-    
-    public GVSaldoReqSEPA(HBCIHandler handler,String name)
-    {
-        super(handler,name);
-    }
-    
-    public GVSaldoReqSEPA(HBCIHandler handler)
-    {
-        this(handler,getLowlevelName());
+public class GVSaldoReqSEPA
+        extends GVSaldoReq {
+    public GVSaldoReqSEPA(HBCIHandler handler) {
+        this(handler, getLowlevelName());
 
         /*
         addConstraint("my.country","KTV.KIK.country","", LogFilter.FILTER_NONE);
@@ -47,9 +34,17 @@ public class GVSaldoReqSEPA
         addConstraint("my.number","KTV.number","", LogFilter.FILTER_IDS);
         addConstraint("my.subnumber","KTV.subnumber","", LogFilter.FILTER_MOST);
         */
-        addConstraint("my.bic","KTV.bic",  null, LogFilter.FILTER_MOST);
-        addConstraint("my.iban","KTV.iban",null, LogFilter.FILTER_IDS);
-        addConstraint("dummyall","allaccounts", "N", LogFilter.FILTER_NONE);
-        addConstraint("maxentries","maxentries","", LogFilter.FILTER_NONE);
+        addConstraint("my.bic", "KTV.bic", null, LogFilter.FILTER_MOST);
+        addConstraint("my.iban", "KTV.iban", null, LogFilter.FILTER_IDS);
+        addConstraint("dummyall", "allaccounts", "N", LogFilter.FILTER_NONE);
+        addConstraint("maxentries", "maxentries", "", LogFilter.FILTER_NONE);
+    }
+
+    public GVSaldoReqSEPA(HBCIHandler handler, String name) {
+        super(handler, name);
+    }
+
+    public static String getLowlevelName() {
+        return "SaldoSEPA";
     }
 }

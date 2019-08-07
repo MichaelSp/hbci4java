@@ -1,4 +1,3 @@
-
 /*  $Id: RWrongSequenceNumbers.java,v 1.1 2011/05/04 22:37:57 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -25,40 +24,38 @@ import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.manager.MsgGen;
 
 public final class RWrongSequenceNumbers
-    extends Rewrite
-{
-    public String incomingClearText(String st,MsgGen gen) 
-    {
-        StringBuffer sb=new StringBuffer(st);
+        extends Rewrite {
+    public String incomingClearText(String st, MsgGen gen) {
+        StringBuffer sb = new StringBuffer(st);
 
-        int     idx;
-        boolean quoteNext=false;
-        int     correctSeq=1;
-        
-        for (int i=0;i<sb.length();i++) {
-            char ch=sb.charAt(i);
-            
-            if (!quoteNext && ch=='@') {
+        int idx;
+        boolean quoteNext = false;
+        int correctSeq = 1;
+
+        for (int i = 0; i < sb.length(); i++) {
+            char ch = sb.charAt(i);
+
+            if (!quoteNext && ch == '@') {
                 // skip binary values
-                idx=sb.indexOf("@",i+1);
-                String len_st=sb.substring(i+1,idx);
-                i+=Integer.parseInt(len_st)+1+len_st.length();
-            } else if (!quoteNext && ch=='\'' || i==0) {
-                idx=sb.indexOf(":",i+1);
-                if (idx!=-1) {
-                    int idx2=sb.indexOf(":",idx+1);
-                    int seq=Integer.parseInt(sb.substring(idx+1,idx2));
-                    if (seq!=correctSeq) {
-                        HBCIUtils.log("found wrong sequence number "+seq+"; replacing with "+correctSeq,HBCIUtils.LOG_WARN);
-                        sb.replace(idx+1,idx2,Integer.toString(correctSeq));
+                idx = sb.indexOf("@", i + 1);
+                String len_st = sb.substring(i + 1, idx);
+                i += Integer.parseInt(len_st) + 1 + len_st.length();
+            } else if (!quoteNext && ch == '\'' || i == 0) {
+                idx = sb.indexOf(":", i + 1);
+                if (idx != -1) {
+                    int idx2 = sb.indexOf(":", idx + 1);
+                    int seq = Integer.parseInt(sb.substring(idx + 1, idx2));
+                    if (seq != correctSeq) {
+                        HBCIUtils.log("found wrong sequence number " + seq + "; replacing with " + correctSeq, HBCIUtils.LOG_WARN);
+                        sb.replace(idx + 1, idx2, Integer.toString(correctSeq));
                     }
-                    i=idx2;
+                    i = idx2;
                 }
                 correctSeq++;
             }
-            quoteNext=!quoteNext && ch=='?';
+            quoteNext = !quoteNext && ch == '?';
         }
-        
+
         return sb.toString();
     }
 }

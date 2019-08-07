@@ -67,7 +67,7 @@ bool initialize(void)
         unsigned char pin[9];
         scanf("%8s",pin);
         
-        // TODO: hier auch CT-keypad unterstützen
+        // TODO: hier auch CT-keypad unterstÃ¼tzen
         if (RSA_modifyPin(RSA_PIN_CH,5,cardid,strlen((const char*)pin),pin)) {
             printf("modifying CH pin successful\n");
         } else {
@@ -104,7 +104,7 @@ bool initialize(void)
     }
     
     // EG PIN verifizieren
-    // TODO: hier optional eingabe der e/g-pin ermöglichen
+    // TODO: hier optional eingabe der e/g-pin ermÃ¶glichen
     if (RSA_verifyPin(RSA_PIN_EG, 5, cardid)) {
         printf("E/G PIN ok.\n");
     } else {
@@ -125,7 +125,7 @@ void modifyPIN(void)
     unsigned char newpin[9];
     scanf("%8s",newpin);
     
-    // TODO: hier auch CT-keypad unterstützen
+    // TODO: hier auch CT-keypad unterstÃ¼tzen
     if (RSA_modifyPin(RSA_PIN_CH,
                       strlen((const char*)oldpin),oldpin,
                       strlen((const char*)newpin),newpin)) 
@@ -153,11 +153,11 @@ void listAllEntries(void)
         return;
     }
     
-    // anzahl der verwendeten und max. anzahl einträge lesen
+    // anzahl der verwendeten und max. anzahl eintrÃ¤ge lesen
     unsigned char nof_entries=(buffer[0]>>4)&0x07;
     printf("used nof entries: %i\n", nof_entries);
     
-    // durch alle bank-einträge durchgehen
+    // durch alle bank-eintrÃ¤ge durchgehen
     for (int entry_idx=0;entry_idx<nof_entries;entry_idx++) {
         // ef_bnk lesen und ausgeben
         if (!SECCOS_selectSubFile(SECCOS_SELECT_RET_NOTHING, RSA_EF_BNK)) {
@@ -192,11 +192,11 @@ void printKeyInfo(unsigned char* buffer)
     char  status_st[128];
     switch (buffer[0]) {
         case 0x00: strcpy(status_st,"INI-Brief fehlt"); break;
-        case 0x01: strcpy(status_st,"Schlüsselnummer oder -version fehlen"); break;
-        case 0x02: strcpy(status_st,"Neuer Schlüssel im Puffer erzeugt"); break;
-        case 0x07: strcpy(status_st,"Privater und öffentlicher Schlüssel neu geschrieben"); break;
+        case 0x01: strcpy(status_st,"SchlÃ¼sselnummer oder -version fehlen"); break;
+        case 0x02: strcpy(status_st,"Neuer SchlÃ¼ssel im Puffer erzeugt"); break;
+        case 0x07: strcpy(status_st,"Privater und Ã¶ffentlicher SchlÃ¼ssel neu geschrieben"); break;
         case 0x08: strcpy(status_st,"Inaktiv, kann neu beschrieben werden"); break;
-        case 0x0a: strcpy(status_st,"Inaktiv, Schlüssel mit Zertifikat verwenden"); break;
+        case 0x0a: strcpy(status_st,"Inaktiv, SchlÃ¼ssel mit Zertifikat verwenden"); break;
         case 0x10: strcpy(status_st,"Aktiv"); break;
         default:   strcpy(status_st,"(unbekannt)"); break;
     }
@@ -205,16 +205,16 @@ void printKeyInfo(unsigned char* buffer)
     printf("    status-byte: %s (%s)\n",st,status_st);
     delete[] st;
     
-    printf("    schlüssel-typ: %s\n",buffer[1]==0x53?"Signierschlüssel":(buffer[1]==0x56?"Chiffrierschlüssel":"unbekannt"));
+    printf("    schlÃ¼ssel-typ: %s\n",buffer[1]==0x53?"SignierschlÃ¼ssel":(buffer[1]==0x56?"ChiffrierschlÃ¼ssel":"unbekannt"));
     
     char  st2[4];
     memcpy(st2,buffer+2,3);
     st2[3]=0;
-    printf("    schlüsselnummer: %s\n",st2);
+    printf("    schlÃ¼sselnummer: %s\n",st2);
     
     memcpy(st2,buffer+5,3);
     st2[3]=0;
-    printf("    schlüsselversion: %s\n",st2);
+    printf("    schlÃ¼sselversion: %s\n",st2);
 }
 
 bool printKeyData(unsigned char kid, unsigned char nof_entries)
@@ -345,15 +345,15 @@ void printEntryDetails(unsigned char num)
         return;
     }
     
-    // Anzahl der Kunden-ID-Einträge ermitteln
+    // Anzahl der Kunden-ID-EintrÃ¤ge ermitteln
     unsigned char nof_entries=(buffer[0]>>4)&0x0F;
     
-    // Anzahl der Einträge pro Bankverbindung ermitteln
+    // Anzahl der EintrÃ¤ge pro Bankverbindung ermitteln
     SECCOS_readBinary(&len,buffer,1,nof_entries);
     unsigned char skip_entries=0;
     unsigned char nof_entries2=0;
     
-    // Offset für Beginn der Einträge für die aktuelle
+    // Offset fÃ¼r Beginn der EintrÃ¤ge fÃ¼r die aktuelle
     // Bankverbindung ermitteln
     for (int i=0;i<nof_entries;i++) {
         if (((buffer[i]>>4)&0x0F) == (num)) {
@@ -363,7 +363,7 @@ void printEntryDetails(unsigned char num)
             skip_entries+=buffer[i]&0x0F;
         }
     }
-    printf("  Anzahl Kunden-IDs für diese Bankverbindung: %i\n",nof_entries2);
+    printf("  Anzahl Kunden-IDs fÃ¼r diese Bankverbindung: %i\n",nof_entries2);
     
     // Kunden-IDs anzeigen
     for (int i=0;i<nof_entries2;i++) {
@@ -372,7 +372,7 @@ void printEntryDetails(unsigned char num)
         printf("    Kunden-ID #%i: %s\n",i+1,buffer);
     }
 
-    // EF_KEYLOG lesen und schlüssel-infos anzeigen
+    // EF_KEYLOG lesen und schlÃ¼ssel-infos anzeigen
     if (!SECCOS_selectSubFile(SECCOS_SELECT_RET_NOTHING, RSA_EF_KEY_LOG)) {
         fprintf(stderr,"error while selecting EF_KEY_LOG\n");
         return;
@@ -396,7 +396,7 @@ void printEntryDetails(unsigned char num)
     printf("  public inst sig key:\n");
     printKeyInfo(buffer+24);
     
-    // schlüssel-infos aus IPF lesen
+    // schlÃ¼ssel-infos aus IPF lesen
     if (!SECCOS_selectSubFile(SECCOS_SELECT_RET_NOTHING, RSA_EF_IPF)) {
         fprintf(stderr, "error while selecting EF_IPF\n");
     }
@@ -442,17 +442,17 @@ void printEntryDetails(unsigned char num)
                       (((unsigned long)buffer[1])<<16) |
                       (((unsigned long)buffer[2])<<8) |
                       (((unsigned long)buffer[3])<<0);
-    printf("aktueller Sequenzzähler: %li\n",seq);
+    printf("aktueller SequenzzÃ¤hler: %li\n",seq);
 }
 
 /* Kommandos:
-     - newpin: Neue CH-PIN für Karte setzen
-     - list: Listet alle Bank-Einträge auf
-     - details #idx: Zeigt Bank-Daten und Schlüsseldetails zu dem gewählten
-                     Eintrag (Bank-Daten, Schlüssel, SEQ)
+     - newpin: Neue CH-PIN fÃ¼r Karte setzen
+     - list: Listet alle Bank-EintrÃ¤ge auf
+     - details #idx: Zeigt Bank-Daten und SchlÃ¼sseldetails zu dem gewÃ¤hlten
+                     Eintrag (Bank-Daten, SchlÃ¼ssel, SEQ)
      - edit #idx: Bearbeiten von Bank-Daten #idx
-     - instkeys #idx: Bankschlüssel für Eintrag #idx bearbeiten
-     - userkeys #idx: Schlüssel des Nutzers bearbeiten
+     - instkeys #idx: BankschlÃ¼ssel fÃ¼r Eintrag #idx bearbeiten
+     - userkeys #idx: SchlÃ¼ssel des Nutzers bearbeiten
  */
 int main(int argc, char** argv)
 {

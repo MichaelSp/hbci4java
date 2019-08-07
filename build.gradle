@@ -6,7 +6,7 @@ plugins {
 }
 
 group "com.github.hbci4j"
-version "3.0.25"
+version "3.1.0"
 
 sourceCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'

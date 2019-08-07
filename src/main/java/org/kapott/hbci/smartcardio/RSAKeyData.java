@@ -1,7 +1,9 @@
 /**
- * 
+ *
  */
 package org.kapott.hbci.smartcardio;
+
+import org.kapott.hbci.exceptions.HBCI_Exception;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
@@ -10,29 +12,12 @@ import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 
-import org.kapott.hbci.exceptions.HBCI_Exception;
-
 /**
  * @author axel
  *
  */
 public class RSAKeyData {
-    
-    public enum Type {
-        
-        ENCIPHER(0),
-        SIGN(1),
-        DECIPHER(2),
-        VERIFY(3);
-        
-        private final int pos;
-        
-        Type(int pos) {
-            this.pos = pos;
-        }
-        
-    }
-    
+
     private final int index;
     private final Type type;
     private final int status;
@@ -40,30 +25,29 @@ public class RSAKeyData {
     private final int keyNum;
     private final int keyVersion;
     private final PublicKey publicKey;
-    
     public RSAKeyData(int index, Type type, byte[] keyLogData, byte[] publicKeyData) {
         int offset = type.pos * 8;
-        
+
         if (keyLogData.length < offset + 8)
             throw new HBCI_Exception("keyLogData too short");
-        
+
         this.index = index;
         this.type = type;
         this.status = keyLogData[offset];
         this.keyType = keyLogData[offset + 1];
         this.keyNum = Integer.valueOf(new String(keyLogData, offset + 2, 3, SmartCardService.CHARSET).trim());
         this.keyVersion = Integer.valueOf(new String(keyLogData, offset + 5, 3, SmartCardService.CHARSET).trim());
-        
+
         if (publicKeyData == null || status != 0x10) {
             this.publicKey = null;
         } else {
             if (publicKeyData.length < 0x79)
                 throw new HBCI_Exception("publicKeyData too short");
-            
+
             byte algoByte = publicKeyData[6];
             if ((algoByte & 0x01) == 0)
                 throw new HBCI_Exception("invalid public key type");
-            
+
             byte modLen = publicKeyData[14];
             byte[] modulus = new byte[modLen];
             byte[] publicExponent = new byte[3];
@@ -79,7 +63,7 @@ public class RSAKeyData {
                     publicExponent[n] = publicKeyData[20 + modLen + 3 - 1 - n];
             }
             RSAPublicKeySpec keySpec = new RSAPublicKeySpec(new BigInteger(modulus), new BigInteger(publicExponent));
-            
+
             try {
                 KeyFactory keyFactory = KeyFactory.getInstance("RSA");
                 this.publicKey = keyFactory.generatePublic(keySpec);
@@ -90,11 +74,11 @@ public class RSAKeyData {
             }
         }
     }
-    
+
     public int getIndex() {
         return index;
     }
-    
+
     public Type getType() {
         return type;
     }
@@ -114,7 +98,7 @@ public class RSAKeyData {
     public int getKeyVersion() {
         return keyVersion;
     }
-    
+
     public PublicKey getPublicKey() {
         return publicKey;
     }
@@ -122,12 +106,27 @@ public class RSAKeyData {
     @Override
     public String toString() {
         return "index=" + index
-            + " type=" + type
-            + " keyType=0x" + Integer.toHexString(keyType)
-            + " status=0x" + Integer.toHexString(status)
-            + " keyNum=" + keyNum
-            + " keyVersion=" + keyVersion
-            + " publicKey=" + publicKey;
+                + " type=" + type
+                + " keyType=0x" + Integer.toHexString(keyType)
+                + " status=0x" + Integer.toHexString(status)
+                + " keyNum=" + keyNum
+                + " keyVersion=" + keyVersion
+                + " publicKey=" + publicKey;
+    }
+
+    public enum Type {
+
+        ENCIPHER(0),
+        SIGN(1),
+        DECIPHER(2),
+        VERIFY(3);
+
+        private final int pos;
+
+        Type(int pos) {
+            this.pos = pos;
+        }
+
     }
 
 }

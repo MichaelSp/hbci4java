@@ -1,4 +1,3 @@
-
 /*  $Id: FilterBase64.java,v 1.1 2011/05/04 22:37:51 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -26,28 +25,24 @@ import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.manager.HBCIUtilsInternal;
 
 public final class FilterBase64
-    extends Filter
-{
-    public FilterBase64()
-    {
-        HBCIUtils.log("using filter: MIM (base64)",HBCIUtils.LOG_DEBUG);
+        extends Filter {
+    public FilterBase64() {
+        HBCIUtils.log("using filter: MIM (base64)", HBCIUtils.LOG_DEBUG);
     }
-    
-    public String decode(String st)
-    {
+
+    public String decode(String st) {
         try {
-            return new String(HBCIUtils.decodeBase64(st),Comm.ENCODING);
+            return new String(HBCIUtils.decodeBase64(st), Comm.ENCODING);
         } catch (Exception e) {
-            throw new HBCI_Exception(HBCIUtilsInternal.getLocMsg("EXCMSG_B64DECODEERR"),e);
+            throw new HBCI_Exception(HBCIUtilsInternal.getLocMsg("EXCMSG_B64DECODEERR"), e);
         }
     }
-    
-    public byte[] encode(String st)
-    {
+
+    public byte[] encode(String st) {
         try {
             return HBCIUtils.encodeBase64(st.getBytes(Comm.ENCODING)).getBytes(Comm.ENCODING);
         } catch (Exception ex) {
-            throw new HBCI_Exception(HBCIUtilsInternal.getLocMsg("EXCMSG_B64ENCODEERR"),ex);
+            throw new HBCI_Exception(HBCIUtilsInternal.getLocMsg("EXCMSG_B64ENCODEERR"), ex);
         }
     }
 }

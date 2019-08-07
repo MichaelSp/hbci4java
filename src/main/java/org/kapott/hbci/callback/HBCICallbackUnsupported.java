@@ -1,8 +1,8 @@
 package org.kapott.hbci.callback;
 
-import java.util.Date;
-
 import org.kapott.hbci.passport.HBCIPassport;
+
+import java.util.Date;
 
 /**
  * Implementierung, die für alle Aufrufe eine {@link UnsupportedOperationException} wirft.
@@ -21,32 +21,27 @@ import org.kapott.hbci.passport.HBCIPassport;
 public class HBCICallbackUnsupported implements HBCICallback {
 
     @Override
-    public void callback(HBCIPassport passport, int reason, String msg, int datatype, StringBuffer retData)
-    {
+    public void callback(HBCIPassport passport, int reason, String msg, int datatype, StringBuffer retData) {
         throw new UnsupportedOperationException("Unexpected HBCI callback");
     }
 
     @Override
-    public void status(HBCIPassport passport, int statusTag, Object o)
-    {
+    public void status(HBCIPassport passport, int statusTag, Object o) {
         throw new UnsupportedOperationException("Unexpected HBCI callback");
     }
 
     @Override
-    public void status(HBCIPassport passport, int statusTag, Object[] o)
-    {
+    public void status(HBCIPassport passport, int statusTag, Object[] o) {
         throw new UnsupportedOperationException("Unexpected HBCI callback");
     }
 
     @Override
-    public void log(String msg, int level, Date date, StackTraceElement trace)
-    {
+    public void log(String msg, int level, Date date, StackTraceElement trace) {
         throw new UnsupportedOperationException("Unexpected HBCI callback");
     }
 
     @Override
-    public boolean useThreadedCallback(HBCIPassport passport, int reason, String msg, int datatype, StringBuffer retData)
-    {
+    public boolean useThreadedCallback(HBCIPassport passport, int reason, String msg, int datatype, StringBuffer retData) {
         throw new UnsupportedOperationException("Unexpected HBCI callback");
     }
 

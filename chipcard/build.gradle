@@ -1,0 +1,60 @@
+import org.gradle.internal.jvm.Jvm
+
+plugins {
+    id 'cpp-library'
+    id 'cpp'
+    id 'java'
+}
+
+configurations {
+    tools
+}
+
+model {
+    components {
+        main(NativeLibrarySpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDirs "src/tools/cpp"
+                        exclude "tools/*.cpp"
+                        include "*.cpp"
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Set the target operating system and architecture for this library
+library {
+    linkage = [Linkage.SHARED]
+    targetMachines = [
+            machines.linux.x86_64,
+            machines.windows.x86, machines.windows.x86_64,
+            machines.macOS.x86_64
+    ]
+
+    binaries.whenElementFinalized { binary ->
+        binary.compileTask.get().configure {
+            compilerArgs.add "-stdlib=libc++"
+            if (binary.targetMachine.operatingSystemFamily.macOs) {
+                compilerArgs.add "-I${Jvm.current().javaHome}/include"
+                compilerArgs.add "-I${Jvm.current().javaHome}/include/darwin"
+                compilerArgs.add '-mmacosx-version-min=10.7'
+                compilerArgs.add "-D__UNIX"
+            } else if (binary.targetMachine.operatingSystemFamily.linux) {
+                compilerArgs.add "-I${Jvm.current().javaHome}/include"
+                compilerArgs.add "-I${Jvm.current().javaHome}/include/linux"
+                compilerArgs.add "-D__UNIX"
+            } else if (binary.targetMachine.operatingSystemFamily.windows) {
+                compilerArgs.add "-I${Jvm.current().javaHome}/include"
+                compilerArgs.add "-I${Jvm.current().javaHome}/include/win32"
+                compilerArgs.add "-D__UNIX"
+            } else if (binary.targetMachine.operatingSystemFamily.freeBSD) {
+                compilerArgs.add "-I${Jvm.current().javaHome}/include"
+                compilerArgs.add "-I${Jvm.current().javaHome}/include/freebsd"
+            }
+        }
+    }
+}

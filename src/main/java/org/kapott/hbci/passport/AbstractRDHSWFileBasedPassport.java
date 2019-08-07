@@ -1,4 +1,3 @@
-
 /*  $Id: AbstractRDHSWFileBasedPassport.java,v 1.1 2011/05/04 22:37:43 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -22,12 +21,11 @@
 package org.kapott.hbci.passport;
 
 /**
- * 
+ *
  */
-public abstract class AbstractRDHSWFileBasedPassport  extends AbstractRDHSWPassport 
-{
-    private String    filename;
-    
+public abstract class AbstractRDHSWFileBasedPassport extends AbstractRDHSWPassport {
+    private String filename;
+
     protected AbstractRDHSWFileBasedPassport(Object init) {
         super(init);
     }

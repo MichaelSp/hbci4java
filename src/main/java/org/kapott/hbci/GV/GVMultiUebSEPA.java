@@ -1,4 +1,3 @@
-
 /*  $Id: GVUebSEPA.java,v 1.1 2011/05/04 22:37:54 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -27,42 +26,23 @@ import org.kapott.hbci.manager.LogFilter;
 /**
  * Job-Implementierung fuer SEPA-Multi-Ueberweisungen.
  */
-public class GVMultiUebSEPA extends GVUebSEPA
-{
-    /**
-     * Liefert den Lowlevel-Namen des Jobs.
-     * @return der Lowlevel-Namen des Jobs.
-     */
-    public static String getLowlevelName()
-    {
-        return "SammelUebSEPA";
-    }
-
-    /**
-     * @see org.kapott.hbci.GV.AbstractSEPAGV#getPainJobName()
-     */
-    @Override
-    public String getPainJobName()
-    {
-        return "UebSEPA";
-    }
-
+public class GVMultiUebSEPA extends GVUebSEPA {
     /**
      * ct.
+     *
      * @param handler
      */
-    public GVMultiUebSEPA(HBCIHandler handler)
-    {
+    public GVMultiUebSEPA(HBCIHandler handler) {
         this(handler, getLowlevelName());
     }
 
     /**
      * ct.
+     *
      * @param handler
      * @param name
      */
-    public GVMultiUebSEPA(HBCIHandler handler, String name)
-    {
+    public GVMultiUebSEPA(HBCIHandler handler, String name) {
         super(handler, name);
 
         addConstraint("batchbook", "sepa.batchbook", "", LogFilter.FILTER_NONE);
@@ -70,8 +50,25 @@ public class GVMultiUebSEPA extends GVUebSEPA
         addConstraint("Total.curr", "Total.curr", null, LogFilter.FILTER_NONE);
     }
 
-    @Override protected void createSEPAFromParams()
-    {
+    /**
+     * Liefert den Lowlevel-Namen des Jobs.
+     *
+     * @return der Lowlevel-Namen des Jobs.
+     */
+    public static String getLowlevelName() {
+        return "SammelUebSEPA";
+    }
+
+    /**
+     * @see org.kapott.hbci.GV.AbstractSEPAGV#getPainJobName()
+     */
+    @Override
+    public String getPainJobName() {
+        return "UebSEPA";
+    }
+
+    @Override
+    protected void createSEPAFromParams() {
         super.createSEPAFromParams();
         setParam("Total", SepaUtil.sumBtgValueObject(sepaParams));
     }

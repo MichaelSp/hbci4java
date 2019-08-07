@@ -1,12 +1,12 @@
 package org.kapott.hbci.concurrent;
 
 
-import java.util.Properties;
-
 import org.kapott.hbci.callback.HBCICallback;
 import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.passport.HBCIPassport;
+
+import java.util.Properties;
 
 /**
  * Basis-Klasse für Implementierungen von {@link Runnable}, die typische Aufgaben mit einem {@link HBCIPassport}
@@ -26,52 +26,40 @@ import org.kapott.hbci.passport.HBCIPassport;
  *
  * @author Hendrik Schnepel
  */
-public abstract class HBCIRunnable implements Runnable
-{
+public abstract class HBCIRunnable implements Runnable {
 
     private final Properties properties;
     private final HBCICallback callback;
-    private HBCIPassportFactory passportFactory;
-
     protected HBCIPassport passport = null;
     protected HBCIHandler handler = null;
+    private HBCIPassportFactory passportFactory;
 
-    public HBCIRunnable(Properties properties, HBCICallback callback, HBCIPassportFactory passportFactory)
-    {
+    public HBCIRunnable(Properties properties, HBCICallback callback, HBCIPassportFactory passportFactory) {
         this.properties = properties;
         this.callback = callback;
         this.passportFactory = passportFactory;
     }
 
     @Override
-    public final void run()
-    {
+    public final void run() {
         init();
-        try
-        {
+        try {
             prepare();
             execute();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             HBCIUtils.log(e);
-        }
-        finally
-        {
+        } finally {
             done();
         }
     }
 
-    private void init()
-    {
+    private void init() {
         HBCIUtils.initThread(properties, callback);
     }
 
-    private void prepare() throws Exception
-    {
+    private void prepare() throws Exception {
         passport = passportFactory.createPassport();
-        if (passport != null)
-        {
+        if (passport != null) {
             String version = passport.getHBCIVersion();
             handler = new HBCIHandler((version.length() != 0) ? version : "plus", passport);
         }
@@ -79,14 +67,11 @@ public abstract class HBCIRunnable implements Runnable
 
     protected abstract void execute() throws Exception;
 
-    private void done()
-    {
-        if (handler != null)
-        {
+    private void done() {
+        if (handler != null) {
             handler.close();
         }
-        if (passport != null)
-        {
+        if (passport != null) {
             passport.close();
         }
         HBCIUtils.doneThread();

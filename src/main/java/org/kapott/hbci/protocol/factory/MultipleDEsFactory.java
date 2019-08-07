@@ -1,4 +1,3 @@
-
 /*  $Id: MultipleDEsFactory.java,v 1.1 2011/05/04 22:37:49 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,44 +20,40 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.MultipleDEs;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class MultipleDEsFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class MultipleDEsFactory
+        extends ObjectFactory {
     private static MultipleDEsFactory instance;
-    
-    public static synchronized MultipleDEsFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new MultipleDEsFactory();
+
+    private MultipleDEsFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DE", "1024")));
+    }
+
+    public static synchronized MultipleDEsFactory getInstance() {
+        if (instance == null) {
+            instance = new MultipleDEsFactory();
         }
         return instance;
     }
-    
-    private MultipleDEsFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DE","1024")));
-    }
-    
-    public MultipleDEs createMultipleDEs(Node sfref, char delimiter, String path, char predelim0, char predelim1, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs,Hashtable<String, String> valids)
-    {
-        MultipleDEs ret=(MultipleDEs)getFreeObject();
-        
-        if (ret==null) {
+
+    public MultipleDEs createMultipleDEs(Node sfref, char delimiter, String path, char predelim0, char predelim1, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        MultipleDEs ret = (MultipleDEs) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new multi DE object",HBCIUtils.LOG_DEBUG);
-            ret=new MultipleDEs(sfref,delimiter,path,predelim0,predelim1,res,fullResLen,syntax,predefs,valids);
+            ret = new MultipleDEs(sfref, delimiter, path, predelim0, predelim1, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing multi DE object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(sfref,delimiter,path,predelim0,predelim1,res,fullResLen,syntax,predefs,valids);
+                ret.init(sfref, delimiter, path, predelim0, predelim1, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -69,18 +64,17 @@ public class MultipleDEsFactory
         return ret;
     }
 
-    public MultipleDEs createMultipleDEs(Node sfref, char delimiter,String path, Document syntax)
-    {
-        MultipleDEs ret=(MultipleDEs)getFreeObject();
-        
-        if (ret==null) {
+    public MultipleDEs createMultipleDEs(Node sfref, char delimiter, String path, Document syntax) {
+        MultipleDEs ret = (MultipleDEs) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new multi DE object",HBCIUtils.LOG_DEBUG);
-            ret=new MultipleDEs(sfref,delimiter,path,syntax);
+            ret = new MultipleDEs(sfref, delimiter, path, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing multi DE object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(sfref,delimiter,path,syntax);
+                ret.init(sfref, delimiter, path, syntax);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -91,10 +85,9 @@ public class MultipleDEsFactory
         return ret;
     }
 
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((MultipleDEs)o).destroy();
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((MultipleDEs) o).destroy();
             super.unuseObject(o);
         }
     }

@@ -9,9 +9,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * Jede Gruppe ist mit {@link ThreadGroup#setDaemon(true)} konfiguriert, so dass mit Ende des einzelnen
  * Threads auch automatisch die Gruppe geschlossen wird.
  *
+ * @author Hendrik Schnepel
  * @see <code>README.MultiThreading</code>
  * @see <a href="https://groups.google.com/forum/#!msg/hbci4java/cOQrbPDC0Jo/rbm6jgMaMfcJ">https://groups.google.com/forum/#!msg/hbci4java/cOQrbPDC0Jo/rbm6jgMaMfcJ</a>
- * @author Hendrik Schnepel
  */
 public class HBCIThreadFactory implements ThreadFactory {
 

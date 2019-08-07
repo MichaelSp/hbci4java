@@ -1,19 +1,19 @@
 /**
- * 
+ *
  */
 package org.kapott.hbci.smartcardio;
 
+import org.kapott.hbci.exceptions.HBCI_Exception;
+
 import java.nio.charset.Charset;
 import java.util.Arrays;
-
-import org.kapott.hbci.exceptions.HBCI_Exception;
 
 /**
  * @author axel
  *
  */
 public class RSABankData {
-    
+
     private int index;
     private String country;
     private String bankCode;
@@ -24,14 +24,14 @@ public class RSABankData {
     private String bankId;
     private String systemId;
     private String customerId;
-    
+
     public RSABankData() {
     }
-    
+
     public RSABankData(int index, byte[] record, byte[] customerIdData) {
-      
-      final Charset cs = SmartCardService.CHARSET;
-      
+
+        final Charset cs = SmartCardService.CHARSET;
+
         this.index = index;
         this.country = new String(record, 0, 3, cs).trim();
         this.bankCode = new String(record, 3, 30, cs).trim();
@@ -41,18 +41,9 @@ public class RSABankData {
         this.comSuffix = new String(record, 92, 2, cs).trim();
         this.bankId = new String(record, 94, 30, cs).trim();
         this.systemId = new String(record, 124, 30, cs).trim();
-        this.customerId = customerIdData == null ? "" :new String(customerIdData, cs).trim();
+        this.customerId = customerIdData == null ? "" : new String(customerIdData, cs).trim();
     }
-    
-    private void fillRecord(byte[] record, int offset, int length, String value) {
-        byte[] bytes = value.getBytes(SmartCardService.CHARSET);
-        if (bytes.length > length)
-            throw new HBCI_Exception("string value for bank data record at offset " + offset + " is " + bytes.length + " bytes long but must not be longer than " + length + " bytes");
-        
-        Arrays.fill(record, offset, offset + length, (byte) 0x20);
-        System.arraycopy(bytes, 0, record, offset, bytes.length);
-    }
-    
+
     public byte[] toRecord() {
         byte[] result = new byte[154];
         fillRecord(result, 0, 3, country);
@@ -65,7 +56,16 @@ public class RSABankData {
         fillRecord(result, 124, 30, systemId);
         return result;
     }
-    
+
+    private void fillRecord(byte[] record, int offset, int length, String value) {
+        byte[] bytes = value.getBytes(SmartCardService.CHARSET);
+        if (bytes.length > length)
+            throw new HBCI_Exception("string value for bank data record at offset " + offset + " is " + bytes.length + " bytes long but must not be longer than " + length + " bytes");
+
+        Arrays.fill(record, offset, offset + length, (byte) 0x20);
+        System.arraycopy(bytes, 0, record, offset, bytes.length);
+    }
+
     public byte[] toCustomerIdData() {
         byte[] result = new byte[30];
         fillRecord(result, 0, 30, customerId);
@@ -143,7 +143,7 @@ public class RSABankData {
     public void setSystemId(String systemId) {
         this.systemId = systemId;
     }
-    
+
     public String getCustomerId() {
         return customerId;
     }
@@ -155,15 +155,15 @@ public class RSABankData {
     @Override
     public String toString() {
         return "index=" + index
-             + " country=" + country
-             + " bankCode=" + bankCode
-             + " userId=" + userId
-             + " comService=" + comService
-             + " comAddress=" + comAddress
-             + " comSuffix=" + comSuffix
-             + " bankId=" + bankId
-             + " systemId=" + systemId
-             + " customerId=" + customerId;
+                + " country=" + country
+                + " bankCode=" + bankCode
+                + " userId=" + userId
+                + " comService=" + comService
+                + " comAddress=" + comAddress
+                + " comSuffix=" + comSuffix
+                + " bankId=" + bankId
+                + " systemId=" + systemId
+                + " customerId=" + customerId;
     }
 
 }

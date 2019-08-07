@@ -1,4 +1,3 @@
-
 /*  $Id: DDVKeyData.java,v 1.1 2011/11/24 21:59:37 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -25,18 +24,16 @@ package org.kapott.hbci.smartcardio;
  * DDV-Schluesseldaten fuer den DDVPCSC-Passport, basierend auf dem OCF-Code
  * aus HBCI4Java 2.5.8.
  */
-public class DDVKeyData
-{
-  public int num;
-  public int version;
-  public int len;
-  public int alg;
-  
-  /**
-   * @see java.lang.Object#toString()
-   */
-  public String toString()
-  {
-    return "key: num="+num+" version="+version+" len="+len+" alg="+alg;
-  }
+public class DDVKeyData {
+    public int num;
+    public int version;
+    public int len;
+    public int alg;
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return "key: num=" + num + " version=" + version + " len=" + len + " alg=" + alg;
+    }
 }

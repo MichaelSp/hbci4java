@@ -1,4 +1,3 @@
-
 /*  $Id: GVTermUebDel.java,v 1.1 2011/05/04 22:37:54 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,48 +20,44 @@
 
 package org.kapott.hbci.GV;
 
-import java.util.Enumeration;
-import java.util.Properties;
-
 import org.kapott.hbci.GV_Result.HBCIJobResultImpl;
 import org.kapott.hbci.exceptions.InvalidUserDataException;
 import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.HBCIUtilsInternal;
 import org.kapott.hbci.manager.LogFilter;
 
+import java.util.Enumeration;
+import java.util.Properties;
+
 public final class GVTermUebDel
-    extends HBCIJobImpl
-{
-    public static String getLowlevelName()
-    {
+        extends HBCIJobImpl {
+    public GVTermUebDel(HBCIHandler handler) {
+        super(handler, getLowlevelName(), new HBCIJobResultImpl());
+
+        addConstraint("orderid", "id", null, LogFilter.FILTER_NONE);
+    }
+
+    public static String getLowlevelName() {
         return "TermUebDel";
     }
-    
-    public GVTermUebDel(HBCIHandler handler)
-    {
-        super(handler,getLowlevelName(),new HBCIJobResultImpl());
-        
-        addConstraint("orderid","id",null, LogFilter.FILTER_NONE);
-    }
-    
-    public void setParam(String paramName,String value)
-    {
-        super.setParam(paramName,value);
+
+    public void setParam(String paramName, String value) {
+        super.setParam(paramName, value);
 
         if (paramName.equals("orderid")) {
-            Properties p=(Properties)getMainPassport().getPersistentData("termueb_"+value);
-            if (p==null) {
-                String msg=HBCIUtilsInternal.getLocMsg("EXCMSG_NOSUCHSCHEDTRANS",value);
-                if (!HBCIUtilsInternal.ignoreError(getMainPassport(),"client.errors.ignoreWrongJobDataErrors",msg))
+            Properties p = (Properties) getMainPassport().getPersistentData("termueb_" + value);
+            if (p == null) {
+                String msg = HBCIUtilsInternal.getLocMsg("EXCMSG_NOSUCHSCHEDTRANS", value);
+                if (!HBCIUtilsInternal.ignoreError(getMainPassport(), "client.errors.ignoreWrongJobDataErrors", msg))
                     throw new InvalidUserDataException(msg);
-                p=new Properties();
+                p = new Properties();
             }
-            
-            for (Enumeration e=p.propertyNames();e.hasMoreElements();) {
-                String key=(String)e.nextElement();
-                
-                setLowlevelParam(getName()+"."+key,
-                                 p.getProperty(key));
+
+            for (Enumeration e = p.propertyNames(); e.hasMoreElements(); ) {
+                String key = (String) e.nextElement();
+
+                setLowlevelParam(getName() + "." + key,
+                        p.getProperty(key));
             }
         }
     }

@@ -20,44 +20,40 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.DE;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class DEFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class DEFactory
+        extends ObjectFactory {
     private static DEFactory instance;
-    
-    public static synchronized DEFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new DEFactory();
+
+    private DEFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DE", "1024")));
+    }
+
+    public static synchronized DEFactory getInstance() {
+        if (instance == null) {
+            instance = new DEFactory();
         }
         return instance;
     }
-    
-    private DEFactory()
-    {
-        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.DE","1024")));
-    }
-    
-    public DE createDE(Node dedef, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs,Hashtable<String, String> valids)
-    {
-        DE ret=(DE)getFreeObject();
-        
-        if (ret==null) {
+
+    public DE createDE(Node dedef, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        DE ret = (DE) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new DE object",HBCIUtils.LOG_DEBUG);
-            ret=new DE(dedef,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+            ret = new DE(dedef, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing DE object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(dedef,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+                ret.init(dedef, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -67,14 +63,13 @@ public class DEFactory
 
         return ret;
     }
-    
-    public DE createDE(Node dedef, String name, String path, int idx, Document syntax)
-    {
-        DE ret=(DE)getFreeObject();
-        
-        if (ret==null) {
+
+    public DE createDE(Node dedef, String name, String path, int idx, Document syntax) {
+        DE ret = (DE) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new DE object",HBCIUtils.LOG_DEBUG);
-            ret=new DE(dedef, name, path, idx, syntax);
+            ret = new DE(dedef, name, path, idx, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing DE object",HBCIUtils.LOG_DEBUG);
@@ -89,11 +84,10 @@ public class DEFactory
 
         return ret;
     }
-    
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((DE)o).destroy();
+
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((DE) o).destroy();
             super.unuseObject(o);
         }
     }

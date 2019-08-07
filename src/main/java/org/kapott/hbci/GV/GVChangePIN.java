@@ -1,4 +1,3 @@
-
 /*  $Id: GVChangePIN.java,v 1.1 2011/05/04 22:37:53 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -25,17 +24,14 @@ import org.kapott.hbci.GV_Result.HBCIJobResultImpl;
 import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.LogFilter;
 
-public class GVChangePIN 
-    extends HBCIJobImpl
-{
-    public static String getLowlevelName()
-    {
-        return "ChangePIN";
-    }
-    
-    public GVChangePIN(HBCIHandler handler)
-    {
+public class GVChangePIN
+        extends HBCIJobImpl {
+    public GVChangePIN(HBCIHandler handler) {
         super(handler, getLowlevelName(), new HBCIJobResultImpl());
         addConstraint("newpin", "newpin", null, LogFilter.FILTER_SECRETS);
+    }
+
+    public static String getLowlevelName() {
+        return "ChangePIN";
     }
 }

@@ -1,4 +1,3 @@
-
 /*  $Id: DateField.java,v 1.1 2011/05/04 22:37:48 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,63 +20,56 @@
 
 package org.kapott.hbci.passport.rdhXfile;
 
+import org.kapott.hbci.exceptions.HBCI_Exception;
+
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.kapott.hbci.exceptions.HBCI_Exception;
-
 
 public class DateField
-    extends TLV
-{
+        extends TLV {
     private Date date;
-    
-    public DateField()
-    {
+
+    public DateField() {
         super(0x4452);
     }
-    
-    public DateField(TLV tlv)
-    {
+
+    public DateField(TLV tlv) {
         super(tlv);
-        
+
         try {
-            SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
-            this.date=format.parse(new String(this.getData()));
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+            this.date = format.parse(new String(this.getData()));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
-    
-    public Date getDate()
-    {
-        return this.date;
-    }
-    
-    public void setDate(Date date)
-    {
-        this.date=date;
-    }
-    
-    public void updateData()
-    {
-        try {
-            ByteArrayOutputStream os=new ByteArrayOutputStream();
 
-            SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
-            String           date_st=format.format(getDate());
+    public void updateData() {
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+            String date_st = format.format(getDate());
             os.write(date_st.getBytes());
-            
+
             setData(os.toByteArray());
         } catch (Exception e) {
             throw new HBCI_Exception(e);
         }
     }
-    
-    public String toString()
-    {
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String toString() {
         return this.date.toString();
     }
 }

@@ -1,4 +1,3 @@
-
 /*  $Id: ShowLowlevelGVRestrictions.java,v 1.1 2011/05/04 22:37:46 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,9 +20,6 @@
 
 package org.kapott.hbci.tools;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import org.kapott.hbci.callback.HBCICallbackConsole;
 import org.kapott.hbci.manager.HBCIKernelImpl;
 import org.kapott.hbci.manager.HBCIUtils;
@@ -33,13 +29,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/** TODO: doku fehlt (analog zu ShowLowlevelGVRs */
-public class ShowLowlevelGVRestrictions 
-    extends AbstractShowLowlevelData
-{
-    public static void main(String[] args) throws Exception
-    {
-        HBCIUtils.init(null,new HBCICallbackConsole());
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+/**
+ * TODO: doku fehlt (analog zu ShowLowlevelGVRs
+ */
+public class ShowLowlevelGVRestrictions
+        extends AbstractShowLowlevelData {
+    public static void main(String[] args) throws Exception {
+        HBCIUtils.init(null, new HBCICallbackConsole());
 
         String hbciversion;
         if (args.length >= 1) {
@@ -52,12 +51,12 @@ public class ShowLowlevelGVRestrictions
         }
 
         HBCIKernelImpl kernel = new HBCIKernelImpl(null, hbciversion);
-        MsgGen         msggen = kernel.getMsgGen();
-        Document       syntax = msggen.getSyntax();
+        MsgGen msggen = kernel.getMsgGen();
+        Document syntax = msggen.getSyntax();
 
-        Element  paramlist = syntax.getElementById("Params");
+        Element paramlist = syntax.getElementById("Params");
         NodeList paramnodes = paramlist.getChildNodes();
-        int      len = paramnodes.getLength();
+        int len = paramnodes.getLength();
 
         for (int i = 0; i < len; i++) {
             Node paramrefnode = paramnodes.item(i);

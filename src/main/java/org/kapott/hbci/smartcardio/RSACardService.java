@@ -1,35 +1,32 @@
 /**
- * 
+ *
  */
 package org.kapott.hbci.smartcardio;
 
+import org.kapott.hbci.exceptions.HBCI_Exception;
+import org.kapott.hbci.manager.HBCIUtils;
+
+import javax.smartcardio.Card;
+import javax.smartcardio.CommandAPDU;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.smartcardio.Card;
-import javax.smartcardio.CommandAPDU;
-
-import org.kapott.hbci.exceptions.HBCI_Exception;
-import org.kapott.hbci.manager.HBCIUtils;
-
 /**
  * @author axel
  *
  */
-public class RSACardService extends HBCICardService
-{
+public class RSACardService extends HBCICardService {
     private byte[] cid;
-    
+
     /**
      * @see org.kapott.hbci.smartcardio.SmartCardService#init(javax.smartcardio.Card)
      */
     @Override
-    protected void init(Card card)
-    {
+    protected void init(Card card) {
         super.init(card);
-        
+
 //        ATR atr = card.getATR();
 //        if (!Arrays.equals(atr.getBytes(), new byte[]{
 //            (byte) 0x3b,
@@ -51,11 +48,11 @@ public class RSACardService extends HBCICardService
 //            })) {
 //            throw new HBCI_Exception("card has wrong ATR");
 //        }
-        
+
         this.selectFile(0x3F00);
         this.selectFile(0x2F02);
         byte[] data = readBinary(0, 0);
-        
+
         SimpleTLV tlv = new SimpleTLV(data);
         if (tlv.isMalformed() || tlv.getSize() != 1 || tlv.getTag(0) != 0x5A) {
             throw new HBCI_Exception("malformed tlv for fid 0x2F02");
@@ -64,22 +61,21 @@ public class RSACardService extends HBCICardService
         if (content.length != 10) {
             throw new HBCI_Exception("malformed tlv for fid 0x2F02");
         }
-        
+
         this.cid = new byte[5];
         System.arraycopy(content, 4, cid, 0, 5);
-        
+
         this.selectFile(0xA600);
     }
-    
+
     /**
      * @see org.kapott.hbci.smartcardio.HBCICardService#getCID()
      */
     @Override
-    public String getCID()
-    {
-      return new String(this.cid,SmartCardService.CHARSET);
+    public String getCID() {
+        return new String(this.cid, SmartCardService.CHARSET);
     }
-    
+
     /**
      * @see org.kapott.hbci.smartcardio.HBCICardService#createPINVerificationDataStructure(int)
      */
@@ -91,20 +87,20 @@ public class RSACardService extends HBCICardService
         verifyCommand.write(0x82); // bmFormatString
         verifyCommand.write(0x00); // bmPINBlockString
         verifyCommand.write(0x00); // bmPINLengthFormat
-        verifyCommand.write(new byte[] {(byte) 0x20,(byte) 0x00}); // PIN size (max/min)
+        verifyCommand.write(new byte[]{(byte) 0x20, (byte) 0x00}); // PIN size (max/min)
         verifyCommand.write(0x02); // bEntryValidationCondition
         verifyCommand.write(0x01); // bNumberMessage
-        verifyCommand.write(new byte[] { 0x04, 0x09 }); // wLangId
+        verifyCommand.write(new byte[]{0x04, 0x09}); // wLangId
         verifyCommand.write(0x00); // bMsgIndex
-        verifyCommand.write(new byte[] { 0x00, 0x00, 0x00 }); // bTeoPrologue
-        byte[] verifyApdu = new byte[] {
-            SECCOS_CLA_STD, // CLA
-            SECCOS_INS_VERIFY, // INS
-            0x00, // P1
-            (byte) (SECCOS_PWD_TYPE_DF | pwdId), // P2
-            0x08, // Lc = 8 bytes in command data
-            (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20,
-            (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20 };
+        verifyCommand.write(new byte[]{0x00, 0x00, 0x00}); // bTeoPrologue
+        byte[] verifyApdu = new byte[]{
+                SECCOS_CLA_STD, // CLA
+                SECCOS_INS_VERIFY, // INS
+                0x00, // P1
+                (byte) (SECCOS_PWD_TYPE_DF | pwdId), // P2
+                0x08, // Lc = 8 bytes in command data
+                (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20,
+                (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20};
         verifyCommand.write(verifyApdu.length & 0xff); // ulDataLength[0]
         verifyCommand.write(0x00); // ulDataLength[1]
         verifyCommand.write(0x00); // ulDataLength[2]
@@ -112,22 +108,22 @@ public class RSACardService extends HBCICardService
         verifyCommand.write(verifyApdu); // abData
         return verifyCommand.toByteArray();
     }
-    
+
     //
     // this seems to be needed only when data on chip card should be changed
     //
 //    private void verifyModifyPIN(int pwdId) {
-//        byte[] body = new byte[] {(byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20, 
+//        byte[] body = new byte[] {(byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20,
 //                                  (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20};
-//        
+//
 //        System.arraycopy(cid, 0, body, 0, cid.length);
-//        
+//
 //        CommandAPDU command = new CommandAPDU(SECCOS_CLA_STD, SECCOS_INS_VERIFY,
 //                                              (byte) 0x00, (byte) (SECCOS_PWD_TYPE_DF | pwdId),
 //                                              body);
 //        send(command);
 //    }
-    
+
     /**
      * @see org.kapott.hbci.smartcardio.SmartCardService#verifySoftPIN(int, byte[])
      */
@@ -135,28 +131,28 @@ public class RSACardService extends HBCICardService
     public void verifySoftPIN(int pwdId, byte[] softPin) {
         if (softPin.length > 8)
             throw new HBCI_Exception("illegal PIN size");
-        
-        byte[] body = new byte[] {(byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20, 
-                                  (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20};
-        
+
+        byte[] body = new byte[]{(byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20,
+                (byte) 0x20, (byte) 0x20, (byte) 0x20, (byte) 0x20};
+
         System.arraycopy(softPin, 0, body, 0, softPin.length);
-        
+
         CommandAPDU command = new CommandAPDU(SECCOS_CLA_STD, SECCOS_INS_VERIFY,
-                                              (byte) 0x00, (byte) (SECCOS_PWD_TYPE_DF | pwdId),
-                                              body);
+                (byte) 0x00, (byte) (SECCOS_PWD_TYPE_DF | pwdId),
+                body);
         send(command);
     }
-    
+
     /**
      * @param idx
      * @return
      */
     public RSABankData readBankData(int idx) {
         selectFile(0xA603);
-        byte[] rawData  = readRecordBySFI(0x00, idx);
+        byte[] rawData = readRecordBySFI(0x00, idx);
         if (rawData == null)
             return null;
-        
+
         byte[] customerIdData = null;
         try {
             selectFile(0xA604);
@@ -175,22 +171,22 @@ public class RSACardService extends HBCICardService
             // properly there are no information about customer id on this card
             customerIdData = null;
         }
-        
+
         return new RSABankData(idx, rawData, customerIdData);
     }
-    
+
     /**
      * @param idx
      * @param bankData
      */
     public void writeBankData(int idx, RSABankData bankData) {
         byte[] rawData = bankData.toRecord();
-        
+
         HBCIUtils.log("bankData=" + toHex(rawData), HBCIUtils.LOG_DEBUG);
 //        selectFile(0xA603);
 //        updateRecordBySFI(0x00, idx, rawData);
     }
-    
+
     /**
      * @param idx
      * @return
@@ -222,25 +218,25 @@ public class RSACardService extends HBCICardService
         if (rawData == null)
             return null;
         return new RSAKeyData[]{
-                        new RSAKeyData(idx, RSAKeyData.Type.VERIFY, rawData, verifyPKData),
-                        new RSAKeyData(idx, RSAKeyData.Type.ENCIPHER, rawData, encipherPKData),
-                        new RSAKeyData(idx, RSAKeyData.Type.SIGN, rawData, signPKData),
-                        new RSAKeyData(idx, RSAKeyData.Type.DECIPHER, rawData, decipherPKData)
-                        };
+                new RSAKeyData(idx, RSAKeyData.Type.VERIFY, rawData, verifyPKData),
+                new RSAKeyData(idx, RSAKeyData.Type.ENCIPHER, rawData, encipherPKData),
+                new RSAKeyData(idx, RSAKeyData.Type.SIGN, rawData, signPKData),
+                new RSAKeyData(idx, RSAKeyData.Type.DECIPHER, rawData, decipherPKData)
+        };
     }
-    
+
     /**
      * @param idx
      * @return
      */
     public int readSigId(int idx) {
         selectFile(0xA601);
-        byte[] rawData  = readRecordBySFI(0x00, idx);
+        byte[] rawData = readRecordBySFI(0x00, idx);
         if (rawData == null)
             return 0;
         return ((((int) rawData[0]) & 0xFF) << 24) | ((((int) rawData[1]) & 0xFF) << 16) | ((((int) rawData[2]) & 0xFF) << 8) | (((int) rawData[3]) & 0xFF);
     }
-    
+
     /**
      * @param idx
      * @param sigId
@@ -252,12 +248,12 @@ public class RSACardService extends HBCICardService
 //        rawData[1]=(byte) ((sigId >> 16) & 0xFF);
 //        rawData[2]=(byte) ((sigId >>  8) & 0xFF);
 //        rawData[3]=(byte)  (sigId        & 0xFF);
-//        
+//
 //        HBCIUtils.log("sidId=" + toHex(rawData), HBCIUtils.LOG_DEBUG);
 //        //selectFile(0xA601);
 //        //updateRecordBySFI(0x00, idx, rawData);
     }
-    
+
     /**
      * @param idx
      * @param data
@@ -266,22 +262,22 @@ public class RSACardService extends HBCICardService
     public byte[] sign(int idx, byte[] data) {
         // MANAGE SE (activate my sig key)
         send(new CommandAPDU(SECCOS_CLA_STD, 0x22, 0x41, 0xB6 /*signature*/, new byte[]{
-                        (byte) 0x84, // private key
-                        (byte) 0x01, // length
-                        (byte) (0x81 + idx), // kid
-                        (byte) 0x83, // public key
-                        (byte) 0x01, // length
-                        (byte) (0x81 + idx), // kid
-                        (byte) 0x80, // algorithm
-                        (byte) 0x01, // length
-                        (byte) 0x25  // HBCI
-                        }));
+                (byte) 0x84, // private key
+                (byte) 0x01, // length
+                (byte) (0x81 + idx), // kid
+                (byte) 0x83, // public key
+                (byte) 0x01, // length
+                (byte) (0x81 + idx), // kid
+                (byte) 0x80, // algorithm
+                (byte) 0x01, // length
+                (byte) 0x25  // HBCI
+        }));
         // PUT HASH
         send(new CommandAPDU(SECCOS_CLA_STD, 0x2a, 0x90, 0x81, data));
         // SIGN
         return receive(new CommandAPDU(SECCOS_CLA_STD, 0x2a, 0x9e, 0x9a, 256));
     }
-    
+
     /**
      * @param idx
      * @param data
@@ -291,16 +287,16 @@ public class RSACardService extends HBCICardService
     public boolean verify(int idx, byte[] data, byte[] sig) {
         // MANAGE SE (activate inst sig key)
         send(new CommandAPDU(SECCOS_CLA_STD, 0x22, 0x41, 0xB6 /*signature*/, new byte[]{
-                        (byte) 0x84, // private key
-                        (byte) 0x01, // length
-                        (byte) (0x81 + idx), // kid
-                        (byte) 0x83, // public key
-                        (byte) 0x01, // length
-                        (byte) (0x91 + idx), // kid
-                        (byte) 0x80, // algorithm
-                        (byte) 0x01, // length
-                        (byte) 0x25  // HBCI
-                        }));
+                (byte) 0x84, // private key
+                (byte) 0x01, // length
+                (byte) (0x81 + idx), // kid
+                (byte) 0x83, // public key
+                (byte) 0x01, // length
+                (byte) (0x91 + idx), // kid
+                (byte) 0x80, // algorithm
+                (byte) 0x01, // length
+                (byte) 0x25  // HBCI
+        }));
         // PUT HASH
         send(new CommandAPDU(SECCOS_CLA_STD, 0x2a, 0x90, 0x81, data));
         // VERIFY
@@ -311,7 +307,7 @@ public class RSACardService extends HBCICardService
         }
         return true;
     }
-    
+
     /**
      * @param idx
      * @param data
@@ -320,13 +316,13 @@ public class RSACardService extends HBCICardService
     public byte[] encipher(int idx, byte[] data) {
         // MANAGE SE (activate inst enc key)
         send(new CommandAPDU(SECCOS_CLA_STD, 0x22, 0x41, 0xB8 /*cipher*/, new byte[]{
-                        (byte) 0x84, // private key
-                        (byte) 0x01, // length
-                        (byte) (0x86 + idx), // kid
-                        (byte) 0x83, // public key
-                        (byte) 0x01, // length
-                        (byte) (0x96 + idx) // kid
-                        }));
+                (byte) 0x84, // private key
+                (byte) 0x01, // length
+                (byte) (0x86 + idx), // kid
+                (byte) 0x83, // public key
+                (byte) 0x01, // length
+                (byte) (0x96 + idx) // kid
+        }));
         // ENCIPHER
         byte[] buffer = receive(new CommandAPDU(SECCOS_CLA_STD, 0x2a, 0x86, 0x80, data, 256));
         // strip padding indicator
@@ -334,7 +330,7 @@ public class RSACardService extends HBCICardService
         System.arraycopy(buffer, 1, result, 0, result.length);
         return result;
     }
-    
+
     /**
      * @param idx
      * @param data
@@ -347,28 +343,28 @@ public class RSACardService extends HBCICardService
         System.arraycopy(data, 0, buffer, 1, data.length);
         // MANAGE SE (activate my enc key)
         send(new CommandAPDU(SECCOS_CLA_STD, 0x22, 0x41, 0xB8 /*cipher*/, new byte[]{
-                        (byte) 0x84, // private key
-                        (byte) 0x01, // length
-                        (byte) (0x86 + idx), // kid
-                        (byte) 0x83, // public key
-                        (byte) 0x01, // length
-                        (byte) (0x86 + idx) // kid
+                (byte) 0x84, // private key
+                (byte) 0x01, // length
+                (byte) (0x86 + idx), // kid
+                (byte) 0x83, // public key
+                (byte) 0x01, // length
+                (byte) (0x86 + idx) // kid
         }));
         // DECIPHER
         return receive(new CommandAPDU(SECCOS_CLA_STD, 0x2a, 0x80, 0x86, buffer, 256));
     }
-    
+
     private static class SimpleTLV {
-        
+
         private final boolean malformed;
         private final byte[] data;
         private final byte[] tags;
         private final byte[][] contents;
-        
+
         public SimpleTLV(byte[] data) {
             List<Byte> tags = new ArrayList<Byte>();
             List<byte[]> contents = new ArrayList<byte[]>();
-            
+
             int pos = 0;
             while (pos < data.length) {
                 if (data[pos] == (byte) 0x00 || data[pos] == (byte) 0xFF) {
@@ -403,37 +399,37 @@ public class RSACardService extends HBCICardService
                     contents.add(content);
                 }
             }
-            
+
             byte[] tempTags = new byte[tags.size()];
             for (int n = 0; n < tags.size(); n++)
                 tempTags[n] = tags.get(n);
-            
+
             this.malformed = pos == Integer.MAX_VALUE;
             this.data = data.clone();
             this.tags = this.malformed ? new byte[0] : tempTags;
             this.contents = this.malformed ? new byte[0][0] : contents.toArray(new byte[contents.size()][]);
         }
-        
+
         public boolean isMalformed() {
             return malformed;
         }
-        
+
         public byte[] getData() {
             return data.clone();
         }
-        
+
         public int getSize() {
             return tags.length;
         }
-        
+
         public byte getTag(int idx) {
             return tags[idx];
         }
-        
+
         public byte[] getContent(int idx) {
             return contents[idx].clone();
         }
-        
+
     }
 
 }

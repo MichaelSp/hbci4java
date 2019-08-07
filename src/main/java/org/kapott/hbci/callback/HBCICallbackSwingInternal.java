@@ -1,4 +1,3 @@
-
 /*  $Id: HBCICallbackSwingInternal.java,v 1.1 2011/05/04 22:37:51 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,52 +20,47 @@
 
 package org.kapott.hbci.callback;
 
-import java.awt.Container;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Hashtable;
 
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-
-/** Callback für Anwendungen mit GUI; arbeitet mit <code>JInternalFrame</code>s
-    anstatt mit Top-Level-Windows. */
+/**
+ * Callback für Anwendungen mit GUI; arbeitet mit <code>JInternalFrame</code>s
+ * anstatt mit Top-Level-Windows.
+ */
 public class HBCICallbackSwingInternal
-    extends HBCICallbackSwing
-{
-    public static final boolean DIALOG_RESIZABLE=true;
-    public static final boolean DIALOG_NOT_RESIZABLE=false;
-    public static final boolean DIALOG_MAXIMIZABLE=true;
-    public static final boolean DIALOG_NOT_MAXIMIZABLE=false;
-    public static final boolean DIALOG_CLOSABLE=true;
-    public static final boolean DIALOG_NOT_CLOSABLE=false;
-    public static final boolean DIALOG_ICONIFIABLE=true;
-    public static final boolean DIALOG_NOT_ICONIFIABLE=false;
+        extends HBCICallbackSwing {
+    public static final boolean DIALOG_RESIZABLE = true;
+    public static final boolean DIALOG_NOT_RESIZABLE = false;
+    public static final boolean DIALOG_MAXIMIZABLE = true;
+    public static final boolean DIALOG_NOT_MAXIMIZABLE = false;
+    public static final boolean DIALOG_CLOSABLE = true;
+    public static final boolean DIALOG_NOT_CLOSABLE = false;
+    public static final boolean DIALOG_ICONIFIABLE = true;
+    public static final boolean DIALOG_NOT_ICONIFIABLE = false;
 
     private JDesktopPane desk;
-    
-    public HBCICallbackSwingInternal(JDesktopPane desk)
-    {
-        this.desk=desk;
+
+    public HBCICallbackSwingInternal(JDesktopPane desk) {
+        this.desk = desk;
     }
-    
-    protected Container createWin(Hashtable currentData,String title,String winname)
-    {
-        JInternalFrame win=new JInternalFrame(title,DIALOG_NOT_RESIZABLE,DIALOG_NOT_CLOSABLE,DIALOG_NOT_MAXIMIZABLE,DIALOG_NOT_ICONIFIABLE);
+
+    protected Container createWin(Hashtable currentData, String title, String winname) {
+        JInternalFrame win = new JInternalFrame(title, DIALOG_NOT_RESIZABLE, DIALOG_NOT_CLOSABLE, DIALOG_NOT_MAXIMIZABLE, DIALOG_NOT_ICONIFIABLE);
         desk.add(win);
-        currentData.put("win_"+winname,win);
-        
+        currentData.put("win_" + winname, win);
+
         return win.getContentPane();
     }
-    
-    protected void removeWin(Hashtable currentData,String winname)
-    {
-        JInternalFrame win=(JInternalFrame)currentData.get("win_"+winname);
+
+    protected void removeWin(Hashtable currentData, String winname) {
+        JInternalFrame win = (JInternalFrame) currentData.get("win_" + winname);
         win.dispose();
         desk.repaint();
     }
-    
-    protected void drawWin(Hashtable currentData,String winname)
-    {
-        JInternalFrame win=(JInternalFrame)currentData.get("win_"+winname);
+
+    protected void drawWin(Hashtable currentData, String winname) {
+        JInternalFrame win = (JInternalFrame) currentData.get("win_" + winname);
 
         win.pack();
         win.setVisible(true);

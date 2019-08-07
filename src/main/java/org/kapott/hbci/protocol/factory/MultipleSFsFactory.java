@@ -1,4 +1,3 @@
-
 /*  $Id: MultipleSFsFactory.java,v 1.1 2011/05/04 22:37:49 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,44 +20,40 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.MultipleSFs;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class MultipleSFsFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class MultipleSFsFactory
+        extends ObjectFactory {
     private static MultipleSFsFactory instance;
-    
-    public static synchronized MultipleSFsFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new MultipleSFsFactory();
+
+    private MultipleSFsFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.SF", "128")));
+    }
+
+    public static synchronized MultipleSFsFactory getInstance() {
+        if (instance == null) {
+            instance = new MultipleSFsFactory();
         }
         return instance;
     }
-    
-    private MultipleSFsFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.SF","128")));
-    }
- 
-    public MultipleSFs createMultipleSFs(Node sfref, String path, char predelim0, char predelim1, StringBuffer res, int fullResLen, Document syntax, Hashtable<String,String> predefs,Hashtable<String,String> valids)
-    {
-        MultipleSFs ret=(MultipleSFs)getFreeObject();
-        
-        if (ret==null) {
+
+    public MultipleSFs createMultipleSFs(Node sfref, String path, char predelim0, char predelim1, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        MultipleSFs ret = (MultipleSFs) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new multi SF object",HBCIUtils.LOG_DEBUG);
-            ret=new MultipleSFs(sfref,path,predelim0,predelim1,res,fullResLen,syntax,predefs,valids);
+            ret = new MultipleSFs(sfref, path, predelim0, predelim1, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing multi SF object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(sfref,path,predelim0,predelim1,res,fullResLen,syntax,predefs,valids);
+                ret.init(sfref, path, predelim0, predelim1, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -69,18 +64,17 @@ public class MultipleSFsFactory
         return ret;
     }
 
-    public MultipleSFs createMultipleSFs(Node sfref, String path, Document syntax)
-    {
-        MultipleSFs ret=(MultipleSFs)getFreeObject();
-        
-        if (ret==null) {
+    public MultipleSFs createMultipleSFs(Node sfref, String path, Document syntax) {
+        MultipleSFs ret = (MultipleSFs) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new multi SF object",HBCIUtils.LOG_DEBUG);
-            ret=new MultipleSFs(sfref,path,syntax);
+            ret = new MultipleSFs(sfref, path, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing multi SF object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(sfref,path,syntax);
+                ret.init(sfref, path, syntax);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -91,10 +85,9 @@ public class MultipleSFsFactory
         return ret;
     }
 
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((MultipleSFs)o).destroy();
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((MultipleSFs) o).destroy();
             super.unuseObject(o);
         }
     }

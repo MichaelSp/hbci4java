@@ -1,4 +1,3 @@
-
 /*  $Id: SEGFactory.java,v 1.1 2011/05/04 22:37:48 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -13,7 +12,7 @@
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-  
+
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -21,43 +20,39 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.SEG;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 
-public class SEGFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class SEGFactory
+        extends ObjectFactory {
     private static SEGFactory instance;
-    
-    public static synchronized SEGFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new SEGFactory();
+
+    private SEGFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.SEG", "128")));
+    }
+
+    public static synchronized SEGFactory getInstance() {
+        if (instance == null) {
+            instance = new SEGFactory();
         }
         return instance;
     }
-    
-    private SEGFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.SEG","128")));
-    }
-    
-    public SEG createSEG(String type, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs,Hashtable<String, String> valids)
-    {
-        SEG ret=(SEG)getFreeObject();
-        
-        if (ret==null) {
+
+    public SEG createSEG(String type, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        SEG ret = (SEG) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new SEG object",HBCIUtils.LOG_DEBUG);
-            ret=new SEG(type,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+            ret = new SEG(type, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing SEG object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(type,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+                ret.init(type, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -67,14 +62,13 @@ public class SEGFactory
 
         return ret;
     }
-    
-    public SEG createSEG(String type, String name, String path, int idx, Document syntax)
-    {
-        SEG ret=(SEG)getFreeObject();
-        
-        if (ret==null) {
+
+    public SEG createSEG(String type, String name, String path, int idx, Document syntax) {
+        SEG ret = (SEG) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new SEG object",HBCIUtils.LOG_DEBUG);
-            ret=new SEG(type, name, path, idx, syntax);
+            ret = new SEG(type, name, path, idx, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing SEG object",HBCIUtils.LOG_DEBUG);
@@ -89,11 +83,10 @@ public class SEGFactory
 
         return ret;
     }
-    
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((SEG)o).destroy();
+
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((SEG) o).destroy();
             super.unuseObject(o);
         }
     }

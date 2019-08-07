@@ -1,4 +1,3 @@
-
 /*  $Id: SigFactory.java,v 1.1 2011/05/04 22:37:57 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -28,48 +27,43 @@ import org.kapott.hbci.protocol.MSG;
 import org.kapott.hbci.security.Sig;
 import org.kapott.hbci.tools.ObjectFactory;
 
-public class SigFactory 
-    extends ObjectFactory 
-{
+public class SigFactory
+        extends ObjectFactory {
     private static SigFactory instance;
-    
-    public static SigFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new SigFactory();
+
+    private SigFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.Sig", "8")));
+    }
+
+    public static SigFactory getInstance() {
+        if (instance == null) {
+            instance = new SigFactory();
         }
         return instance;
     }
-    
-    private SigFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.Sig","8")));
-    }
-    
-    public Sig createSig(IHandlerData handlerdata, MSG msg, HBCIPassportList passports)
-    {
-        Sig ret=(Sig)getFreeObject();
-        
-        if (ret==null) {
-            ret=new Sig(handlerdata,msg,passports);
+
+    public Sig createSig(IHandlerData handlerdata, MSG msg, HBCIPassportList passports) {
+        Sig ret = (Sig) getFreeObject();
+
+        if (ret == null) {
+            ret = new Sig(handlerdata, msg, passports);
             addToUsedPool(ret);
         } else {
             try {
-                ret.init(handlerdata,msg,passports);
+                ret.init(handlerdata, msg, passports);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
                 throw e;
             }
         }
-        
+
         return ret;
     }
-    
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((Sig)o).destroy();
+
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((Sig) o).destroy();
             super.unuseObject(o);
         }
     }

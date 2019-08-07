@@ -1,4 +1,3 @@
-
 /*  $Id: GVUebBZU.java,v 1.1 2011/05/04 22:37:54 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,84 +20,79 @@
 
 package org.kapott.hbci.GV;
 
-import java.util.Properties;
-
 import org.kapott.hbci.exceptions.InvalidUserDataException;
 import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.HBCIUtilsInternal;
 import org.kapott.hbci.manager.LogFilter;
 
+import java.util.Properties;
+
 public final class GVUebBZU
-    extends GVUeb
-{
-    public static String getLowlevelName()
-    {
+        extends GVUeb {
+    public GVUebBZU(HBCIHandler handler) {
+        super(handler, getLowlevelName());
+
+        addConstraint("src.country", "My.KIK.country", "DE", LogFilter.FILTER_NONE);
+        addConstraint("src.blz", "My.KIK.blz", null, LogFilter.FILTER_MOST);
+        addConstraint("src.number", "My.number", null, LogFilter.FILTER_IDS);
+        addConstraint("src.subnumber", "My.subnumber", "", LogFilter.FILTER_MOST);
+        addConstraint("dst.country", "Other.KIK.country", "DE", LogFilter.FILTER_NONE);
+        addConstraint("dst.blz", "Other.KIK.blz", null, LogFilter.FILTER_MOST);
+        addConstraint("dst.number", "Other.number", null, LogFilter.FILTER_IDS);
+        addConstraint("dst.subnumber", "Other.subnumber", "", LogFilter.FILTER_MOST);
+        addConstraint("btg.value", "BTG.value", null, LogFilter.FILTER_MOST);
+        addConstraint("btg.curr", "BTG.curr", null, LogFilter.FILTER_NONE);
+        addConstraint("name", "name", null, LogFilter.FILTER_IDS);
+        addConstraint("bzudata", "usage.usage", null, LogFilter.FILTER_MOST);
+
+        addConstraint("name2", "name2", "", LogFilter.FILTER_IDS);
+        addConstraint("key", "key", "67", LogFilter.FILTER_NONE);
+
+        Properties parameters = getJobRestrictions();
+        int maxusage = Integer.parseInt(parameters.getProperty("maxusage"));
+
+        for (int i = 1; i < maxusage; i++) {
+            String name = HBCIUtilsInternal.withCounter("usage", i);
+            addConstraint(name, "usage." + name, "", LogFilter.FILTER_MOST);
+        }
+    }
+
+    public static String getLowlevelName() {
         return "Ueb";
     }
-    
-    public GVUebBZU(HBCIHandler handler)
-    {
-        super(handler,getLowlevelName());
-        
-        addConstraint("src.country","My.KIK.country","DE", LogFilter.FILTER_NONE);
-        addConstraint("src.blz","My.KIK.blz",null, LogFilter.FILTER_MOST);
-        addConstraint("src.number","My.number",null, LogFilter.FILTER_IDS);
-        addConstraint("src.subnumber","My.subnumber","", LogFilter.FILTER_MOST);
-        addConstraint("dst.country","Other.KIK.country","DE", LogFilter.FILTER_NONE);
-        addConstraint("dst.blz","Other.KIK.blz",null, LogFilter.FILTER_MOST);
-        addConstraint("dst.number","Other.number",null, LogFilter.FILTER_IDS);
-        addConstraint("dst.subnumber","Other.subnumber","", LogFilter.FILTER_MOST);
-        addConstraint("btg.value","BTG.value",null, LogFilter.FILTER_MOST);
-        addConstraint("btg.curr","BTG.curr",null, LogFilter.FILTER_NONE);
-        addConstraint("name","name",null, LogFilter.FILTER_IDS);
-        addConstraint("bzudata","usage.usage",null, LogFilter.FILTER_MOST);
 
-        addConstraint("name2","name2","", LogFilter.FILTER_IDS);
-        addConstraint("key","key","67", LogFilter.FILTER_NONE);
-
-        Properties parameters=getJobRestrictions();
-        int        maxusage=Integer.parseInt(parameters.getProperty("maxusage"));
-
-        for (int i=1;i<maxusage;i++) {
-            String name=HBCIUtilsInternal.withCounter("usage",i);
-            addConstraint(name,"usage."+name,"", LogFilter.FILTER_MOST);
-        }
-    }
-    
-    private void checkBZUData(String bzudata)
-    {
-        if (bzudata==null)
-            throw new InvalidUserDataException(HBCIUtilsInternal.getLocMsg("EXCMSG_BZUMISSING"));
-
-        int len=bzudata.length();
-        if (len!=13)
-            throw new InvalidUserDataException(HBCIUtilsInternal.getLocMsg("EXCMSG_INV_BZULEN",Integer.toString(len)));
-
-        byte[] digits=bzudata.getBytes();
-        int p=10;
-        int s=0;
-        int mod;
-        
-        for (int j=1;j<=13;j++) {
-            s=(p%11) + (digits[j-1]-0x30);
-            
-            if ((mod=(s%10))==0)
-                mod=10;
-            p=mod<<1;
-        }
-        
-        if ((s%10)!=1) {
-            String msg=HBCIUtilsInternal.getLocMsg("EXCMSG_BZUERR",bzudata);
-            if (!HBCIUtilsInternal.ignoreError(getMainPassport(),"client.errors.ignoreWrongJobDataErrors",msg))
-                throw new InvalidUserDataException(msg);
-        }
-    }
-    
-    public void setParam(String paramName,String value)
-    {
+    public void setParam(String paramName, String value) {
         if (paramName.equals("bzudata"))
             checkBZUData(value);
-            
-        super.setParam(paramName,value);
+
+        super.setParam(paramName, value);
+    }
+
+    private void checkBZUData(String bzudata) {
+        if (bzudata == null)
+            throw new InvalidUserDataException(HBCIUtilsInternal.getLocMsg("EXCMSG_BZUMISSING"));
+
+        int len = bzudata.length();
+        if (len != 13)
+            throw new InvalidUserDataException(HBCIUtilsInternal.getLocMsg("EXCMSG_INV_BZULEN", Integer.toString(len)));
+
+        byte[] digits = bzudata.getBytes();
+        int p = 10;
+        int s = 0;
+        int mod;
+
+        for (int j = 1; j <= 13; j++) {
+            s = (p % 11) + (digits[j - 1] - 0x30);
+
+            if ((mod = (s % 10)) == 0)
+                mod = 10;
+            p = mod << 1;
+        }
+
+        if ((s % 10) != 1) {
+            String msg = HBCIUtilsInternal.getLocMsg("EXCMSG_BZUERR", bzudata);
+            if (!HBCIUtilsInternal.ignoreError(getMainPassport(), "client.errors.ignoreWrongJobDataErrors", msg))
+                throw new InvalidUserDataException(msg);
+        }
     }
 }

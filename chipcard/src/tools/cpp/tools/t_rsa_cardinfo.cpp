@@ -34,11 +34,11 @@ void printKeyInfo(unsigned char* buffer)
     char  status_st[128];
     switch (buffer[0]) {
         case 0x00: strcpy(status_st,"INI-Brief fehlt"); break;
-        case 0x01: strcpy(status_st,"Schlüsselnummer oder -version fehlen"); break;
-        case 0x02: strcpy(status_st,"Neuer Schlüssel im Puffer erzeugt"); break;
-        case 0x07: strcpy(status_st,"Privater und öffentlicher Schlüssel neu geschrieben"); break;
+        case 0x01: strcpy(status_st,"SchlÃ¼sselnummer oder -version fehlen"); break;
+        case 0x02: strcpy(status_st,"Neuer SchlÃ¼ssel im Puffer erzeugt"); break;
+        case 0x07: strcpy(status_st,"Privater und Ã¶ffentlicher SchlÃ¼ssel neu geschrieben"); break;
         case 0x08: strcpy(status_st,"Inaktiv, kann neu beschrieben werden"); break;
-        case 0x0a: strcpy(status_st,"Inaktiv, Schlüssel mit Zertifikat verwenden"); break;
+        case 0x0a: strcpy(status_st,"Inaktiv, SchlÃ¼ssel mit Zertifikat verwenden"); break;
         case 0x10: strcpy(status_st,"Aktiv"); break;
         default:   strcpy(status_st,"(unbekannt)"); break;
     }
@@ -47,16 +47,16 @@ void printKeyInfo(unsigned char* buffer)
     printf("    status-byte: %s (%s)\n",st,status_st);
     delete[] st;
     
-    printf("    schlüssel-typ: %s\n",buffer[1]==0x53?"Signierschlüssel":(buffer[1]==0x56?"Chiffrierschlüssel":"unbekannt"));
+    printf("    schlÃ¼ssel-typ: %s\n",buffer[1]==0x53?"SignierschlÃ¼ssel":(buffer[1]==0x56?"ChiffrierschlÃ¼ssel":"unbekannt"));
     
     char  st2[4];
     memcpy(st2,buffer+2,3);
     st2[3]=0;
-    printf("    schlüsselnummer: %s\n",st2);
+    printf("    schlÃ¼sselnummer: %s\n",st2);
     
     memcpy(st2,buffer+5,3);
     st2[3]=0;
-    printf("    schlüsselnummer: %s\n",st2);
+    printf("    schlÃ¼sselnummer: %s\n",st2);
 }
 
 void printKeyData(unsigned int bufferLen,unsigned char* buffer,unsigned char kid)
@@ -187,7 +187,7 @@ int main(int argc,char **argv)
                 unsigned char pin[9];
                 scanf("%8s",pin);
                 
-                // TODO: hier auch CT-keypad unterstützen
+                // TODO: hier auch CT-keypad unterstÃ¼tzen
                 if (RSA_modifyPin(RSA_PIN_CH,5,cardid,strlen((const char*)pin),pin)) {
                     printf("modifying CH pin successful\n");
                 } else {
@@ -221,7 +221,7 @@ int main(int argc,char **argv)
             }
             
             // EG PIN verifizieren
-            // TODO: hier optional eingabe der e/g-pin ermöglichen
+            // TODO: hier optional eingabe der e/g-pin ermÃ¶glichen
             if (RSA_verifyPin(RSA_PIN_EG, 5, cardid)) {
                 printf("E/G PIN ok.\n");
             } else {
@@ -237,9 +237,9 @@ int main(int argc,char **argv)
                     char version[4];
                     memcpy(version, buffer, 3);
                     version[3]=0x00;
-                    printf("Unterstützte HBCI-Version: %s\n",version);
+                    printf("UnterstÃ¼tzte HBCI-Version: %s\n",version);
                     
-                    printf("Unterstützte Signatur-Algorithmen:\n");
+                    printf("UnterstÃ¼tzte Signatur-Algorithmen:\n");
                     printf("  Incoming: %s, %s\n", buffer[3]&0x10?"ISO ohne":"", buffer[3]&0x20?"ISO mit":"");
                     printf("  Outgoing: %s, %s\n", buffer[3]&0x01?"ISO ohne":"", buffer[3]&0x02?"ISO mit":"");
                     
@@ -258,7 +258,7 @@ int main(int argc,char **argv)
             if (CTAPI_isOK(CTAPI_error.status)) {
                 // KEY_LOG lesen
                 if (SECCOS_readBinary(&len,buffer,1)) {
-                    // anzahl der verwendeten und max. anzahl einträge lesen
+                    // anzahl der verwendeten und max. anzahl eintrÃ¤ge lesen
                     nof_entries=(buffer[0]>>4)&0x07;
                     printf("max  nof inst. entries: %i\n", buffer[0]&0x07);
                     printf("used nof inst. entries: %i\n", nof_entries);
@@ -273,7 +273,7 @@ int main(int argc,char **argv)
                 printf("error while selecting KEY_LOG\n");
             }
             
-            // für jede bankverbindung:
+            // fÃ¼r jede bankverbindung:
             int entry_idx;
             for (entry_idx=0;entry_idx<nof_entries;entry_idx++) {
                 printf("data for account #%i\n", (entry_idx+1));
@@ -318,17 +318,17 @@ int main(int argc,char **argv)
                 // kunden-ids lesen
                 if (SECCOS_selectSubFile(SECCOS_SELECT_RET_NOTHING, RSA_EF_KD_ID)) {
                     if (SECCOS_readBinary(&len,buffer,1)) {
-                        // Anzahl der Kunden-ID-Einträge ermitteln
+                        // Anzahl der Kunden-ID-EintrÃ¤ge ermitteln
                         unsigned char nof_entries=(buffer[0]>>4)&0x0F;
                         printf("  Anzahl Kunden-IDs gesamt: %i\n", nof_entries);
                         printf("  Anzahl Kunden-IDs max.:   %i\n", (buffer[0]>>0)&0x0F);
                         
-                        // Anzahl der Einträge pro Bankverbindung ermitteln
+                        // Anzahl der EintrÃ¤ge pro Bankverbindung ermitteln
                         SECCOS_readBinary(&len,buffer,1,nof_entries);
                         unsigned char nof_entries2=0;
                         unsigned char skip_entries=0;
                         
-                        // Offset für Beginn der Einträge für die aktuelle
+                        // Offset fÃ¼r Beginn der EintrÃ¤ge fÃ¼r die aktuelle
                         // Bankverbindung ermitteln
                         for (int i=0;i<nof_entries;i++) {
                             if (((buffer[i]>>4)&0x0F) == (entry_idx+1)) {
@@ -338,7 +338,7 @@ int main(int argc,char **argv)
                                 skip_entries+=buffer[i]&0x0F;
                             }
                         }
-                        printf("  Anzahl Kunden-IDs für diese Bankverbindung: %i (to skip:%i)\n",nof_entries2,skip_entries);
+                        printf("  Anzahl Kunden-IDs fÃ¼r diese Bankverbindung: %i (to skip:%i)\n",nof_entries2,skip_entries);
                         
                         // Kunden-IDs anzeigen
                         for (int i=0;i<nof_entries2;i++) {
@@ -354,7 +354,7 @@ int main(int argc,char **argv)
                 }
                 
 
-                // EF_KEYLOG lesen und schlüssel-infos anzeigen
+                // EF_KEYLOG lesen und schlÃ¼ssel-infos anzeigen
                 if (SECCOS_selectSubFile(SECCOS_SELECT_RET_NOTHING, RSA_EF_KEY_LOG)) {
                     if (SECCOS_readBinary(&len,buffer,1+(32*entry_idx),32)) {
                         printf("  public user enc key:\n");
@@ -376,11 +376,11 @@ int main(int argc,char **argv)
                 }
                 
                 
-                // schlüssel-infos aus IPF lesen
+                // schlÃ¼ssel-infos aus IPF lesen
                 if (SECCOS_selectSubFile(SECCOS_SELECT_RET_NOTHING, RSA_EF_IPF)) {
                     if (SECCOS_readBinary(&len,buffer,1)) {
                         unsigned int nof_entries=buffer[0];
-                        printf("  Anzahl der Schlüssel im IPF: %i\n", nof_entries);
+                        printf("  Anzahl der SchlÃ¼ssel im IPF: %i\n", nof_entries);
                         
                         unsigned int bufferLen=nof_entries*121;
                         unsigned int readPosi=1;
@@ -419,7 +419,7 @@ int main(int argc,char **argv)
                                           (((unsigned long)buffer[1])<<16) |
                                           (((unsigned long)buffer[2])<<8) |
                                           (((unsigned long)buffer[3])<<0);
-                        printf("  aktueller Sequenzzähler: %li\n",seq);
+                        printf("  aktueller SequenzzÃ¤hler: %li\n",seq);
                     } else {
                         printf("  error while reading EF_SEQ\n");
                     }

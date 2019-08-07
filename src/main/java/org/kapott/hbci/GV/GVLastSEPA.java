@@ -1,5 +1,6 @@
-/** 
+/**
  * Geschäftsvorfall SEPA Basislastschrift. Diese ist in pain.008.003.02.xsd spezifiziert.
+ *
  * @author Jan Thielemann
  */
 
@@ -13,23 +14,12 @@ import org.kapott.hbci.manager.LogFilter;
 /**
  * Implementierung des HBCI-Jobs fuer die SEPA-Basis-Lastschrift.
  */
-public class GVLastSEPA extends AbstractGVLastSEPA
-{
-    /**
-     * Liefert den Lowlevel-Jobnamen.
-     * @return der Lowlevel-Jobname.
-     */
-    public static String getLowlevelName()
-    {
-        return "LastSEPA";
-    }
-
+public class GVLastSEPA extends AbstractGVLastSEPA {
     /**
      * ct.
      * @param handler
      */
-    public GVLastSEPA(HBCIHandler handler)
-    {
+    public GVLastSEPA(HBCIHandler handler) {
         this(handler, getLowlevelName(), new GVRLastSEPA());
     }
 
@@ -39,17 +29,24 @@ public class GVLastSEPA extends AbstractGVLastSEPA
      * @param lowlevelName
      * @param result
      */
-    public GVLastSEPA(HBCIHandler handler, String lowlevelName, AbstractGVRLastSEPA result)
-    {
+    public GVLastSEPA(HBCIHandler handler, String lowlevelName, AbstractGVRLastSEPA result) {
         super(handler, lowlevelName, result);
 
-    	// Typ der Lastschrift. Moegliche Werte:
-    	// CORE = Basis-Lastschrift (Default)
-    	// COR1 = Basis-Lastschrift mit verkuerzter Vorlaufzeit
-    	// B2B  = Business-2-Business-Lastschrift mit eingeschraenkter Rueckgabe-Moeglichkeit
+        // Typ der Lastschrift. Moegliche Werte:
+        // CORE = Basis-Lastschrift (Default)
+        // COR1 = Basis-Lastschrift mit verkuerzter Vorlaufzeit
+        // B2B  = Business-2-Business-Lastschrift mit eingeschraenkter Rueckgabe-Moeglichkeit
         //
         // TODO: Wobei eigentlich nur "CORE" erlaubt ist, da dieser GV nur die CORE-Lastschrift
         // kapselt. Eigentlich sollte das gar nicht konfigurierbar sein
         addConstraint("type", "sepa.type", "CORE", LogFilter.FILTER_NONE);
+    }
+
+    /**
+     * Liefert den Lowlevel-Jobnamen.
+     * @return der Lowlevel-Jobname.
+     */
+    public static String getLowlevelName() {
+        return "LastSEPA";
     }
 }

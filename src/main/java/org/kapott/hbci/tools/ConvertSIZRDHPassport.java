@@ -1,4 +1,3 @@
-
 /*  $Id: ConvertSIZRDHPassport.java,v 1.1 2011/05/04 22:37:45 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,57 +20,57 @@
 
 package org.kapott.hbci.tools;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import org.kapott.hbci.callback.HBCICallbackConsole;
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.passport.AbstractHBCIPassport;
 import org.kapott.hbci.passport.HBCIPassportInternal;
 import org.kapott.hbci.passport.HBCIPassportRDHNew;
 
-/** <p>Tool zum Konvertieren von SIZ-RDH-Schlüsseldateien in 
-    RDHNew-Dateien. SIZ-RDH-Schlüsseldateien werden von HBCI-Software verwendet,
-    die auf dem SIZ-HBCI-Kernel basiert (z.B. von <em>StarMoney</em>).</p>
-    <p>Die Konvertierung kann auch
-    mit dem separat verfügbaren <em>HBCI4Java Passport Editor</em> durchgeführt werden.</p>
-    <p>Soll der HBCI-Zugang sowohl mit der ursprünglichen Software als auch parallel
-    dazu mit <em>HBCI4Java</em> benutzt werden, so ist eine Konvertierung der Schlüsseldatei
-    nicht zu empfehlen. Statt dessen sollte die Schlüsseldatei direkt benutzt werden.
-    Dafür kann die Passport-Variante {@link org.kapott.hbci.passport.HBCIPassportSIZRDHFile}
-    benutzt werden.</p>
-    <p>Siehe dazu auch die Datei <code>README.SIZRDHFile</code></p> 
-    <p>Aufgerufen wird dieser Konverter mit
-    <pre>java -cp ... org.kapott.hbci.tools.ConvertSIZRDHPassport</pre>
-    Es handelt sich um ein interaktives Programm. Nach dem Start wird nach dem
-    Dateinamen einer existierenden SIZ-RDH-Schlüsseldatei sowie nach dem Usernamen und 
-    Passwort für deren Entschlüsselung gefragt. Anschließend wird nach einem
-    <em>neuen(!)</em> Dateinamen für die zu erstellende RDHNew-Passport-Datei
-    sowie nach einem Passwort für deren Verschlüsselung gefragt. Nach Beendigung
-    des Programmes existiert die RDHNew-Passport-Datei, welche ab sofort benutzt
-    werden kann.</p> */
-// TODO: ConvertRDHXFilePassport 
-public class ConvertSIZRDHPassport
-{
-    public static void main(String[] args) 
-        throws IOException
-    {
-        HBCIUtils.init(null,new HBCICallbackConsole());
-        HBCIUtils.setParam("log.loglevel.default","5");
-        
-        String nameOld=readParam(args,0,"Filename of SIZ RDH key file");
-        String libname=readParam(args,1,"Complete filename of SIZ RDH library");
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-        HBCIUtils.setParam("client.passport.SIZRDHFile.filename",nameOld);
-        HBCIUtils.setParam("client.passport.SIZRDHFile.libname",libname);
-        HBCIUtils.setParam("client.passport.SIZRDHFile.init","1");
-        HBCIPassportInternal passportOld=(HBCIPassportInternal)AbstractHBCIPassport.getInstance("SIZRDHFile");
-        
-        String nameNew=readParam(args,2,"Filename of new RDHNew passport file");
-        HBCIUtils.setParam("client.passport.RDHNew.filename",nameNew);
-        HBCIUtils.setParam("client.passport.RDHNew.init","0");
-        HBCIPassportInternal passportNew=(HBCIPassportInternal)AbstractHBCIPassport.getInstance("RDHNew");
+/**
+ * <p>Tool zum Konvertieren von SIZ-RDH-Schlüsseldateien in
+ * RDHNew-Dateien. SIZ-RDH-Schlüsseldateien werden von HBCI-Software verwendet,
+ * die auf dem SIZ-HBCI-Kernel basiert (z.B. von <em>StarMoney</em>).</p>
+ * <p>Die Konvertierung kann auch
+ * mit dem separat verfügbaren <em>HBCI4Java Passport Editor</em> durchgeführt werden.</p>
+ * <p>Soll der HBCI-Zugang sowohl mit der ursprünglichen Software als auch parallel
+ * dazu mit <em>HBCI4Java</em> benutzt werden, so ist eine Konvertierung der Schlüsseldatei
+ * nicht zu empfehlen. Statt dessen sollte die Schlüsseldatei direkt benutzt werden.
+ * Dafür kann die Passport-Variante {@link org.kapott.hbci.passport.HBCIPassportSIZRDHFile}
+ * benutzt werden.</p>
+ * <p>Siehe dazu auch die Datei <code>README.SIZRDHFile</code></p>
+ * <p>Aufgerufen wird dieser Konverter mit
+ * <pre>java -cp ... org.kapott.hbci.tools.ConvertSIZRDHPassport</pre>
+ * Es handelt sich um ein interaktives Programm. Nach dem Start wird nach dem
+ * Dateinamen einer existierenden SIZ-RDH-Schlüsseldatei sowie nach dem Usernamen und
+ * Passwort für deren Entschlüsselung gefragt. Anschließend wird nach einem
+ * <em>neuen(!)</em> Dateinamen für die zu erstellende RDHNew-Passport-Datei
+ * sowie nach einem Passwort für deren Verschlüsselung gefragt. Nach Beendigung
+ * des Programmes existiert die RDHNew-Passport-Datei, welche ab sofort benutzt
+ * werden kann.</p>
+ */
+// TODO: ConvertRDHXFilePassport
+public class ConvertSIZRDHPassport {
+    public static void main(String[] args)
+            throws IOException {
+        HBCIUtils.init(null, new HBCICallbackConsole());
+        HBCIUtils.setParam("log.loglevel.default", "5");
+
+        String nameOld = readParam(args, 0, "Filename of SIZ RDH key file");
+        String libname = readParam(args, 1, "Complete filename of SIZ RDH library");
+
+        HBCIUtils.setParam("client.passport.SIZRDHFile.filename", nameOld);
+        HBCIUtils.setParam("client.passport.SIZRDHFile.libname", libname);
+        HBCIUtils.setParam("client.passport.SIZRDHFile.init", "1");
+        HBCIPassportInternal passportOld = (HBCIPassportInternal) AbstractHBCIPassport.getInstance("SIZRDHFile");
+
+        String nameNew = readParam(args, 2, "Filename of new RDHNew passport file");
+        HBCIUtils.setParam("client.passport.RDHNew.filename", nameNew);
+        HBCIUtils.setParam("client.passport.RDHNew.init", "0");
+        HBCIPassportInternal passportNew = (HBCIPassportInternal) AbstractHBCIPassport.getInstance("RDHNew");
 
         passportNew.setBLZ(passportOld.getBLZ());
         passportNew.setCountry(passportOld.getCountry());
@@ -85,35 +84,34 @@ public class ConvertSIZRDHPassport
         passportNew.setHBCIVersion(passportOld.getHBCIVersion());
         passportNew.setBPD(passportOld.getBPD());
         passportNew.setUPD(passportOld.getUPD());
-        
-        ((HBCIPassportRDHNew)passportNew).setInstSigKey(passportOld.getInstSigKey());
-        ((HBCIPassportRDHNew)passportNew).setInstEncKey(passportOld.getInstEncKey());
-        ((HBCIPassportRDHNew)passportNew).setMyPublicSigKey(passportOld.getMyPublicSigKey());
-        ((HBCIPassportRDHNew)passportNew).setMyPrivateSigKey(passportOld.getMyPrivateSigKey());
-        ((HBCIPassportRDHNew)passportNew).setMyPublicEncKey(passportOld.getMyPublicEncKey());
-        ((HBCIPassportRDHNew)passportNew).setMyPrivateEncKey(passportOld.getMyPrivateEncKey());
-        
+
+        ((HBCIPassportRDHNew) passportNew).setInstSigKey(passportOld.getInstSigKey());
+        ((HBCIPassportRDHNew) passportNew).setInstEncKey(passportOld.getInstEncKey());
+        ((HBCIPassportRDHNew) passportNew).setMyPublicSigKey(passportOld.getMyPublicSigKey());
+        ((HBCIPassportRDHNew) passportNew).setMyPrivateSigKey(passportOld.getMyPrivateSigKey());
+        ((HBCIPassportRDHNew) passportNew).setMyPublicEncKey(passportOld.getMyPublicEncKey());
+        ((HBCIPassportRDHNew) passportNew).setMyPrivateEncKey(passportOld.getMyPrivateEncKey());
+
         passportNew.saveChanges();
-        
+
         passportOld.close();
-        passportNew.close();            
+        passportNew.close();
     }
 
-    private static String readParam(String[] args,int idx,String st)
-        throws IOException
-    {
+    private static String readParam(String[] args, int idx, String st)
+            throws IOException {
         String ret;
-        
-        System.out.print(st+": ");
+
+        System.out.print(st + ": ");
         System.out.flush();
-        
-        if (args.length<=idx) {
-            ret=new BufferedReader(new InputStreamReader(System.in)).readLine();
+
+        if (args.length <= idx) {
+            ret = new BufferedReader(new InputStreamReader(System.in)).readLine();
         } else {
             System.out.println(args[idx]);
-            ret=args[idx];
+            ret = args[idx];
         }
-        
+
         return ret;
     }
 }

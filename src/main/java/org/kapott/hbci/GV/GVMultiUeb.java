@@ -1,4 +1,3 @@
-
 /*  $Id: GVMultiUeb.java,v 1.1 2011/05/04 22:37:53 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -27,34 +26,29 @@ import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.LogFilter;
 
 public class GVMultiUeb
-    extends AbstractMultiGV
-{
-    public static String getLowlevelName()
-    {
+        extends AbstractMultiGV {
+    public GVMultiUeb(HBCIHandler handler) {
+        super(handler, getLowlevelName(), new HBCIJobResultImpl());
+
+        addConstraint("data", "data", null, LogFilter.FILTER_NONE);
+        addConstraint("my.country", "KTV.KIK.country", "DE", LogFilter.FILTER_NONE);
+        addConstraint("my.blz", "KTV.KIK.blz", null, LogFilter.FILTER_MOST);
+        addConstraint("my.number", "KTV.number", null, LogFilter.FILTER_IDS);
+        addConstraint("my.subnumber", "KTV.subnumber", "", LogFilter.FILTER_MOST);
+    }
+
+    public static String getLowlevelName() {
         return "SammelUeb";
     }
-    
-    public GVMultiUeb(HBCIHandler handler)
-    {
-        super(handler,getLowlevelName(),new HBCIJobResultImpl());
 
-        addConstraint("data","data",null, LogFilter.FILTER_NONE);
-        addConstraint("my.country","KTV.KIK.country","DE", LogFilter.FILTER_NONE);
-        addConstraint("my.blz","KTV.KIK.blz",null, LogFilter.FILTER_MOST);
-        addConstraint("my.number","KTV.number",null, LogFilter.FILTER_IDS);
-        addConstraint("my.subnumber","KTV.subnumber","", LogFilter.FILTER_MOST);
-    }
-    
-    public void setParam(String paramName, String value)
-    {
+    public void setParam(String paramName, String value) {
         if (paramName.equals("data")) {
-            value="B"+value;
+            value = "B" + value;
         }
-        super.setParam(paramName,value);
+        super.setParam(paramName, value);
     }
 
-    public void verifyConstraints()
-    {
+    public void verifyConstraints() {
         super.verifyConstraints();
         checkAccountCRC("my");
     }

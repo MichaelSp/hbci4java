@@ -35,7 +35,7 @@
 #define RSA_PIN_CH ((unsigned char)0x10)
 #define RSA_PIN_EG ((unsigned char)0x11)
 
-// zurückgegebenes byte-array ist immer 5 bytes lang
+// zurÃ¼ckgegebenes byte-array ist immer 5 bytes lang
 unsigned char*  RSA_getCardNumber();
 
 bool RSA_modifyPin(unsigned char pinnum,unsigned char oldlen,unsigned char* oldpin,unsigned char newlen,unsigned char* newpin);

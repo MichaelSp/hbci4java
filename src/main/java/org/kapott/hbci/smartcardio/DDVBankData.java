@@ -1,4 +1,3 @@
-
 /*  $Id: DDVBankData.java,v 1.1 2011/11/24 21:59:37 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -25,14 +24,13 @@ package org.kapott.hbci.smartcardio;
  * DDV-Bankdaten fuer den DDVPCSC-Passport, basierend auf dem OCF-Code
  * aus HBCI4Java 2.5.8.
  */
-public class DDVBankData
-{
-  public int    recordnum;
-  public int    commType;
-  public String shortname;
-  public String commaddr;
-  public String commaddr2;
-  public String country;
-  public String blz;
-  public String userid;
+public class DDVBankData {
+    public int recordnum;
+    public int commType;
+    public String shortname;
+    public String commaddr;
+    public String commaddr2;
+    public String country;
+    public String blz;
+    public String userid;
 }

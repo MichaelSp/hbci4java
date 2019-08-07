@@ -1,4 +1,3 @@
-
 /*  $Id: AbstractDDVPassport.java,v 1.1 2011/05/04 22:37:43 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -25,112 +24,90 @@ import org.kapott.hbci.comm.Comm;
 import org.kapott.hbci.security.Crypt;
 import org.kapott.hbci.security.Sig;
 
-public abstract class AbstractDDVPassport 
-    extends AbstractHBCIPassport implements HBCIPassportChipcard
-{
-    protected AbstractDDVPassport(Object init)
-    {
+public abstract class AbstractDDVPassport
+        extends AbstractHBCIPassport implements HBCIPassportChipcard {
+    protected AbstractDDVPassport(Object init) {
         super(init);
     }
 
-    public String getPassportTypeName()
-    {
+    public String getPassportTypeName() {
         return "DDV";
     }
-    
-    public Comm getCommInstance()
-    {
-        return Comm.getInstance("Standard",this);
+
+    public Comm getCommInstance() {
+        return Comm.getInstance("Standard", this);
     }
-    
-    public String getProfileMethod()
-    {
+
+    public String getProfileMethod() {
         return "DDV";
     }
-    
-    public String getProfileVersion()
-    {
+
+    public String getProfileVersion() {
         // TODO: es gibt auch DDV-2
         return "1";
     }
 
-    public String getSysStatus()
-    {
+    public String getSysStatus() {
         return "0";
     }
 
-    public boolean needInstKeys()
-    {
+    public boolean needInstKeys() {
         return false;
     }
 
-    public boolean needUserKeys()
-    {
+    public boolean needUserKeys() {
         return false;
     }
-    
-    public boolean needUserSig()
-    {
+
+    public boolean needUserSig() {
         return false;
     }
-    
-    public boolean hasInstSigKey()
-    {
+
+    public boolean hasInstSigKey() {
         return true;
     }
-    
-    public boolean hasInstEncKey()
-    {
+
+    public boolean hasInstEncKey() {
         return true;
     }
-    
-    public boolean hasMySigKey()
-    {
+
+    public boolean hasMySigKey() {
         return true;
     }
-    
-    public boolean hasMyEncKey()
-    {
+
+    public boolean hasMyEncKey() {
         return true;
     }
-    
-    public String getCryptKeyType()
-    {
+
+    public String getCryptKeyType() {
         return Crypt.ENC_KEYTYPE_DDV;
     }
 
-    public String getSigFunction()
-    {
+    public String getSigFunction() {
         return Sig.SECFUNC_HBCI_SIG_DDV;
     }
 
-    public String getSigAlg()
-    {
+    public String getSigAlg() {
         return Sig.SIGALG_DES;
     }
 
-    public String getSigMode()
-    {
+    public String getSigMode() {
         return Sig.SIGMODE_RETAIL_MAC;
     }
 
-    public String getCryptFunction()
-    {
+    public String getCryptFunction() {
         return Crypt.SECFUNC_ENC_3DES;
     }
 
-    public String getCryptAlg()
-    {
+    public String getCryptAlg() {
         return Crypt.ENCALG_2K3DES;
     }
 
-    public String getCryptMode()
-    {
+    public String getCryptMode() {
         return Crypt.ENCMODE_CBC;
     }
 
-    public String getHashAlg()
-    {
+    public String getHashAlg() {
         return Sig.HASHALG_RIPEMD160;
     }
 

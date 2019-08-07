@@ -9,37 +9,29 @@ import org.kapott.hbci.passport.HBCIPassport;
  *
  * @author Hendrik Schnepel
  */
-public class DefaultHBCIPassportFactory implements HBCIPassportFactory
-{
+public class DefaultHBCIPassportFactory implements HBCIPassportFactory {
 
     private final String name;
     private final Object init;
 
-    public DefaultHBCIPassportFactory(String name)
-    {
+    public DefaultHBCIPassportFactory(String name) {
         this(name, null);
     }
 
-    public DefaultHBCIPassportFactory(Object init)
-    {
-        this(null, init);
-    }
-
-    public DefaultHBCIPassportFactory(String name, Object init)
-    {
+    public DefaultHBCIPassportFactory(String name, Object init) {
         this.name = name;
         this.init = init;
     }
 
+    public DefaultHBCIPassportFactory(Object init) {
+        this(null, init);
+    }
+
     @Override
-    public HBCIPassport createPassport() throws Exception
-    {
-        if (name == null)
-        {
+    public HBCIPassport createPassport() throws Exception {
+        if (name == null) {
             return AbstractHBCIPassport.getInstance(init);
-        }
-        else
-        {
+        } else {
             return AbstractHBCIPassport.getInstance(name, init);
         }
     }

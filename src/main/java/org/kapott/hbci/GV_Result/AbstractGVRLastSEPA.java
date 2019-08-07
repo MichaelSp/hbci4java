@@ -1,4 +1,3 @@
-
 /*  $Id: GVRTermUeb.java,v 1.1 2011/05/04 22:37:47 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -22,36 +21,37 @@
 package org.kapott.hbci.GV_Result;
 
 
-
-/** Rückgabedaten für das Einreichen einer terminierten SEPA-Lastschrift. Beim Einreichen
-    einer terminierten Lastschrift gibt die Bank u.U. eine Auftrags-Identifikationsnummer
-    zurück, die benutzt werden kann, um den Auftrag später zu ändern oder zu löschen. */
+/**
+ * Rückgabedaten für das Einreichen einer terminierten SEPA-Lastschrift. Beim Einreichen
+ * einer terminierten Lastschrift gibt die Bank u.U. eine Auftrags-Identifikationsnummer
+ * zurück, die benutzt werden kann, um den Auftrag später zu ändern oder zu löschen.
+ */
 public abstract class AbstractGVRLastSEPA
-    extends HBCIJobResultImpl
-{
+        extends HBCIJobResultImpl {
     private String orderid;
 
     /**
-     * Speichert die Order-ID.
-     * @param orderid
-     */
-    public void setOrderId(String orderid)
-    {
-        this.orderid=orderid;
-    }
-
-    /** Gibt die Auftrags-ID zurück, unter der der Auftrag bei der Bank geführt wird. 
-        @return die Auftrags-ID oder <code>null</code>, wenn die Bank keine Auftrags-IDs unterstützt */
-    public String getOrderId()
-    {
-        return orderid;
-    }
-    
-    /**
      * @see org.kapott.hbci.GV_Result.HBCIJobResultImpl#toString()
      */
-    public String toString()
-    {
-        return "orderid: "+getOrderId();
+    public String toString() {
+        return "orderid: " + getOrderId();
+    }
+
+    /**
+     * Gibt die Auftrags-ID zurück, unter der der Auftrag bei der Bank geführt wird.
+     *
+     * @return die Auftrags-ID oder <code>null</code>, wenn die Bank keine Auftrags-IDs unterstützt
+     */
+    public String getOrderId() {
+        return orderid;
+    }
+
+    /**
+     * Speichert die Order-ID.
+     *
+     * @param orderid
+     */
+    public void setOrderId(String orderid) {
+        this.orderid = orderid;
     }
 }

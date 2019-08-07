@@ -1,62 +1,55 @@
 package org.kapott.hbci4java.rsa;
 
-import java.io.File;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.passport.AbstractHBCIPassport;
 import org.kapott.hbci.passport.HBCIPassportRSA;
 import org.kapott.hbci.structures.Konto;
 import org.kapott.hbci4java.AbstractTest;
 
+import java.io.File;
+
 /**
  * @author axel
- *
  */
 public class HBCIPassportRSATest extends AbstractTest {
-    
+
     private static File dir = null;
-    
+    private HBCIPassportRSA passport = null;
+
     /**
      * Deaktiviert den Test, wenn das System-Property nicht auf "true" steht.
+     *
      * @throws Exception
      */
     @BeforeClass
-    public static void beforeClass() throws Exception
-    {
+    public static void beforeClass() throws Exception {
         Assume.assumeTrue(Boolean.getBoolean(AbstractTest.SYSPROP_CHIPCARD));
     }
-    
+
     @BeforeClass
     public static void beforeCardClass() throws Exception {
-        
+
         Assume.assumeTrue(Boolean.getBoolean(AbstractTest.SYSPROP_CHIPCARD));
-        
+
         String tmpDir = System.getProperty("java.io.tmpdir", "/tmp");
         dir = new File(tmpDir, "rsajava");
         dir.mkdirs();
     }
-    
+
     @AfterClass
     public static void afterCardClass() throws Exception {
         dir = null;
         // TODO: Verzeichnis und Inhalt muesste mal noch geloescht werden.
     }
-    
-    private HBCIPassportRSA passport = null;
-    
+
     @Before
     public void beforeCard() throws Exception {
         HBCIUtils.setParam("client.passport.RSA.path", dir.getAbsolutePath() + "/");
         HBCIUtils.setParam("client.passport.RSA.entryidx", "1");
         this.passport = (HBCIPassportRSA) AbstractHBCIPassport.getInstance("RSA");
     }
-    
+
     @After
     public void afterCard() throws Exception {
 //        if (this.passport != null)
@@ -64,7 +57,7 @@ public class HBCIPassportRSATest extends AbstractTest {
         if (this.passport != null)
             this.passport.close();
     }
-    
+
     @Test
     public void testReadCardData() throws Exception {
         System.out.println("card id: " + passport.getCardId());
@@ -80,7 +73,7 @@ public class HBCIPassportRSATest extends AbstractTest {
         System.out.println("instEnc: " + passport.hasInstEncKey());
         System.out.println("mySig  : " + passport.hasMySigKey());
         System.out.println("myEnc  : " + passport.hasMyEncKey());
-        
+
         Konto[] accounts = passport.getAccounts();
         if (accounts != null) {
             for (Konto account : accounts) {
@@ -95,23 +88,23 @@ public class HBCIPassportRSATest extends AbstractTest {
             }
         }
     }
-    
+
 //    @Test
 //    public void testCiphering() throws Exception {
 //        byte[] data = "Hallo Welt hier ist Axel".getBytes("UTF-8");
-//        
+//
 //        byte[][] encrypted = passport.encrypt(data);
-//        
+//
 //        byte[] decrypted = passport.decrypt(encrypted[0], encrypted[1]);
-//        
+//
 //        System.out.println(new String(decrypted, "UTF-8"));
 //    }
-    
+
 //    @Test
 //    public void testFetchSaldo() throws Exception {
 //        HBCIHandler handler = new HBCIHandler("220", passport);
 //        HBCIJob job = handler.newJob("SaldoReq");
-//        
+//
 //        // wir nehmen wir die Saldo-Abfrage einfach das erste verfuegbare Konto
 //        //job.setParam("my", passport.getAccounts()[0]);
 //        job.addToQueue();
@@ -119,5 +112,5 @@ public class HBCIPassportRSATest extends AbstractTest {
 //        HBCIJobResult result = job.getJobResult();
 //        System.out.println(result);
 //    }
-    
+
 }

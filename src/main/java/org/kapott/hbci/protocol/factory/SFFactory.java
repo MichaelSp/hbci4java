@@ -1,4 +1,3 @@
-
 /*  $Id: SFFactory.java,v 1.1 2011/05/04 22:37:49 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,43 +20,39 @@
 
 package org.kapott.hbci.protocol.factory;
 
-import java.util.Hashtable;
-
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.protocol.SF;
 import org.kapott.hbci.tools.ObjectFactory;
 import org.w3c.dom.Document;
 
-public class SFFactory 
-    extends ObjectFactory 
-{
+import java.util.Hashtable;
+
+public class SFFactory
+        extends ObjectFactory {
     private static SFFactory instance;
-    
-    public static synchronized SFFactory getInstance()
-    {
-        if (instance==null) {
-            instance=new SFFactory();
+
+    private SFFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.SF", "128")));
+    }
+
+    public static synchronized SFFactory getInstance() {
+        if (instance == null) {
+            instance = new SFFactory();
         }
         return instance;
     }
-    
-    private SFFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.SF","128")));
-    }
-    
-    public SF createSF(String type, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String,String> predefs,Hashtable<String,String> valids)
-    {
-        SF ret=(SF)getFreeObject();
-        
-        if (ret==null) {
+
+    public SF createSF(String type, String name, String path, char predelim, int idx, StringBuffer res, int fullResLen, Document syntax, Hashtable<String, String> predefs, Hashtable<String, String> valids) {
+        SF ret = (SF) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new SF object",HBCIUtils.LOG_DEBUG);
-            ret=new SF(type,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+            ret = new SF(type, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing SF object",HBCIUtils.LOG_DEBUG);
             try {
-                ret.init(type,name,path,predelim,idx,res,fullResLen,syntax,predefs,valids);
+                ret.init(type, name, path, predelim, idx, res, fullResLen, syntax, predefs, valids);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
@@ -67,14 +62,13 @@ public class SFFactory
 
         return ret;
     }
-    
-    public SF createSF(String type, String name, String path, int idx, Document syntax)
-    {
-        SF ret=(SF)getFreeObject();
-        
-        if (ret==null) {
+
+    public SF createSF(String type, String name, String path, int idx, Document syntax) {
+        SF ret = (SF) getFreeObject();
+
+        if (ret == null) {
             // HBCIUtils.log("creating new SF object",HBCIUtils.LOG_DEBUG);
-            ret=new SF(type, name, path, idx, syntax);
+            ret = new SF(type, name, path, idx, syntax);
             addToUsedPool(ret);
         } else {
             // HBCIUtils.log("reusing SF object",HBCIUtils.LOG_DEBUG);
@@ -89,11 +83,10 @@ public class SFFactory
 
         return ret;
     }
-    
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((SF)o).destroy();
+
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((SF) o).destroy();
             super.unuseObject(o);
         }
     }

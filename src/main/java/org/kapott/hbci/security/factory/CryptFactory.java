@@ -1,4 +1,3 @@
-
 /*  $Id: CryptFactory.java,v 1.1 2011/05/04 22:37:57 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -27,55 +26,50 @@ import org.kapott.hbci.protocol.MSG;
 import org.kapott.hbci.security.Crypt;
 import org.kapott.hbci.tools.ObjectFactory;
 
-public class CryptFactory 
-    extends ObjectFactory 
-{
+public class CryptFactory
+        extends ObjectFactory {
     private static CryptFactory instance;
-    
-    public static synchronized CryptFactory getInstance()
-    {
-        if (instance==null) {
-            HBCIUtils.log("creating new crypt factory",HBCIUtils.LOG_DEBUG);
-            instance=new CryptFactory();
+
+    private CryptFactory() {
+        super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.Crypt", "8")));
+    }
+
+    public static synchronized CryptFactory getInstance() {
+        if (instance == null) {
+            HBCIUtils.log("creating new crypt factory", HBCIUtils.LOG_DEBUG);
+            instance = new CryptFactory();
         }
         return instance;
     }
-    
-    private CryptFactory()
-    {
-    	super(Integer.parseInt(HBCIUtils.getParam("kernel.objpool.Crypt","8")));
-    }
-    
-    public Crypt createCrypt(IHandlerData handlerdata, MSG msg)
-    {
-        HBCIUtils.log("checking if crypt available in pool",HBCIUtils.LOG_DEBUG);
-        Crypt ret=(Crypt)getFreeObject();
-        
-        if (ret==null) {
-            HBCIUtils.log("no, creating new crypt",HBCIUtils.LOG_DEBUG);
-            ret=new Crypt(handlerdata,msg);
-            HBCIUtils.log("adding to used pool",HBCIUtils.LOG_DEBUG);
+
+    public Crypt createCrypt(IHandlerData handlerdata, MSG msg) {
+        HBCIUtils.log("checking if crypt available in pool", HBCIUtils.LOG_DEBUG);
+        Crypt ret = (Crypt) getFreeObject();
+
+        if (ret == null) {
+            HBCIUtils.log("no, creating new crypt", HBCIUtils.LOG_DEBUG);
+            ret = new Crypt(handlerdata, msg);
+            HBCIUtils.log("adding to used pool", HBCIUtils.LOG_DEBUG);
             addToUsedPool(ret);
         } else {
             try {
-                HBCIUtils.log("yes, initializing with handlerdata + message",HBCIUtils.LOG_DEBUG);
-                ret.init(handlerdata,msg);
-                HBCIUtils.log("adding to used pool",HBCIUtils.LOG_DEBUG);
+                HBCIUtils.log("yes, initializing with handlerdata + message", HBCIUtils.LOG_DEBUG);
+                ret.init(handlerdata, msg);
+                HBCIUtils.log("adding to used pool", HBCIUtils.LOG_DEBUG);
                 addToUsedPool(ret);
             } catch (RuntimeException e) {
                 addToFreePool(ret);
                 throw e;
             }
         }
-        
-        HBCIUtils.log("crypt acquired",HBCIUtils.LOG_DEBUG);
+
+        HBCIUtils.log("crypt acquired", HBCIUtils.LOG_DEBUG);
         return ret;
     }
-    
-    public void unuseObject(Object o)
-    {
-        if (o!=null) {
-            ((Crypt)o).destroy();
+
+    public void unuseObject(Object o) {
+        if (o != null) {
+            ((Crypt) o).destroy();
             super.unuseObject(o);
         }
     }

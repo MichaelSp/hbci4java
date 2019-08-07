@@ -1,4 +1,3 @@
-
 /*  $Id: Filter.java,v 1.1 2011/05/04 22:37:50 willuhn Exp $
 
     This file is part of HBCI4Java
@@ -21,24 +20,23 @@
 
 package org.kapott.hbci.comm;
 
-import java.lang.reflect.Constructor;
-
 import org.kapott.hbci.exceptions.HBCI_Exception;
 import org.kapott.hbci.manager.HBCIUtilsInternal;
 
-public abstract class Filter
-{
-    public abstract byte[] encode(String st);
-    public abstract String decode(String st);
-        
-    public static Filter getInstance(String filter)
-    {
+import java.lang.reflect.Constructor;
+
+public abstract class Filter {
+    public static Filter getInstance(String filter) {
         try {
-            Class cl=Class.forName("org.kapott.hbci.comm.Filter"+filter);
-            Constructor cons=cl.getConstructor((Class[])null);
-            return (Filter)cons.newInstance((Object[])null);
+            Class cl = Class.forName("org.kapott.hbci.comm.Filter" + filter);
+            Constructor cons = cl.getConstructor((Class[]) null);
+            return (Filter) cons.newInstance((Object[]) null);
         } catch (Exception e) {
-            throw new HBCI_Exception(HBCIUtilsInternal.getLocMsg("EXCMSG_CANTCREATEFILT",filter),e);
+            throw new HBCI_Exception(HBCIUtilsInternal.getLocMsg("EXCMSG_CANTCREATEFILT", filter), e);
         }
     }
+
+    public abstract byte[] encode(String st);
+
+    public abstract String decode(String st);
 }

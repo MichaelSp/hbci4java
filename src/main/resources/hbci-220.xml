@@ -1,130 +1,130 @@
 <?xml version="1.0"?>
 <!DOCTYPE hbci
-[
-<!ELEMENT hbci (DEGs,SEGs,SFs,MSGs)>
+        [
+                <!ELEMENT hbci (DEGs,SEGs,SFs,MSGs)>
 
-<!ELEMENT DEGs    (DEGdef)*>
-<!ELEMENT SEGs    (SEGdef)*>
-<!ELEMENT SFs     (SFdef)*>
-<!ELEMENT MSGs    (MSGdef)*>
+                <!ELEMENT DEGs    (DEGdef)*>
+                <!ELEMENT SEGs    (SEGdef)*>
+                <!ELEMENT SFs     (SFdef)*>
+                <!ELEMENT MSGs    (MSGdef)*>
 
-<!ELEMENT DEGdef ((DE | DEG)+,valids*,value*)>
-<!ATTLIST DEGdef
-  id ID #REQUIRED
-  needsRequestTag (1) #IMPLIED
->
+                <!ELEMENT DEGdef ((DE | DEG)+,valids*,value*)>
+                <!ATTLIST DEGdef
+                        id ID #REQUIRED
+                        needsRequestTag (1) #IMPLIED
+                        >
 
-<!ELEMENT SEGdef ((DEG | DE)+,valids*,value*)>
-<!ATTLIST SEGdef
-  id ID #REQUIRED
-  needsRequestTag (1) #IMPLIED
->
+                <!ELEMENT SEGdef ((DEG | DE)+,valids*,value*)>
+                <!ATTLIST SEGdef
+                        id ID #REQUIRED
+                        needsRequestTag (1) #IMPLIED
+                        >
 
-<!ELEMENT SFdef (SEG | SF)*>
-<!ATTLIST SFdef
-  id ID #REQUIRED
-  needsRequestTag (1) #IMPLIED
->
+                <!ELEMENT SFdef (SEG | SF)*>
+                <!ATTLIST SFdef
+                        id ID #REQUIRED
+                        needsRequestTag (1) #IMPLIED
+                        >
 
-<!ELEMENT MSGdef ((SEG | SF)+,valids*,value*)>
-<!ATTLIST MSGdef
-  id ID #REQUIRED
-  dontsign (1) #IMPLIED
-  dontcrypt (1) #IMPLIED
->
+                <!ELEMENT MSGdef ((SEG | SF)+,valids*,value*)>
+                <!ATTLIST MSGdef
+                        id ID #REQUIRED
+                        dontsign (1) #IMPLIED
+                        dontcrypt (1) #IMPLIED
+                        >
 
-<!ELEMENT DE EMPTY>
-<!ATTLIST DE
-  name CDATA #REQUIRED
-  type (AN | Bin | Code | Ctr | Cur | DTAUS | Date | Dig | ID | JN | Num | Time | Wrt) #REQUIRED
-  minsize CDATA #IMPLIED
-  maxsize CDATA #IMPLIED
-  minnum CDATA "1"
-  maxnum CDATA "1"
->
+                <!ELEMENT DE EMPTY>
+                <!ATTLIST DE
+                        name CDATA #REQUIRED
+                        type (AN | Bin | Code | Ctr | Cur | DTAUS | Date | Dig | ID | JN | Num | Time | Wrt) #REQUIRED
+                        minsize CDATA #IMPLIED
+                        maxsize CDATA #IMPLIED
+                        minnum CDATA "1"
+                        maxnum CDATA "1"
+                        >
 
-<!ELEMENT DEG EMPTY>
-<!ATTLIST DEG
-  type IDREF #REQUIRED
-  name CDATA #IMPLIED
-  minnum CDATA "1"
-  maxnum CDATA "1"
->
+                <!ELEMENT DEG EMPTY>
+                <!ATTLIST DEG
+                        type IDREF #REQUIRED
+                        name CDATA #IMPLIED
+                        minnum CDATA "1"
+                        maxnum CDATA "1"
+                        >
 
-<!ELEMENT SEG EMPTY>
-<!ATTLIST SEG
-  type IDREF #REQUIRED
-  name CDATA #IMPLIED
-  minnum CDATA "1"
-  maxnum CDATA "1"
->
+                <!ELEMENT SEG EMPTY>
+                <!ATTLIST SEG
+                        type IDREF #REQUIRED
+                        name CDATA #IMPLIED
+                        minnum CDATA "1"
+                        maxnum CDATA "1"
+                        >
 
-<!ELEMENT SF EMPTY>
-<!ATTLIST SF
-  type IDREF #REQUIRED
-  name CDATA #IMPLIED
-  minnum CDATA "1"
-  maxnum CDATA "1"
->
+                <!ELEMENT SF EMPTY>
+                <!ATTLIST SF
+                        type IDREF #REQUIRED
+                        name CDATA #IMPLIED
+                        minnum CDATA "1"
+                        maxnum CDATA "1"
+                        >
 
-<!ELEMENT valids (validvalue)+>
-<!ATTLIST valids
-  path CDATA #REQUIRED
->
+                <!ELEMENT valids (validvalue)+>
+                <!ATTLIST valids
+                        path CDATA #REQUIRED
+                        >
 
-<!ELEMENT validvalue (#PCDATA)>
+                <!ELEMENT validvalue (#PCDATA)>
 
-<!ELEMENT value (#PCDATA)>
-<!ATTLIST value
-  path CDATA #REQUIRED
->
+                <!ELEMENT value (#PCDATA)>
+                <!ATTLIST value
+                        path CDATA #REQUIRED
+                        >
 
-<!ENTITY MsgSigHeadInst
-  '<SEG type="MsgHeadInst" name="MsgHead"/>
+                <!ENTITY MsgSigHeadInst
+                        '<SEG type="MsgHeadInst" name="MsgHead"/>
    <SEG type="SigHeadInst" name="SigHead" minnum="0"/>'
->
+                        >
 
-<!ENTITY MsgSigTailInst
-  '<SEG type="SigTailInst" name="SigTail" minnum="0"/>
+                <!ENTITY MsgSigTailInst
+                        '<SEG type="SigTailInst" name="SigTail" minnum="0"/>
    <SEG type="MsgTailInst" name="MsgTail"/>'
->
+                        >
 
-<!ENTITY MsgSigHeadUser
-  '<SEG type="MsgHeadUser" name="MsgHead"/>
+                <!ENTITY MsgSigHeadUser
+                        '<SEG type="MsgHeadUser" name="MsgHead"/>
    <SEG type="SigHeadUser" name="SigHead" minnum="0" maxnum="3"/>'
->
+                        >
 
-<!ENTITY MsgSigTailUser
-  '<SEG type="SigTailUser" name="SigTail" minnum="0" maxnum="3"/>
+                <!ENTITY MsgSigTailUser
+                        '<SEG type="SigTailUser" name="SigTail" minnum="0" maxnum="3"/>
    <SEG type="MsgTailUser" name="MsgTail"/>'
->
+                        >
 
-<!-- end of administrative entities -->
+                <!-- end of administrative entities -->
 
-<!ENTITY GVP
-  '<!-- 2.01 -->
+                <!ENTITY GVP
+                        '<!-- 2.01 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DE name="maxnum" type="Num" maxsize="3"/>
    <DE name="minsigs" type="Num" maxsize="1"/>'
->
-<!ENTITY GVP2
-  '<!-- 3.0 -->
+                        >
+                <!ENTITY GVP2
+                        '<!-- 3.0 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DE name="maxnum" type="Num" maxsize="3"/>
    <DE name="minsigs" type="Num" maxsize="1"/>
    <DE name="secclass" type="Code" maxsize="1"/>'
->
-<!ENTITY SecClassValids
-  '<valids path="secclass">
+                        >
+                <!ENTITY SecClassValids
+                        '<valids path="secclass">
        <validvalue>0</validvalue>
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
        <validvalue>3</validvalue>
        <validvalue>4</validvalue>
    </valids>'
->
-<!ENTITY SingleInlandInst1
-  '<!-- 2.01 -->
+                        >
+                <!ENTITY SingleInlandInst1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -136,9 +136,9 @@
    <DEG type="usage1" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
-<!ENTITY SingleInlandUser1
-  '<!-- 2.01 -->
+                        >
+                <!ENTITY SingleInlandUser1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -150,10 +150,10 @@
    <DEG type="usage1" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
+                        >
 
-<!ENTITY SingleInlandInst2
-  '<!-- 2.1 -->
+                <!ENTITY SingleInlandInst2
+                        '<!-- 2.1 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -165,9 +165,9 @@
    <DEG type="usage2" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
-<!ENTITY SingleInlandUser2
-  '<!-- 2.1 -->
+                        >
+                <!ENTITY SingleInlandUser2
+                        '<!-- 2.1 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -179,10 +179,10 @@
    <DEG type="usage2" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
+                        >
 
-<!ENTITY SingleInlandInst3
-  '<!-- 2.2 -->
+                <!ENTITY SingleInlandInst3
+                        '<!-- 2.2 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV2" name="My"/>
    <DEG type="KTV2" name="Other"/>
@@ -194,9 +194,9 @@
    <DEG type="usage3" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
-<!ENTITY SingleInlandUser3
-  '<!-- 2.2 -->
+                        >
+                <!ENTITY SingleInlandUser3
+                        '<!-- 2.2 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV2" name="My"/>
    <DEG type="KTV2" name="Other"/>
@@ -208,10 +208,10 @@
    <DEG type="usage3" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
+                        >
 
-<!ENTITY SingleInlandInst4
-  '<!-- 3.0 -->
+                <!ENTITY SingleInlandInst4
+                        '<!-- 3.0 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV3" name="My"/>
    <DEG type="KTV3" name="Other"/>
@@ -224,9 +224,9 @@
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>
    <DE name="status" type="Code" maxsize="1" minnum="0"/>'
->
-<!ENTITY SingleInlandUser4
-  '<!-- 3.0 -->
+                        >
+                <!ENTITY SingleInlandUser4
+                        '<!-- 3.0 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV3" name="My"/>
    <DEG type="KTV3" name="Other"/>
@@ -238,10 +238,10 @@
    <DEG type="usage3" name="usage" minnum="0"/>
    <DE name="date" type="Date" minnum="0"/>
    <DE name="id" type="AN" maxsize="99" minnum="0"/>'
->
+                        >
 
-<!ENTITY DauerInst1
-  '<!-- 2.01 -->
+                <!ENTITY DauerInst1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -255,9 +255,9 @@
    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
    <DEG type="DauerDetails"/>
    <DEG type="Aussetzung1" name="Aussetzung" minnum="0"/>'
->
-<!ENTITY DauerUser1
-  '<!-- 2.01 -->
+                        >
+                <!ENTITY DauerUser1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -271,10 +271,10 @@
    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
    <DEG type="DauerDetails"/>
    <DEG type="Aussetzung1" name="Aussetzung" minnum="0"/>'
->
+                        >
 
-<!ENTITY DauerInst2
-  '<!-- 2.1 -->
+                <!ENTITY DauerInst2
+                        '<!-- 2.1 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -288,9 +288,9 @@
    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
    <DEG type="DauerDetails"/>
    <DEG type="Aussetzung2" name="Aussetzung" minnum="0"/>'
->
-<!ENTITY DauerUser2
-  '<!-- 2.1 -->
+                        >
+                <!ENTITY DauerUser2
+                        '<!-- 2.1 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTO" name="My"/>
    <DEG type="KTO" name="Other"/>
@@ -304,10 +304,10 @@
    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
    <DEG type="DauerDetails"/>
    <DEG type="Aussetzung2" name="Aussetzung" minnum="0"/>'
->
+                        >
 
-<!ENTITY DauerInst3
-  '<!-- 2.2 -->
+                <!ENTITY DauerInst3
+                        '<!-- 2.2 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV2" name="My"/>
    <DEG type="KTV2" name="Other"/>
@@ -321,9 +321,9 @@
    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
    <DEG type="DauerDetails"/>
    <DEG type="Aussetzung2" name="Aussetzung" minnum="0"/>'
->
-<!ENTITY DauerUser3
-  '<!-- 2.2 -->
+                        >
+                <!ENTITY DauerUser3
+                        '<!-- 2.2 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV2" name="My"/>
    <DEG type="KTV2" name="Other"/>
@@ -337,10 +337,10 @@
    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
    <DEG type="DauerDetails"/>
    <DEG type="Aussetzung2" name="Aussetzung" minnum="0"/>'
->
+                        >
 
-<!ENTITY FestgeldInst1
-  '<!-- 2.01 -->
+                <!ENTITY FestgeldInst1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTO" name="Anlagekto" minnum="0"/>
    <DE name="kontakt" type="ID" minnum="0"/>
@@ -355,8 +355,8 @@
    <DEG type="FestCondVersion" minnum="0"/>
    <DEG type="BTG" name="Zinsbetrag" minnum="0"/>
    <DE name="status" type="Num" maxsize="1" minnum="0"/>
-   <DEG type="Prolong" minnum="0"/> 
-   
+   <DEG type="Prolong" minnum="0"/>
+
    <valids path="wiederanlage">
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
@@ -365,9 +365,9 @@
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
    </valids>'
->
-<!ENTITY FestgeldUser1
-  '<!-- 2.01 -->
+                        >
+                <!ENTITY FestgeldUser1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTO" name="Anlagekto" minnum="0"/>
    <DE name="kontakt" type="ID" minnum="0"/>
@@ -382,8 +382,8 @@
    <DEG type="FestCondVersion" minnum="0"/>
    <DEG type="BTG" name="Zinsbetrag" minnum="0"/>
    <DE name="status" type="Num" maxsize="1" minnum="0"/>
-   <DEG type="Prolong" minnum="0"/> 
-   
+   <DEG type="Prolong" minnum="0"/>
+
    <valids path="wiederanlage">
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
@@ -392,10 +392,10 @@
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
    </valids>'
->
+                        >
 
-<!ENTITY FestgeldInst2
-  '<!-- 2.2 -->
+                <!ENTITY FestgeldInst2
+                        '<!-- 2.2 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV2" name="Anlagekto" minnum="0"/>
    <DE name="kontakt" type="ID" minnum="0"/>
@@ -410,8 +410,8 @@
    <DEG type="FestCondVersion" minnum="0"/>
    <DEG type="BTG" name="Zinsbetrag" minnum="0"/>
    <DE name="status" type="Num" maxsize="1" minnum="0"/>
-   <DEG type="Prolong" minnum="0"/> 
-   
+   <DEG type="Prolong" minnum="0"/>
+
    <valids path="wiederanlage">
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
@@ -420,9 +420,9 @@
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
    </valids>'
->
-<!ENTITY FestgeldUser2
-  '<!-- 2.2 -->
+                        >
+                <!ENTITY FestgeldUser2
+                        '<!-- 2.2 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV2" name="Anlagekto" minnum="0"/>
    <DE name="kontakt" type="ID" minnum="0"/>
@@ -437,8 +437,8 @@
    <DEG type="FestCondVersion" minnum="0"/>
    <DEG type="BTG" name="Zinsbetrag" minnum="0"/>
    <DE name="status" type="Num" maxsize="1" minnum="0"/>
-   <DEG type="Prolong" minnum="0"/> 
-   
+   <DEG type="Prolong" minnum="0"/>
+
    <valids path="wiederanlage">
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
@@ -447,10 +447,10 @@
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
    </valids>'
->
+                        >
 
-<!ENTITY FestgeldInst3
-  '<!-- 3.0 -->
+                <!ENTITY FestgeldInst3
+                        '<!-- 3.0 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV3" name="Anlagekto" minnum="0"/>
    <DE name="kontakt" type="ID" minnum="0"/>
@@ -465,8 +465,8 @@
    <DEG type="FestCondVersion" minnum="0"/>
    <DEG type="BTG" name="Zinsbetrag" minnum="0"/>
    <DE name="status" type="Code" maxsize="1" minnum="0"/>
-   <DEG type="Prolong" minnum="0"/> 
-   
+   <DEG type="Prolong" minnum="0"/>
+
    <valids path="wiederanlage">
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
@@ -479,9 +479,9 @@
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
    </valids>'
->
-<!ENTITY FestgeldUser3
-  '<!-- 3.0 -->
+                        >
+                <!ENTITY FestgeldUser3
+                        '<!-- 3.0 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV3" name="Anlagekto" minnum="0"/>
    <DE name="kontakt" type="ID" minnum="0"/>
@@ -496,8 +496,8 @@
    <DEG type="FestCondVersion" minnum="0"/>
    <DEG type="BTG" name="Zinsbetrag" minnum="0"/>
    <DE name="status" type="Code" maxsize="1" minnum="0"/>
-   <DEG type="Prolong" minnum="0"/> 
-   
+   <DEG type="Prolong" minnum="0"/>
+
    <valids path="wiederanlage">
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
@@ -510,45 +510,45 @@
        <validvalue>1</validvalue>
        <validvalue>2</validvalue>
    </valids>'
->
+                        >
 
-<!ENTITY SammelInst1
-  '<!-- 2.01 -->
+                <!ENTITY SammelInst1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DE name="data" type="Bin" maxsize="0"/>'
->
-<!ENTITY SammelUser1
-  '<!-- 2.01 -->
+                        >
+                <!ENTITY SammelUser1
+                        '<!-- 2.01 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DE name="data" type="Bin" maxsize="0"/>'
->
+                        >
 
-<!ENTITY SammelInst2
-  '<!-- 2.2 -->
+                <!ENTITY SammelInst2
+                        '<!-- 2.2 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV2" name="KTV"/>
    <DE name="data" type="Bin" maxsize="0"/>'
->
-<!ENTITY SammelUser2
-  '<!-- 2.2 -->
+                        >
+                <!ENTITY SammelUser2
+                        '<!-- 2.2 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV2" name="KTV"/>
    <DE name="data" type="Bin" maxsize="0"/>'
->
+                        >
 
-<!ENTITY SammelInst3
-  '<!-- 3.0 -->
+                <!ENTITY SammelInst3
+                        '<!-- 3.0 -->
    <DEG type="SegHeadInst" name="SegHead"/>
    <DEG type="KTV3" name="KTV"/>
    <DE name="data" type="Bin" maxsize="0"/>'
->
-<!ENTITY SammelUser3
-  '<!-- 3.0 -->
+                        >
+                <!ENTITY SammelUser3
+                        '<!-- 3.0 -->
    <DEG type="SegHeadUser" name="SegHead"/>
    <DEG type="KTV3" name="KTV"/>
    <DE name="data" type="Bin" maxsize="0"/>'
->
-]>
+                        >
+                ]>
 
 <hbci>
     <DEGs>
@@ -564,7 +564,7 @@
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
-                
+
                 <!-- Siehe http://www.onlinebanking-forum.de/phpBB2/viewtopic.php?t=14583 -->
                 <validvalue>98</validvalue>
                 <validvalue>99</validvalue>
@@ -593,7 +593,7 @@
                 <validvalue>3</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="CryptAlg">
             <DE name="use" type="AN" maxsize="3"/>
             <DE name="mode" type="AN" maxsize="3"/>
@@ -617,7 +617,7 @@
             <DE name="alg" type="AN" maxsize="3"/>
             <DE name="parname" type="AN" maxsize="3"/>
             <DE name="parameter" type="Bin" maxsize="512" minnum="0"/>
-            
+
             <valids path="alg">
                 <validvalue>999</validvalue>
             </valids>
@@ -625,7 +625,7 @@
             <value path="usage">1</value>
             <value path="parname">1</value>
         </DEGdef>
-        
+
         <DEGdef id="KeyName">
             <DEG type="KIK"/>
             <DE name="userid" type="ID"/>
@@ -662,7 +662,7 @@
             <DE name="dialogid" type="ID"/>
             <DE name="msgnum" type="Num" maxsize="4"/>
         </DEGdef>
-        
+
         <DEGdef id="PubKey">
             <DE name="usage" type="AN" maxsize="3"/>
             <DE name="mode" type="AN" maxsize="3"/>
@@ -710,7 +710,7 @@
                 <validvalue>6</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="SegHeadInst">
             <DE name="code" type="AN" maxsize="6"/>
             <DE name="seq" type="Num" maxsize="3"/>
@@ -766,7 +766,7 @@
 
         <DEGdef id="SuppVersions">
             <DE name="version" type="Num" maxsize="3" maxnum="9"/>
-            
+
             <valids path="version">
                 <validvalue>201</validvalue>
                 <validvalue>210</validvalue>
@@ -777,7 +777,7 @@
         </DEGdef>
 
         <!-- end of administrative degs -->
-    
+
         <DEGdef id="Address1"> <!-- 2.01 -->
             <DE name="name1" type="AN" maxsize="35"/>
             <DE name="name2" type="AN" maxsize="35" minnum="0"/>
@@ -785,7 +785,7 @@
             <DE name="plz_ort" type="AN" maxsize="35"/>
             <DE name="tel" type="AN" maxsize="35" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="Address2">
             <DE name="name1" type="AN" maxsize="35"/>
             <DE name="name2" type="AN" maxsize="35" minnum="0"/>
@@ -797,7 +797,7 @@
             <DE name="fax" type="AN" maxsize="35" minnum="0"/>
             <DE name="email" type="AN" maxsize="35" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="Aussetzung1"> <!-- 2.01 -->
             <DE name="annual" type="JN"/>
             <DE name="startdate" type="Date" minnum="0"/>
@@ -821,7 +821,7 @@
             <DE name="number" type="Num" maxsize="2" minnum="0"/>
             <DEG type="BTG" name="newvalue" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="Berechtigter1"> <!-- 2.2 -->
             <DE name="name" type="AN" maxsize="35"/>
             <DE name="name2" type="AN" maxsize="35" minnum="0"/>
@@ -830,7 +830,7 @@
             <DE name="BTG.value" type="Wrt" minnum="0"/>
             <DE name="BTG.curr" type="Cur" minnum="0"/>
             <DE name="risiko" type="AN" maxsize="2" minnum="0"/>
-            
+
             <valids path="berechtigter">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -852,7 +852,7 @@
             <DE name="berechtigung" type="Num" maxsize="1" minnum="0"/>
             <DEG type="BTG" minnum="0"/>
             <DE name="risiko" type="AN" maxsize="2" minnum="0"/>
-            
+
             <valids path="berechtigter">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -866,18 +866,18 @@
                 <validvalue>4</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ChallengeGraph">
             <DE name="graph" type="Bin" maxsize="2048"/>
             <DE name="format" type="Code" minsize="3" maxsize="3"/>
-            
+
             <valids path="format">
                 <validvalue>GIF</validvalue>
                 <validvalue>JPG</validvalue>
                 <validvalue>PNG</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ChallengeKlassParams">
             <DE name="param1" type="AN" minsize="0" maxsize="999" minnum="0" maxnum="1"/>
             <DE name="param2" type="AN" minsize="0" maxsize="999" minnum="0" maxnum="1"/>
@@ -889,7 +889,7 @@
             <DE name="param8" type="AN" minsize="0" maxsize="999" minnum="0" maxnum="1"/>
             <DE name="param9" type="AN" minsize="0" maxsize="999" minnum="0" maxnum="1"/>
         </DEGdef>
-        
+
         <DEGdef id="ChallengeValidity">
             <DE name="date" type="Date"/>
             <DE name="time" type="Time"/>
@@ -901,7 +901,7 @@
             <DE name="addr2" type="AN" maxsize="512" minnum="0"/>
             <DE name="filter" type="AN" minsize="3" maxsize="3" minnum="0"/>
             <DE name="filterversion" type="Num" maxsize="3" minnum="0"/>
-            
+
             <valids path="dienst">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -912,7 +912,7 @@
                 <validvalue>UUE</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="DauerDetails">
             <DE name="firstdate" type="Date"/>
             <DE name="timeunit" type="Code" maxsize="1"/>
@@ -925,7 +925,7 @@
                 <validvalue>W</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="DauerDetailsEdit">
             <DE name="firstdate" type="Date" minnum="0"/>
             <DE name="timeunit" type="Code" maxsize="1" minnum="0"/>
@@ -938,7 +938,7 @@
                 <validvalue>W</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="FestCond1"> <!--2.01 -->
             <DE name="anlagedate" type="Date"/>
             <DE name="ablaufdate" type="Date"/>
@@ -948,7 +948,7 @@
             <DEG type="BTG" name="MaxBetrag" minnum="0"/>
             <DE name="condid" type="ID" minnum="0"/>
             <DE name="condbez" type="AN" maxsize="30" minnum="0"/>
-            
+
             <valids path="zinsmethode">
                 <validvalue>A</validvalue>
                 <validvalue>B</validvalue>
@@ -958,7 +958,7 @@
                 <validvalue>F</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="FestCond2"> <!-- 3.0 -->
             <DE name="anlagedate" type="Date"/>
             <DE name="ablaufdate" type="Date"/>
@@ -968,7 +968,7 @@
             <DEG type="BTG" name="MaxBetrag" minnum="0"/>
             <DE name="condid" type="ID" minnum="0"/>
             <DE name="condbez" type="AN" maxsize="30" minnum="0"/>
-            
+
             <valids path="zinsmethode">
                 <validvalue>A</validvalue>
                 <validvalue>B</validvalue>
@@ -979,22 +979,22 @@
                 <validvalue>Z</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="FestCondVersion">
             <DE name="version" type="AN" maxsize="10"/>
             <DE name="date" type="Date"/>
             <DE name="time" type="Time"/>
         </DEGdef>
-        
+
         <DEGdef id="Info">
             <DE name="code" type="AN" maxsize="10"/>
             <DE name="msg" type="AN" maxsize="2048"/>
         </DEGdef>
-        
+
         <DEGdef id="InfoCodes">
             <DE name="code" type="AN" maxsize="10" maxnum="9"/>
         </DEGdef>
-        
+
         <DEGdef id="InfoInfo">
             <DE name="code" type="AN" maxsize="10"/>
             <DE name="descr" type="AN" maxsize="35"/>
@@ -1002,7 +1002,7 @@
             <DE name="version" type="Date" minnum="0"/>
             <DE name="format" type="AN" maxsize="3" minnum="0"/>
             <DE name="comment" type="AN" maxsize="35" minnum="0" maxnum="5"/>
-            
+
             <valids path="type">
                 <validvalue>F</validvalue>
                 <validvalue>D</validvalue>
@@ -1015,20 +1015,20 @@
             <DE name="number" type="ID"/>
             <DEG type="KIK"/>
         </DEGdef>
-        
+
         <DEGdef id="KTV2"> <!-- 2.2 -->
             <DE name="number" type="ID"/>
             <DE name="subnumber" type="ID" minnum="0"/>
             <DE name="KIK.country" type="Ctr"/>
             <DE name="KIK.blz" type="AN" maxsize="30" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="KTV3"> <!-- 3.0 -->
             <DE name="number" type="ID"/>
             <DE name="subnumber" type="ID" minnum="0"/>
             <DEG type="KIK"/>
         </DEGdef>
-        
+
         <DEGdef id="KTVInt">
             <DE name="iban" type="AN" maxsize="34" minnum="0"/>
             <DE name="bic" type="AN" maxsize="11" minnum="0"/>
@@ -1036,7 +1036,7 @@
             <DE name="subnumber" type="ID" minnum="0"/>
             <DEG type="KIK" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="KTVZVInt">
             <DE name="sepa" type="JN"/>
             <DE name="iban" type="AN" maxsize="34" minnum="0"/>
@@ -1045,17 +1045,17 @@
             <DE name="subnumber" type="ID" minnum="0"/>
             <DEG type="KIK"/>
         </DEGdef>
-        
+
         <DEGdef id="ParCustomMsg">
             <DE name="maxlen" type="Num" maxsize="4"/>
         </DEGdef>
-        
+
         <DEGdef id="ParDauerDel">
             <DE name="minpretime" type="Num" maxsize="4"/>
             <DE name="maxpretime" type="Num" maxsize="4"/>
             <DE name="cantermdel" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParDauerEdit">
             <DE name="numtermchanges" type="Num" maxsize="1"/>
             <DE name="minpretime" type="Num" maxsize="4"/>
@@ -1077,7 +1077,7 @@
             <DE name="daysperweek" type="Dig" maxsize="7" minnum="0"/>
             <DE name="textkey" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParDauerNew">
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="minpretime" type="Num" maxsize="4"/>
@@ -1088,82 +1088,82 @@
             <DE name="daysperweek" type="Dig" maxsize="7" minnum="0"/>
             <DE name="textkey" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParFestCondList">
             <DE name="curr" type="Cur" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParFestNew1"> <!-- 2.01 -->
             <DE name="canotherausbuchungskto" type="JN"/>
             <DE name="canotherzinskto" type="JN"/>
             <DE name="kontoauszug" type="Code" maxsize="1" minnum="0" maxnum="9"/>
-            
+
             <valids path="kontoauszug">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ParFestNew2"> <!-- 2.2 -->
             <DE name="canexistinganlkto" type="JN"/>
             <DE name="canotherausbuchungskto" type="JN"/>
             <DE name="canotherzinskto" type="JN"/>
             <DE name="kontoauszug" type="Code" maxsize="1" minnum="0" maxnum="9"/>
-            
+
             <valids path="kontoauszug">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ParKontoauszug">
             <DE name="canindex" type="JN"/>
             <DE name="needreceipt" type="JN"/>
             <DE name="canmaxentries" type="JN"/>
             <DE name="format" type="Code" maxsize="1" maxnum="9"/>
         </DEGdef>
-        
+
         <DEGdef id="ParKUmsNew1"> <!-- 2.01 -->
             <DE name="timerange" type="Num" maxsize="4"/>
             <DE name="canmaxentries" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParKUmsNew2"> <!-- 2.2 -->
             <DE name="timerange" type="Num" maxsize="4"/>
             <DE name="canmaxentries" type="JN"/>
             <DE name="canallaccounts" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParKUmsZeit1"> <!-- 2.01 -->
             <DE name="timerange" type="Num" maxsize="4"/>
             <DE name="canmaxentries" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParKUmsZeit2"> <!-- 2.2 -->
             <DE name="timerange" type="Num" maxsize="4"/>
             <DE name="canmaxentries" type="JN"/>
             <DE name="canallaccounts" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParLast">
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParLastObjection">
             <DEG type="BTG" name="fee" minnum="0"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParOrderHistory">
             <DE name="timerange" type="Num" maxsize="4"/>
             <DE name="canmaxentries" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParPinTan">
             <DEG type="PinTanGV" minnum="0" maxnum="999"/>
         </DEGdef>
-        
+
         <DEGdef id="ParPinTan2">
             <DE name="pinlen_min" type="Num" maxsize="2" minnum="0"/>
             <DE name="pinlen_max" type="Num" maxsize="2" minnum="0"/>
@@ -1172,32 +1172,32 @@
             <DE name="info_customerid" type="AN" maxsize="30" minnum="0"/>
             <DEG type="PinTanGV" minnum="0" maxnum="999"/>
         </DEGdef>
-        
+
         <DEGdef id="ParSammelLast">
             <DE name="maxcsets" type="Num" maxsize="6"/>
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParSammelUeb">
             <DE name="maxcsets" type="Num" maxsize="6"/>
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
 
-	<DEGdef id="ParSammelUebSEPA">
-	    <DE name="maxnum" type="Num" maxsize="7" />
-	    <DE name="needtotal" type="JN" />
-	    <DE name="cansingletransfer" type="JN" />
-	</DEGdef>
-        
+        <DEGdef id="ParSammelUebSEPA">
+            <DE name="maxnum" type="Num" maxsize="7"/>
+            <DE name="needtotal" type="JN"/>
+            <DE name="cansingletransfer" type="JN"/>
+        </DEGdef>
+
         <DEGdef id="ParSEPAInfo">
             <DE name="cansingleaccquery" type="JN"/>
             <DE name="cannationalacc" type="JN"/>
             <DE name="canstructusage" type="JN"/>
             <DE name="suppformats" type="AN" maxsize="256" minnum="0" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermSepaEinzelLast">
             <DE name="minVorlZeitFNALRCUR" type="Num" maxsize="4"/>
             <DE name="maxVorlZeitFNALRCUR" type="Num" maxsize="4"/>
@@ -1210,7 +1210,7 @@
             <DE name="maxVorlZeitFNALRCUR" type="Num" maxsize="4"/>
             <DE name="minVorlZeitFRSTOOFF" type="Num" maxsize="4"/>
             <DE name="maxVorlZeitFRSTOOFF" type="Num" maxsize="4"/>
-            <DE name="PurposeCodes" type="AN" maxsize="4096" />
+            <DE name="PurposeCodes" type="AN" maxsize="4096"/>
             <DE name="suppformats" type="AN" maxsize="256" minnum="0" maxnum="9"/>
         </DEGdef>
 
@@ -1220,15 +1220,15 @@
             <DE name="minVorlZeitFRSTOOFF" type="Num" maxsize="4"/>
             <DE name="maxVorlZeitFRSTOOFF" type="Num" maxsize="4"/>
         </DEGdef>
-        
-        
+
+
         <DEGdef id="ParTAN2Step1">
             <DE name="can1step" type="JN"/>
             <DE name="canmultitangvs" type="JN"/>
             <DE name="orderhashmode" type="Code" maxsize="1"/>
             <DE name="instsig" type="Code" maxsize="1"/>
             <DEG type="TAN2StepParams1" name="TAN2StepParams" maxnum="98"/>
-            
+
             <valids path="orderhashmode">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
@@ -1240,52 +1240,52 @@
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ParTAN2Step2">
             <DE name="can1step" type="JN"/>
             <DE name="canmultitangvs" type="JN"/>
             <DE name="orderhashmode" type="Code" maxsize="1"/>
             <DEG type="TAN2StepParams2" name="TAN2StepParams" maxnum="98"/>
-            
+
             <valids path="orderhashmode">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ParTAN2Step3">
             <DE name="can1step" type="JN"/>
             <DE name="canmultitangvs" type="JN"/>
             <DE name="orderhashmode" type="Code" maxsize="1"/>
             <DEG type="TAN2StepParams3" name="TAN2StepParams" maxnum="98"/>
-            
+
             <valids path="orderhashmode">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ParTAN2Step4">
             <DE name="can1step" type="JN"/>
             <DE name="canmultitangvs" type="JN"/>
             <DE name="orderhashmode" type="Code" maxsize="1"/>
             <DEG type="TAN2StepParams4" name="TAN2StepParams" maxnum="98"/>
-            
+
             <valids path="orderhashmode">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="ParTAN2Step5">
             <DE name="can1step" type="JN"/>
             <DE name="canmultitangvs" type="JN"/>
             <DE name="orderhashmode" type="Code" maxsize="1"/>
             <DEG type="TAN2StepParams5" name="TAN2StepParams" maxnum="98"/>
-            
+
             <valids path="orderhashmode">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
@@ -1296,11 +1296,11 @@
         <DEGdef id="ParTemplateD">
             <DE name="dummy" type="AN" minsize="0" maxsize="999" minnum="2" maxnum="999"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTemplate2D">
             <DE name="dummy" type="AN" minsize="0" maxsize="999" maxnum="999"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermSammelLast">
             <DE name="minpretime" type="Num" maxsize="4"/>
             <DE name="maxpretime" type="Num" maxsize="4"/>
@@ -1308,11 +1308,11 @@
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermSammelLastList">
             <DE name="cantimerange" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermSammelUeb">
             <DE name="minpretime" type="Num" maxsize="4"/>
             <DE name="maxpretime" type="Num" maxsize="4"/>
@@ -1320,25 +1320,25 @@
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermSammelUebList">
             <DE name="cantimerange" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermUeb">
             <DE name="minpretime" type="Num" maxsize="4"/>
             <DE name="maxpretime" type="Num" maxsize="4"/>
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermUebEdit">
             <DE name="minpretime" type="Num" maxsize="4"/>
             <DE name="maxpretime" type="Num" maxsize="4"/>
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParTermUebList">
             <DE name="cantimerange" type="JN"/>
         </DEGdef>
@@ -1352,47 +1352,47 @@
             <DE name="caniban" type="JN"/>
             <DE name="countryinfo" type="AN" maxsize="99" minnum="0" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParUmb">
             <DE name="maxusage" type="Num" maxsize="2"/>
             <DE name="key" type="Dig" minsize="2" maxsize="2" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParVormerkposten">
-          <DE name="canmaxentries" type="JN"/>
-          <DE name="canallaccounts" type="JN"/>
+            <DE name="canmaxentries" type="JN"/>
+            <DE name="canallaccounts" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPDepotList1">
             <DE name="canmaxentries" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPDepotList2">
             <DE name="canmaxentries" type="JN"/>
             <DE name="cancurr" type="JN"/>
             <DE name="canquality" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPDepotUms">
             <DE name="timerange" type="Num" maxsize="4"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPInfoList">
             <DE name="needdepot" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPKursList1"> <!-- 2.1 -->
             <DE name="availboerses" type="AN" maxsize="2048" minnum="0"/>
             <DE name="kurspaket" type="AN" maxsize="30" minnum="0" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPKursList2"> <!-- 2.2 -->
             <DE name="needdepot" type="JN"/>
             <DE name="canquality" type="JN"/>
             <DE name="availboerses" type="AN" maxsize="4096" minnum="0"/>
             <DE name="kurspaket" type="AN" maxsize="30" minnum="0" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPRefList">
             <DE name="searchallowed" type="JN"/>
             <DE name="regionallowed" type="JN"/>
@@ -1401,28 +1401,28 @@
             <DE name="availboerses" type="AN" maxsize="4096" minnum="0"/>
             <DE name="availtypes" type="AN" maxsize="35" minnum="0" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="ParWPStammList">
             <DE name="needdepot" type="JN"/>
             <DE name="risikodescr" type="AN" maxsize="38" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="PinTanGV">
             <DE name="segcode" type="AN" maxsize="6"/>
             <DE name="needtan" type="JN"/>
         </DEGdef>
-        
+
         <DEGdef id="Prolong">
             <DE name="laufzeit" type="Num" maxsize="3"/>
             <DEG type="BTG"/>
             <DE name="wiederanlage" type="Num" maxsize="1"/>
-            
+
             <valids path="wiederanlage">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="Saldo">
             <DE name="CreditDebit" type="Code" maxsize="1"/>
             <DE name="BTG.value" type="Wrt"/>
@@ -1435,7 +1435,7 @@
                 <validvalue>D</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="Saldo2">  <!-- 3.0 -->
             <DE name="CreditDebit" type="Code" maxsize="1"/>
             <DEG type="BTG"/>
@@ -1447,7 +1447,7 @@
                 <validvalue>D</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="TAN2StepParams1">
             <DE name="secfunc" type="Code" maxsize="3"/>
             <DE name="process" type="Code" maxsize="1"/>
@@ -1460,7 +1460,7 @@
             <DE name="noftanlists" type="Num" maxsize="1" minnum="0"/>
             <DE name="canmultitan" type="JN"/>
             <DE name="cantandelay" type="JN"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1487,7 +1487,7 @@
             <DE name="canstorno" type="JN"/>
             <DE name="needchallengeklass" type="JN"/>
             <DE name="needchallengevalue" type="JN"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1517,7 +1517,7 @@
             <DE name="initmode" type="Code"/>
             <DE name="needtanmedia" type="Code"/>
             <DE name="nofactivetanmedia" type="Num" maxsize="1" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1532,8 +1532,8 @@
             <DE name="secfunc" type="Code" maxsize="3"/>
             <DE name="process" type="Code" maxsize="1"/>
             <DE name="id" type="ID"/>
-	    <DE name="zkamethod_name" type="AN" maxsize="32" minnum="0" />
-	    <DE name="zkamethod_version" type="AN" maxsize="10" minnum="0" />
+            <DE name="zkamethod_name" type="AN" maxsize="32" minnum="0"/>
+            <DE name="zkamethod_version" type="AN" maxsize="10" minnum="0"/>
             <DE name="name" type="AN" maxsize="30"/>
             <DE name="maxlentan2step" type="Num" maxsize="2"/>
             <DE name="tanformat" type="Code" maxsize="1"/>
@@ -1544,14 +1544,14 @@
             <DE name="cantandelay" type="Code" maxsize="1"/>
             <DE name="needtanlistidx" type="Code" maxsize="1"/>
             <DE name="canstorno" type="JN"/>
-	    <DE name="needsmsaccount" type="JN" />
+            <DE name="needsmsaccount" type="JN"/>
             <DE name="needchallengeklass" type="JN"/>
             <DE name="needchallengevalue" type="JN"/>
-	    <DE name="ischallengestructured" type="JN" />
+            <DE name="ischallengestructured" type="JN"/>
             <DE name="initmode" type="Code"/>
             <DE name="needtanmedia" type="Code"/>
             <DE name="nofactivetanmedia" type="Num" maxsize="1" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1566,8 +1566,8 @@
             <DE name="secfunc" type="Code" maxsize="3"/>
             <DE name="process" type="Code" maxsize="1"/>
             <DE name="id" type="ID"/>
-            <DE name="zkamethod_name" type="AN" maxsize="32" minnum="0" />
-            <DE name="zkamethod_version" type="AN" maxsize="10" minnum="0" />
+            <DE name="zkamethod_name" type="AN" maxsize="32" minnum="0"/>
+            <DE name="zkamethod_version" type="AN" maxsize="10" minnum="0"/>
             <DE name="name" type="AN" maxsize="30"/>
             <DE name="maxlentan2step" type="Num" maxsize="2"/>
             <DE name="tanformat" type="Code" maxsize="1"/>
@@ -1581,11 +1581,11 @@
             <DE name="needsmsaccount" type="Code" maxsize="1"/>
             <DE name="needorderaccount" type="Code" maxsize="1"/>
             <DE name="needchallengeklass" type="JN"/>
-            <DE name="ischallengestructured" type="JN" />
+            <DE name="ischallengestructured" type="JN"/>
             <DE name="initmode" type="Code"/>
             <DE name="needtanmedia" type="Code"/>
             <DE name="nofactivetanmedia" type="Num" maxsize="1" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1608,7 +1608,7 @@
             <DE name="startdate" type="Date"/>
             <DE name="enddate" type="Date"/>
         </DEGdef>
-        
+
         <DEGdef id="Timestamp">
             <DE name="date" type="Date"/>
             <DE name="time" type="Time" minnum="0"/>
@@ -1625,14 +1625,14 @@
         <DEGdef id="usage3"> <!-- 2.2 -->
             <DE name="usage" type="DTAUS" maxsize="27" minnum="0" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="WPBInfo1"> <!-- 2.1 -->
             <DE name="boerse" type="AN" minsize="4" maxsize="4"/>
             <DE name="curr" type="Cur"/>
             <DE name="smallestunit" type="Wrt" minnum="0"/>
             <DE name="marktsegment" type="AN" maxsize="1" minnum="0" maxnum="9"/>
         </DEGdef>
-        
+
         <DEGdef id="WPBInfo2"> <!-- 2.2 -->
             <DE name="boerse" type="AN" minsize="4" maxsize="4"/>
             <DE name="curr" type="Cur"/>
@@ -1642,7 +1642,7 @@
             <DE name="marktsegmentausland" type="AN" maxsize="80" minnum="0"/>
             <DE name="marktsegment" type="AN" maxsize="1" minnum="0" maxnum="9"/>
         </DEGdef>
-        
+
         <DEGdef id="WPBKurs">
             <DE name="kurs" type="Wrt"/>
             <DE name="curr" type="Cur"/>
@@ -1651,20 +1651,20 @@
             <DE name="time" type="Time" minnum="0"/>
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="WPImpInfo">
             <DE name="type" type="Num" maxsize="1"/>
             <DE name="cat" type="AN" maxsize="30" minnum="0"/>
             <DE name="date" type="Date"/>
             <DE name="version" type="Num" maxsize="3"/>
             <DE name="comment" type="AN" maxsize="2048" minnum="0"/>
-            
+
             <valids path="type">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="WPKursData">
             <DE name="boerse" type="AN" minsize="4" maxsize="4"/>
             <DE name="notizeinheit" type="Num" maxsize="1"/>
@@ -1683,7 +1683,7 @@
             <DE name="Prevdaykurs.kurs" type="Wrt" minnum="0"/>
             <DE name="Outputprice.kurs" type="Wrt" minnum="0"/>
             <DE name="Retprice.kurs" type="Wrt" minnum="0"/>
-            
+
             <valids path="notizeinheit">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1696,11 +1696,11 @@
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="WPRef">
             <DE name="type" type="Num" maxsize="1"/>
             <DE name="code" type="AN" maxsize="30"/>
-            
+
             <valids path="type">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -1708,7 +1708,7 @@
                 <validvalue>4</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="WPStammAktien">
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
             <DE name="nennwert.value" type="Wrt" minnum="0"/>
@@ -1722,7 +1722,7 @@
                 <validvalue>2</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="WPStammFonds">
             <DE name="faelligkeit" type="Date" minnum="0"/>
             <DE name="wiederanlagerabattvon" type="Date" minnum="0"/>
@@ -1733,14 +1733,14 @@
             <DE name="depotbankgebuehr" type="Wrt" minnum="0"/>
             <DE name="info" type="AN" maxsize="2048" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="WPStammOptions">
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
             <DE name="faelligkeit" type="Date" minnum="0"/>
             <DE name="underlying" type="AN" maxsize="35" minnum="0"/>
             <DE name="bezugsverhaeltnis" type="AN" maxsize="35" minnum="0"/>
         </DEGdef>
-        
+
         <DEGdef id="WPStammRenten">
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
             <DE name="zinssatz" type="Wrt" minnum="0"/>
@@ -1750,7 +1750,7 @@
             <DE name="zinsperiode" type="Num" maxsize="1" minnum="0"/>
             <DE name="einloesungskurs" type="Wrt" minnum="0"/>
             <DE name="einloesungstype" type="Num" maxsize="1" minnum="0"/>
-            
+
             <valids path="zinsperiode">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
@@ -1768,11 +1768,11 @@
                 <validvalue>9</validvalue>
             </valids>
         </DEGdef>
-        
+
         <DEGdef id="WPTypes">
             <DE name="type" type="AN" maxsize="35" maxnum="99"/>
         </DEGdef>
-        
+
         <DEGdef id="WPZinsTermine">
             <DE name="termin" type="Dig" minsize="4" maxsize="4" maxnum="99"/>
         </DEGdef>
@@ -1874,7 +1874,7 @@
             <value path="SegHead.code">HKEND</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="Idn">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KIK"/>
@@ -1890,7 +1890,7 @@
             <value path="SegHead.code">HKIDN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="KeyChange">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="msgtype" type="Num" maxsize="1"/>
@@ -1937,7 +1937,7 @@
             <DE name="locktype" type="AN" maxsize="3"/>
             <DEG type="SecTimestamp"/>
             <DEG type="Cert" minnum="0"/>
-            
+
             <valids path="locktype">
                 <validvalue>1</validvalue>
                 <validvalue>501</validvalue>
@@ -2026,7 +2026,7 @@
             <value path="SegHead.code">HNHBS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="ProcPrep">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="BPD" type="Num" maxsize="3"/>
@@ -2211,14 +2211,14 @@
         </SEGdef>
 
         <!-- end of administrative segments -->
-        
+
         <SEGdef id="AccInfo1"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKIF</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -2241,7 +2241,7 @@
             <DE name="turnus" type="Num" maxsize="1" minnum="0"/>
             <DE name="info" type="AN" maxsize="2048" minnum="0"/>
             <DEG type="Berechtigter1" name="Berechtigter" minnum="0" maxnum="9"/>
-            
+
             <valids path="versandart">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
@@ -2257,24 +2257,24 @@
                 <validvalue>5</validvalue>
                 <validvalue>6</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIKIF</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="AccInfoPar1">
             &GVP;
-            
+
             <value path="SegHead.code">HIKIFS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="AccInfo2"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKIF</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -2297,7 +2297,7 @@
             <DE name="turnus" type="Code" maxsize="1" minnum="0"/>
             <DE name="info" type="AN" maxsize="2048" minnum="0"/>
             <DEG type="Berechtigter2" name="Berechtigter" minnum="0" maxnum="9"/>
-            
+
             <valids path="versandart">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
@@ -2313,23 +2313,23 @@
                 <validvalue>5</validvalue>
                 <validvalue>6</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIKIF</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="AccInfoPar2">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKIFS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="CardList1"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
-            
+
             <value path="SegHead.code">HKAZK</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -2343,21 +2343,21 @@
             <DE name="validuntil" type="Date" minnum="0"/>
             <DEG type="BTG" name="cardlimit" minnum="0"/>
             <DE name="comment" type="AN" maxsize="2048" minnum="0"/>
-            
+
             <value path="SegHead.code">HIAZK</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="CardListPar1">
             &GVP;
-            
+
             <value path="SegHead.code">HIAZKS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="CardList2"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
-            
+
             <value path="SegHead.code">HKAZK</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -2372,56 +2372,56 @@
             <DE name="validuntil" type="Date" minnum="0"/>
             <DEG type="BTG" name="cardlimit" minnum="0"/>
             <DE name="comment" type="AN" maxsize="2048" minnum="0"/>
-            
+
             <value path="SegHead.code">HIAZK</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="CardListPar2">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIAZKS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
 
-	<SEGdef id="ChangePIN1" needsRequestTag="1">
-	    <DEG type="SegHeadUser" name="SegHead" />
-	    <DE name="newpin" type="AN" maxsize="99" minnum="0" />
+        <SEGdef id="ChangePIN1" needsRequestTag="1">
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DE name="newpin" type="AN" maxsize="99" minnum="0"/>
 
-	    <value path="SegHead.code">HKPAE</value>
-	    <value path="SegHead.version">1</value>
-	</SEGdef>
-	<SEGdef id="ChangePINPar1">
-	    &GVP2;
+            <value path="SegHead.code">HKPAE</value>
+            <value path="SegHead.version">1</value>
+        </SEGdef>
+        <SEGdef id="ChangePINPar1">
+            &GVP2;
 
-	    &SecClassValids;
+            &SecClassValids;
 
-	    <value path="SegHead.code">HIPAES</value>
-	    <value path="SegHead.version">1</value>
-	</SEGdef>
-        
-	<SEGdef id="ChangePINOld1" needsRequestTag="1">
-	    <DEG type="SegHeadUser" name="SegHead" />
-	    <DE name="newpin" type="AN" maxsize="6" minnum="0" />
+            <value path="SegHead.code">HIPAES</value>
+            <value path="SegHead.version">1</value>
+        </SEGdef>
 
-	    <value path="SegHead.code">DKPAE</value>
-	    <value path="SegHead.version">1</value>
-	</SEGdef>
-	<SEGdef id="ChangePINOldPar1">
-	    &GVP;
+        <SEGdef id="ChangePINOld1" needsRequestTag="1">
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DE name="newpin" type="AN" maxsize="6" minnum="0"/>
 
-	    <value path="SegHead.code">DIPAES</value>
-	    <value path="SegHead.version">1</value>
-	</SEGdef>
-        
+            <value path="SegHead.code">DKPAE</value>
+            <value path="SegHead.version">1</value>
+        </SEGdef>
+        <SEGdef id="ChangePINOldPar1">
+            &GVP;
+
+            <value path="SegHead.code">DIPAES</value>
+            <value path="SegHead.version">1</value>
+        </SEGdef>
+
         <SEGdef id="CommList2" needsRequestTag="1"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="fromblz" type="Num" maxsize="8" minnum="0"/>
             <DE name="toblz" type="Num" maxsize="8" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKOM</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -2430,30 +2430,30 @@
             <DEG type="KIK"/>
             <DE name="deflang" type="Num" maxsize="3"/>
             <DEG type="CommParam" maxnum="9"/>
-            
+
             <valids path="deflang">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIKOM</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="CommListPar2">
             &GVP;
-            
+
             <value path="SegHead.code">HIKOMS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="CommList3" needsRequestTag="1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="fromblz" type="Num" maxsize="8" minnum="0"/>
             <DE name="toblz" type="Num" maxsize="8" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKOM</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -2462,30 +2462,30 @@
             <DEG type="KIK"/>
             <DE name="deflang" type="Num" maxsize="3"/>
             <DEG type="CommParam" maxnum="9"/>
-            
+
             <valids path="deflang">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIKOM</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="CommListPar3">
             &GVP;
-            
+
             <value path="SegHead.code">HIKOMS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="CommList4" needsRequestTag="1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KIK" name="from" minnum="0"/>
             <DEG type="KIK" name="to" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKOM</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -2494,43 +2494,43 @@
             <DEG type="KIK"/>
             <DE name="deflang" type="Num" maxsize="3"/>
             <DEG type="CommParam" maxnum="9"/>
-            
+
             <valids path="deflang">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIKOM</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="CommListPar4">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKOMS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="CustomMsg2"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
             <DE name="curr" type="Cur" minnum="0"/>
             <DE name="msg" type="AN" maxsize="2048"/>
             <DE name="betreff" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKDM</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="CustomMsgPar2">
             &GVP;
             <DEG type="ParCustomMsg"/>
-            
+
             <value path="SegHead.code">HIKDMS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="CustomMsg3"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV" minnum="0"/>
@@ -2538,98 +2538,98 @@
             <DE name="msg" type="AN" maxsize="2048"/>
             <DE name="betreff" type="AN" maxsize="35" minnum="0"/>
             <DE name="recpt" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKDM</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="CustomMsgPar3">
             &GVP;
             <DEG type="ParCustomMsg"/>
-            
+
             <value path="SegHead.code">HIKDMS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="CustomMsg4"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV" minnum="0"/>
             <DE name="msg" type="AN" maxsize="2048"/>
             <DE name="betreff" type="AN" maxsize="35" minnum="0"/>
             <DE name="recpt" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKDM</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="CustomMsgPar4">
             &GVP;
             <DEG type="ParCustomMsg"/>
-            
+
             <value path="SegHead.code">HIKDMS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="CustomMsg5"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV" minnum="0"/>
             <DE name="msg" type="AN" maxsize="2048"/>
             <DE name="betreff" type="AN" maxsize="35" minnum="0"/>
             <DE name="recpt" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKDM</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="CustomMsgPar5">
             &GVP2;
             <DEG type="ParCustomMsg"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKDMS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerDel1"> <!-- 2.01 -->
             &DauerUser1;
-            
+
             <value path="SegHead.code">HKDAL</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="DauerDelPar1">
             &GVP;
             <DEG type="ParDauerDel"/>
-            
+
             <value path="SegHead.code">HIDALS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerDel2"> <!-- 2.1 -->
             &DauerUser2;
-            
+
             <value path="SegHead.code">HKDAL</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="DauerDelPar2">
             &GVP;
             <DEG type="ParDauerDel"/>
-            
+
             <value path="SegHead.code">HIDALS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerDel3"> <!-- 2.2 -->
             &DauerUser3;
-            
+
             <value path="SegHead.code">HKDAL</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="DauerDelPar3">
             &GVP;
             <DEG type="ParDauerDel"/>
-            
+
             <value path="SegHead.code">HIDALS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerDel4"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -2643,23 +2643,23 @@
             <DE name="date" type="Date" minnum="0"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DEG type="DauerDetails"/>
-            
+
             <value path="SegHead.code">HKDAL</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="DauerDelPar4">
             &GVP2;
             <DEG type="ParDauerDel"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIDALS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerEdit2"> <!-- 2.01 -->
             &DauerUser1;
-            
+
             <value path="SegHead.code">HKDAN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -2667,21 +2667,21 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="DauerEditPar2">
             &GVP;
             <DEG type="ParDauerEdit"/>
-            
+
             <value path="SegHead.code">HIDANS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerEdit3"> <!-- 2.1 -->
             &DauerUser2;
-            
+
             <value path="SegHead.code">HKDAN</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -2689,21 +2689,21 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAN</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="DauerEditPar3">
             &GVP;
             <DEG type="ParDauerEdit"/>
-            
+
             <value path="SegHead.code">HIDANS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
 
         <SEGdef id="DauerEdit4"> <!-- 2.2 -->
             &DauerUser3;
-            
+
             <value path="SegHead.code">HKDAN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -2711,32 +2711,32 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="DauerEditPar4">
             &GVP;
             <DEG type="ParDauerEdit"/>
-            
+
             <value path="SegHead.code">HIDANS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
 
         <SEGdef id="DauerEdit5"> <!-- 3.0 -->
-	    <DEG type="SegHeadUser" name="SegHead"/>
-	    <DEG type="KTV3" name="My"/>
-	    <DEG type="KTV3" name="Other"/>
-	    <DE name="name" type="DTAUS" maxsize="27"/>
-	    <DE name="name2" type="DTAUS" maxsize="27" minnum="0"/>
-	    <DEG type="BTG"/>
-	    <DE name="key" type="Dig" minsize="2" maxsize="2"/>
-	    <DE name="addkey" type="Dig" minsize="3" maxsize="3" minnum="0"/>
-	    <DEG type="usage3" name="usage" minnum="0"/>
-	    <DE name="date" type="Date" minnum="0"/>
-	    <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-	    <DEG type="DauerDetails"/>
-            
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DEG type="KTV3" name="My"/>
+            <DEG type="KTV3" name="Other"/>
+            <DE name="name" type="DTAUS" maxsize="27"/>
+            <DE name="name2" type="DTAUS" maxsize="27" minnum="0"/>
+            <DEG type="BTG"/>
+            <DE name="key" type="Dig" minsize="2" maxsize="2"/>
+            <DE name="addkey" type="Dig" minsize="3" maxsize="3" minnum="0"/>
+            <DEG type="usage3" name="usage" minnum="0"/>
+            <DE name="date" type="Date" minnum="0"/>
+            <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
+            <DEG type="DauerDetails"/>
+
             <value path="SegHead.code">HKDAN</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -2744,16 +2744,16 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAN</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="DauerEditPar5">
             &GVP2;
             <DEG type="ParDauerEdit"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIDANS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -2764,76 +2764,76 @@
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKDAB</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="DauerListRes1">
             &DauerInst1;
-            
+
             <value path="SegHead.code">HIDAB</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="DauerListPar1">
             &GVP;
-            
+
             <value path="SegHead.code">HIDABS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerList2"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKDAB</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="DauerListRes2">
             &DauerInst2;
-            
+
             <value path="SegHead.code">HIDAB</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="DauerListPar2">
             &GVP;
-            
+
             <value path="SegHead.code">HIDABS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerList3"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKDAB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="DauerListRes3">
             &DauerInst3;
-            
+
             <value path="SegHead.code">HIDAB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="DauerListPar3">
             &GVP;
-            
+
             <value path="SegHead.code">HIDABS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerList4"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKDAB</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -2851,26 +2851,26 @@
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DEG type="DauerDetails"/>
             <DEG type="Aussetzung3" name="Aussetzung" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAB</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="DauerListPar4">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIDABS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerList5"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKDAB</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -2891,114 +2891,114 @@
             <DE name="canchange" type="JN" minnum="0"/>
             <DE name="canskip" type="JN" minnum="0"/>
             <DE name="candel" type="JN" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAB</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="DauerListPar5">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIDABS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerNew2"> <!-- 2.01 -->
             &DauerUser1;
-            
+
             <value path="SegHead.code">HKDAE</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="DauerNewRes2" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAE</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="DauerNewPar2">
             &GVP;
             <DEG type="ParDauerNew"/>
-            
+
             <value path="SegHead.code">HIDAES</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerNew3"> <!-- 2.1 -->
             &DauerUser2;
-            
+
             <value path="SegHead.code">HKDAE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="DauerNewRes3" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="DauerNewPar3">
             &GVP;
             <DEG type="ParDauerNew"/>
-            
+
             <value path="SegHead.code">HIDAES</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerNew4"> <!-- 2.2 -->
             &DauerUser3;
-            
+
             <value path="SegHead.code">HKDAE</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="DauerNewRes4" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAE</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="DauerNewPar4">
             &GVP;
             <DEG type="ParDauerNew"/>
-            
+
             <value path="SegHead.code">HIDAES</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="DauerNew5"> <!-- 3.0 -->
-	    <DEG type="SegHeadUser" name="SegHead"/>
-	    <DEG type="KTV3" name="My"/>
-	    <DEG type="KTV3" name="Other"/>
-	    <DE name="name" type="DTAUS" maxsize="27"/>
-	    <DE name="name2" type="DTAUS" maxsize="27" minnum="0"/>
-	    <DEG type="BTG"/>
-	    <DE name="key" type="Dig" minsize="2" maxsize="2"/>
-	    <DE name="addkey" type="Dig" minsize="3" maxsize="3" minnum="0"/>
-	    <DEG type="usage3" name="usage" minnum="0"/>
-	    <DEG type="DauerDetails"/>
-            
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DEG type="KTV3" name="My"/>
+            <DEG type="KTV3" name="Other"/>
+            <DE name="name" type="DTAUS" maxsize="27"/>
+            <DE name="name2" type="DTAUS" maxsize="27" minnum="0"/>
+            <DEG type="BTG"/>
+            <DE name="key" type="Dig" minsize="2" maxsize="2"/>
+            <DE name="addkey" type="Dig" minsize="3" maxsize="3" minnum="0"/>
+            <DEG type="usage3" name="usage" minnum="0"/>
+            <DEG type="DauerDetails"/>
+
             <value path="SegHead.code">HKDAE</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="DauerNewRes5" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDAE</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="DauerNewPar5">
             &GVP2;
             <DEG type="ParDauerNew"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIDAES</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="FestCondList1"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="curr" type="Cur"/>
@@ -3023,7 +3023,7 @@
             <value path="SegHead.code">HIFGKS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="FestCondList2"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="curr" type="Cur"/>
@@ -3048,7 +3048,7 @@
             <value path="SegHead.code">HIFGKS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="FestCondList3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="curr" type="Cur"/>
@@ -3069,13 +3069,13 @@
         <SEGdef id="FestCondListPar3">
             &GVP2;
             <DEG type="ParFestCondList"/>
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HIFGKS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="FestList2"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
@@ -3099,7 +3099,7 @@
             <value path="SegHead.code">HIFGBS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="FestList3"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
@@ -3143,7 +3143,7 @@
         </SEGdef>
         <SEGdef id="FestListPar4">
             &GVP2;
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HIFGBS</value>
@@ -3156,7 +3156,7 @@
             <value path="SegHead.code">HKFGN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        <SEGdef id="FestNewRes2" needsRequestTag="1"> 
+        <SEGdef id="FestNewRes2" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTO" name="KTV" minnum="0"/>
             <DE name="kontakt" type="ID" minnum="0"/>
@@ -3164,7 +3164,7 @@
             <value path="SegHead.code">HIFGN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        <SEGdef id="FestNewPar2"> 
+        <SEGdef id="FestNewPar2">
             &GVP;
             <DEG type="ParFestNew1" name="ParFestNew"/>
 
@@ -3178,7 +3178,7 @@
             <value path="SegHead.code">HKFGN</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="FestNewRes3" needsRequestTag="1"> 
+        <SEGdef id="FestNewRes3" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTV2" name="KTV" minnum="0"/>
             <DE name="kontakt" type="ID" minnum="0"/>
@@ -3186,7 +3186,7 @@
             <value path="SegHead.code">HIFGN</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="FestNewPar3"> 
+        <SEGdef id="FestNewPar3">
             &GVP;
             <DEG type="ParFestNew2" name="ParFestNew"/>
 
@@ -3200,7 +3200,7 @@
             <value path="SegHead.code">HKFGN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        <SEGdef id="FestNewRes4" needsRequestTag="1"> 
+        <SEGdef id="FestNewRes4" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTV3" name="KTV" minnum="0"/>
             <DE name="kontakt" type="ID" minnum="0"/>
@@ -3208,189 +3208,189 @@
             <value path="SegHead.code">HIFGN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        <SEGdef id="FestNewPar4"> 
+        <SEGdef id="FestNewPar4">
             &GVP2;
             <DEG type="ParFestNew2" name="ParFestNew"/>
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HIFGNS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoDetails1"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="InfoCodes"/>
             <DEG type="Address1" name="Address" minnum="0"/>
-            
+
             <value path="SegHead.code">HKINF</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="InfoDetailsPar1">
             &GVP;
-            
+
             <value path="SegHead.code">HIINFS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoDetails2"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="InfoCodes"/>
             <DEG type="Address1" name="Address" minnum="0"/>
-            
+
             <value path="SegHead.code">HKINF</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="InfoDetailsRes2" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="Info" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIINF</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="InfoDetailsPar2">
             &GVP;
-            
+
             <value path="SegHead.code">HIINFS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoDetails3"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="InfoCodes"/>
             <DEG type="Address2" name="Address" minnum="0"/>
-            
+
             <value path="SegHead.code">HKINF</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="InfoDetailsRes3" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="Info" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIINF</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="InfoDetailsPar3">
             &GVP;
-            
+
             <value path="SegHead.code">HIINFS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoDetails4"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="InfoCodes"/>
             <DEG type="Address2" name="Address" minnum="0"/>
-            
+
             <value path="SegHead.code">HKINF</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="InfoDetailsRes4" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="Info" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIINF</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="InfoDetailsPar4">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIINFS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoList1" needsRequestTag="1"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKIA</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="InfoListRes1" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="InfoInfo" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIKIA</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="InfoListPar1">
             &GVP;
-            
+
             <value path="SegHead.code">HIKIAS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoList2" needsRequestTag="1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKIA</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="InfoListRes2" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="InfoInfo" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIKIA</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="InfoListPar2">
             &GVP;
-            
+
             <value path="SegHead.code">HIKIAS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoList3" needsRequestTag="1"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKIA</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="InfoListRes3" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="InfoInfo" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIKIA</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="InfoListPar3">
             &GVP;
-            
+
             <value path="SegHead.code">HIKIAS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="InfoList4" needsRequestTag="1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKIA</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="InfoListRes4" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="InfoInfo" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HIKIA</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="InfoListPar4">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKIAS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="Kontoauszug1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -3398,7 +3398,7 @@
             <DE name="idx" type="Num" maxsize="5" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKEKA</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -3411,20 +3411,20 @@
             <DE name="kondinfo" type="AN" maxsize="2048" minnum="0"/>
             <DE name="ads" type="AN" maxsize="2048" minnum="0"/>
             <DE name="receipt" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIEKA</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="KontoauszugPar1">
             &GVP2;
             <DEG type="ParKontoauszug"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIEKAS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="Kontoauszug2"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -3432,7 +3432,7 @@
             <DE name="idx" type="Num" maxsize="5" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKEKA</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -3450,20 +3450,20 @@
             <DE name="name2" type="AN" maxsize="35" minnum="0"/>
             <DE name="name3" type="AN" maxsize="35" minnum="0"/>
             <DE name="receipt" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIEKA</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="KontoauszugPar2">
             &GVP2;
             <DEG type="ParKontoauszug"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIEKAS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="Kontoauszug3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -3472,7 +3472,7 @@
             <DE name="year" type="Num" maxsize="4" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKEKA</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -3490,20 +3490,20 @@
             <DE name="name2" type="AN" maxsize="35" minnum="0"/>
             <DE name="name3" type="AN" maxsize="35" minnum="0"/>
             <DE name="receipt" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIEKA</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="KontoauszugPar3">
             &GVP2;
             <DEG type="ParKontoauszug"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIEKAS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="Kontoauszug4"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTVInt" name="My"/>
@@ -3512,7 +3512,7 @@
             <DE name="year" type="Num" maxsize="4" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKEKA</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -3530,27 +3530,27 @@
             <DE name="name2" type="AN" maxsize="35" minnum="0"/>
             <DE name="name3" type="AN" maxsize="35" minnum="0"/>
             <DE name="receipt" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIEKA</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="KontoauszugPar4">
             &GVP2;
             <DEG type="ParKontoauszug"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIEKAS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="KUmsNew4"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
             <DE name="curr" type="Cur" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -3558,14 +3558,14 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="KUmsNewPar4">
             &GVP;
             <DEG type="ParKUmsNew1" name="ParKUmsNew"/>
-            
+
             <value path="SegHead.code">HIKANS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -3576,7 +3576,7 @@
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAN</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -3584,14 +3584,14 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAN</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="KUmsNewPar5">
             &GVP;
             <DEG type="ParKUmsNew2" name="ParKUmsNew"/>
-            
+
             <value path="SegHead.code">HIKANS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -3602,7 +3602,7 @@
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAN</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
@@ -3610,16 +3610,16 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAN</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
         <SEGdef id="KUmsNewPar6">
             &GVP2;
             <DEG type="ParKUmsNew2" name="ParKUmsNew"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKANS</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
@@ -3630,7 +3630,7 @@
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAN</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
@@ -3638,16 +3638,16 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAN</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
         <SEGdef id="KUmsNewSEPAPar7">
             &GVP2;
             <DEG type="ParKUmsNew2" name="ParKUmsNewSEPA"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKANS</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
@@ -3660,7 +3660,7 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAZ</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -3668,14 +3668,14 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAZ</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="KUmsZeitPar4">
             &GVP;
             <DEG type="ParKUmsZeit1" name="ParKUmsZeit"/>
-            
+
             <value path="SegHead.code">HIKAZS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -3688,7 +3688,7 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAZ</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -3696,14 +3696,14 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAZ</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="KUmsZeitPar5">
             &GVP;
             <DEG type="ParKUmsZeit2" name="ParKUmsZeit"/>
-            
+
             <value path="SegHead.code">HIKAZS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -3716,7 +3716,7 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAZ</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
@@ -3724,20 +3724,20 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAZ</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
         <SEGdef id="KUmsZeitPar6">
             &GVP2;
             <DEG type="ParKUmsZeit2" name="ParKUmsZeit"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKAZS</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        
+
         <SEGdef id="KUmsZeitSEPA7"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTVInt" name="KTV"/>
@@ -3746,7 +3746,7 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKKAZ</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
@@ -3754,78 +3754,78 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="booked" type="Bin" maxsize="0"/>
             <DE name="notbooked" type="Bin" maxsize="0" minnum="0"/>
-            
+
             <value path="SegHead.code">HIKAZ</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
         <SEGdef id="KUmsZeitSEPAPar7">
             &GVP2;
             <DEG type="ParKUmsZeit2" name="ParKUmsZeitSEPA"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIKAZS</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
-        
+
         <SEGdef id="Last2"> <!-- 2.01 -->
             &SingleInlandUser1;
-            
+
             <value path="SegHead.code">HKLAS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="LastPar2">
             &GVP;
             <DEG type="ParLast"/>
-            
+
             <value path="SegHead.code">HILASS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
 
         <SEGdef id="Last3"> <!-- 2.1 -->
             &SingleInlandUser2;
-            
+
             <value path="SegHead.code">HKLAS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="LastPar3">
             &GVP;
             <DEG type="ParLast"/>
-            
+
             <value path="SegHead.code">HILASS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
 
         <SEGdef id="Last4"> <!-- 2.2 -->
             &SingleInlandUser3;
-            
+
             <value path="SegHead.code">HKLAS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="LastPar4">
             &GVP;
             <DEG type="ParLast"/>
-            
+
             <value path="SegHead.code">HILASS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
 
         <SEGdef id="Last5"> <!-- 3.0 -->
             &SingleInlandUser4;
-            
+
             <value path="SegHead.code">HKLAS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="LastPar5">
             &GVP2;
             <DEG type="ParLast"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HILASS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="LastObjection1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -3835,20 +3835,20 @@
             <DE name="name" type="AN" maxsize="27"/>
             <DE name="name2" type="AN" maxsize="27" minnum="0"/>
             <DE name="primanota" type="AN" maxsize="10" minnum="0"/>
-            
+
             <value path="SegHead.code">HKLSW</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="LastObjectionPar1">
             &GVP2;
             <DEG type="ParLastObjection"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HILSWS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="LastObjection2"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -3860,49 +3860,49 @@
             <DE name="primanota" type="AN" maxsize="10" minnum="0"/>
             <DEG type="usage3" name="usage" minnum="0"/>
             <DE name="orderid" type="AN" maxsize="90" minnum="0"/>
-            
+
             <value path="SegHead.code">HKLSW</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="LastObjectionPar2">
             &GVP2;
             <DEG type="ParLastObjection"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HILSWS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="OrderHistory1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKAUE</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="OrderHistoryRes1">
             &SingleInlandInst4;
-            
+
             <value path="SegHead.code">HIAUE</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="OrderHistoryPar1">
             &GVP2;
             <DEG type="ParOrderHistory"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIAUES</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="PinTanPar1">
             &GVP;
             <DEG type="ParPinTan"/>
-            
+
             <value path="SegHead.code">DIPINS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -3910,20 +3910,20 @@
         <SEGdef id="PinTanPar2">
             &GVP2;
             <DEG type="ParPinTan2" name="ParPinTan"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIPINS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
 
-	<SEGdef id="Receipt1" needsRequestTag="1">
-	    <DEG type="SegHeadUser" name="SegHead" />
-	    <DE name="receipt" type="Bin" maxsize="0" minnum="0" />
-	    
-	    <value path="SegHead.code">HKQTG</value>
-	    <value path="SegHead.version">1</value>
-	</SEGdef>
+        <SEGdef id="Receipt1" needsRequestTag="1">
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DE name="receipt" type="Bin" maxsize="0" minnum="0"/>
+
+            <value path="SegHead.code">HKQTG</value>
+            <value path="SegHead.version">1</value>
+        </SEGdef>
 
         <SEGdef id="Saldo3"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
@@ -3932,11 +3932,11 @@
             <DE name="curr" type="Cur" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKSAL</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="SaldoRes3"> 
+        <SEGdef id="SaldoRes3">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
             <DE name="kontobez" type="AN" maxsize="30"/>
@@ -3946,17 +3946,17 @@
             <DEG type="BTG" name="kredit" minnum="0"/>
             <DEG type="BTG" name="available" minnum="0"/>
             <DEG type="BTG" name="used" minnum="0"/>
-            
+
             <value path="SegHead.code">HISAL</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="SaldoPar3">
             &GVP;
-            
+
             <value path="SegHead.code">HISALS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="Saldo4"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
@@ -3964,11 +3964,11 @@
             <DE name="curr" type="Cur" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKSAL</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        <SEGdef id="SaldoRes4"> 
+        <SEGdef id="SaldoRes4">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
             <DE name="kontobez" type="AN" maxsize="30"/>
@@ -3980,28 +3980,28 @@
             <DEG type="BTG" name="used" minnum="0"/>
             <DE name="Timestamp.date" type="Date" minnum="0"/>
             <DE name="Timestamp.time" type="Time" minnum="0"/>
-            
+
             <value path="SegHead.code">HISAL</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="SaldoPar4">
             &GVP;
-            
+
             <value path="SegHead.code">HISALS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="Saldo5"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKSAL</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        <SEGdef id="SaldoRes5"> 
+        <SEGdef id="SaldoRes5">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
             <DE name="kontobez" type="AN" maxsize="30"/>
@@ -4014,28 +4014,28 @@
             <DE name="Timestamp.date" type="Date" minnum="0"/>
             <DE name="Timestamp.time" type="Time" minnum="0"/>
             <DE name="duedate" type="Date" minnum="0"/>
-            
+
             <value path="SegHead.code">HISAL</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="SaldoPar5">
             &GVP;
-            
+
             <value path="SegHead.code">HISALS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="Saldo6"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKSAL</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        <SEGdef id="SaldoRes6"> 
+        <SEGdef id="SaldoRes6">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
             <DE name="kontobez" type="AN" maxsize="30"/>
@@ -4048,15 +4048,15 @@
             <DEG type="BTG" name="overdrive" minnum="0"/>
             <DEG type="Timestamp" minnum="0"/>
             <DE name="duedate" type="Date" minnum="0"/>
-            
+
             <value path="SegHead.code">HISAL</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
         <SEGdef id="SaldoPar6">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISALS</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
@@ -4067,11 +4067,11 @@
             <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKSAL</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
-        <SEGdef id="SaldoSEPARes7"> 
+        <SEGdef id="SaldoSEPARes7">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTVInt" name="KTV"/>
             <DE name="kontobez" type="AN" maxsize="30"/>
@@ -4084,15 +4084,15 @@
             <DEG type="BTG" name="overdrive" minnum="0"/>
             <DEG type="Timestamp" minnum="0"/>
             <DE name="duedate" type="Date" minnum="0"/>
-            
+
             <value path="SegHead.code">HISAL</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
         <SEGdef id="SaldoSEPAPar7">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISALS</value>
             <value path="SegHead.version">7</value>
         </SEGdef>
@@ -4106,11 +4106,11 @@
         <SEGdef id="SammelLastPar3">
             &GVP;
             <DEG type="ParSammelLast"/>
-            
+
             <value path="SegHead.code">HISLAS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelLast4"> <!-- 2.1 -->
             &SammelUser1;
 
@@ -4120,11 +4120,11 @@
         <SEGdef id="SammelLastPar4">
             &GVP;
             <DEG type="ParSammelLast"/>
-            
+
             <value path="SegHead.code">HISLAS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelLast5"> <!-- 2.2 -->
             &SammelUser2;
 
@@ -4134,11 +4134,11 @@
         <SEGdef id="SammelLastPar5">
             &GVP;
             <DEG type="ParSammelLast"/>
-            
+
             <value path="SegHead.code">HISLAS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelLast6"> <!-- 3.0 -->
             &SammelUser3;
 
@@ -4148,137 +4148,137 @@
         <SEGdef id="SammelLastPar6">
             &GVP2;
             <DEG type="ParSammelLast"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISLAS</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelUeb3"> <!-- 2.01 -->
             &SammelUser1;
-            
+
             <value path="SegHead.code">HKSUB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="SammelUebPar3">
             &GVP;
             <DEG type="ParSammelUeb"/>
-            
+
             <value path="SegHead.code">HISUBS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelUeb4"> <!-- 2.1 -->
             &SammelUser1;
-            
+
             <value path="SegHead.code">HKSUB</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="SammelUebPar4">
             &GVP;
             <DEG type="ParSammelUeb"/>
-            
+
             <value path="SegHead.code">HISUBS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelUeb5"> <!-- 2.2 -->
             &SammelUser2;
-            
+
             <value path="SegHead.code">HKSUB</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="SammelUebPar5">
             &GVP;
             <DEG type="ParSammelUeb"/>
-            
+
             <value path="SegHead.code">HISUBS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelUeb6"> <!-- 3.0 -->
             &SammelUser3;
-            
+
             <value path="SegHead.code">HKSUB</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
         <SEGdef id="SammelUebPar6">
             &GVP2;
             <DEG type="ParSammelUeb"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISUBS</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelUebEil1"> <!-- 3.0 -->
             &SammelUser3;
-            
+
             <value path="SegHead.code">HKDTE</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="SammelUebEilPar1">
             &GVP2;
             <DEG type="ParSammelUeb"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIDTES</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="SammelUebSEPA1"> <!-- 3.0 -->
-            <DEG type="SegHeadUser" name="SegHead" />
-	    <DEG type="KTVInt" name="My" />
-	    <DEG type="BTG" name="Total" minnum="0" />
-	    <DE type="JN" name="singletransfers" minnum="0" />
-	    <DE type="AN" name="sepadescr" maxsize="256" />
-	    <DE type="Bin" name="sepapain" maxsize="0" />
-            
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DEG type="KTVInt" name="My"/>
+            <DEG type="BTG" name="Total" minnum="0"/>
+            <DE type="JN" name="singletransfers" minnum="0"/>
+            <DE type="AN" name="sepadescr" maxsize="256"/>
+            <DE type="Bin" name="sepapain" maxsize="0"/>
+
             <value path="SegHead.code">HKCCM</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="SammelUebSEPAPar1">
             &GVP2;
             <DEG type="ParSammelUebSEPA"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HICCMS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="SEPAInfo1">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HKSPA</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="SEPAInfoRes1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DEG type="KTVZVInt" name="Acc" minnum="0" maxnum="999"/>
-            
+
             <value path="SegHead.code">HISPA</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="SEPAInfoPar1">
             &GVP2;
             <DEG type="ParSEPAInfo"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISPAS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="Status2" needsRequestTag="1"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKPRO</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -4289,24 +4289,24 @@
             <DE name="date" type="Date"/>
             <DE name="time" type="Time"/>
             <DEG type="RetVal"/>
-            
+
             <value path="SegHead.code">HIPRO</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="StatusPar2">
             &GVP;
-            
+
             <value path="SegHead.code">HIPROS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="Status3" needsRequestTag="1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="startdate" type="Date" minnum="0"/>
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKPRO</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -4317,24 +4317,24 @@
             <DE name="date" type="Date"/>
             <DE name="time" type="Time"/>
             <DEG type="RetVal"/>
-            
+
             <value path="SegHead.code">HIPRO</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="StatusPar3">
             &GVP;
-            
+
             <value path="SegHead.code">HIPROS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="Status4" needsRequestTag="1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="startdate" type="Date" minnum="0"/>
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKPRO</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -4345,19 +4345,19 @@
             <DE name="date" type="Date"/>
             <DE name="time" type="Time"/>
             <DEG type="RetVal"/>
-            
+
             <value path="SegHead.code">HIPRO</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="StatusPar4">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIPROS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="TAN2Step1" needsRequestTag="1">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="process" type="Code" maxsize="1"/>
@@ -4366,14 +4366,14 @@
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="notlasttan" type="JN" minnum="0"/>
             <DE name="info" type="AN" maxsize="99" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKTAN</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -4386,23 +4386,23 @@
             <DEG type="ChallengeValidity" minnum="0"/>
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="info" type="AN" maxsize="99" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HITAN</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="TAN2StepPar1">
             &GVP2;
             <DEG type="ParTAN2Step1" name="ParTAN2Step"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITANS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -4417,14 +4417,14 @@
             <DE name="storno" type="JN" minnum="0"/>
             <DE name="challengeklass" type="Num" maxsize="2" minnum="0"/>
             <DEG name="ChallengeKlassParams" type="ChallengeKlassParams" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKTAN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -4437,23 +4437,23 @@
             <DEG type="ChallengeValidity" minnum="0"/>
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="ben" type="AN" maxsize="99" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HITAN</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="TAN2StepPar2">
             &GVP2;
             <DEG type="ParTAN2Step2" name="ParTAN2Step"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITANS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -4469,14 +4469,14 @@
             <DE name="challengeklass" type="Num" maxsize="2" minnum="0"/>
             <DEG name="ChallengeKlassParams" type="ChallengeKlassParams" minnum="0"/>
             <DE name="tanmedia" type="AN" maxsize="32" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKTAN</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -4490,23 +4490,23 @@
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="ben" type="AN" maxsize="99" minnum="0"/>
             <DE name="tanmedia" type="AN" maxsize="32" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HITAN</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TAN2StepPar3">
             &GVP2;
             <DEG type="ParTAN2Step3" name="ParTAN2Step"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITANS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -4519,18 +4519,18 @@
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="notlasttan" type="JN" minnum="0"/>
             <DE name="storno" type="JN" minnum="0"/>
-	    <DEG name="SMSAccount" type="KTV3" minnum="0" />
+            <DEG name="SMSAccount" type="KTV3" minnum="0"/>
             <DE name="challengeklass" type="Num" maxsize="2" minnum="0"/>
             <DEG name="ChallengeKlassParams" type="ChallengeKlassParams" minnum="0"/>
             <DE name="tanmedia" type="AN" maxsize="32" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKTAN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -4540,33 +4540,31 @@
             <DE name="orderhash" type="Bin" maxsize="256" minnum="0"/>
             <DE name="orderref" type="AN" maxsize="35" minnum="0"/>
             <DE name="challenge" type="AN" maxsize="2048" minnum="0"/>
-	    <DE name="challenge_hhd_uc" type="Bin" maxsize="0" minnum="0" />
+            <DE name="challenge_hhd_uc" type="Bin" maxsize="0" minnum="0"/>
             <DEG type="ChallengeValidity" minnum="0"/>
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="ben" type="AN" maxsize="99" minnum="0"/>
             <DE name="tanmedia" type="AN" maxsize="32" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HITAN</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="TAN2StepPar4">
             &GVP2;
             <DEG type="ParTAN2Step4" name="ParTAN2Step"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITANS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-
-
 
 
         <!--  willuhn 2011-05-16 BEGIN HKTAN/HITAN/HITANS Version 5 -->
@@ -4574,24 +4572,24 @@
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="process" type="Code" maxsize="1"/>
             <DE name="ordersegcode" type="AN" maxsize="6" minnum="0"/>
-            <DEG name="OrderAccount" type="KTVInt" minnum="0" />
+            <DEG name="OrderAccount" type="KTVInt" minnum="0"/>
             <DE name="orderhash" type="Bin" maxsize="256" minnum="0"/>
             <DE name="orderref" type="AN" maxsize="35" minnum="0"/>
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="notlasttan" type="JN" minnum="0"/>
             <DE name="storno" type="JN" minnum="0"/>
-            <DEG name="SMSAccount" type="KTV3" minnum="0" />
+            <DEG name="SMSAccount" type="KTV3" minnum="0"/>
             <DE name="challengeklass" type="Num" maxsize="2" minnum="0"/>
             <DEG name="ChallengeKlassParams" type="ChallengeKlassParams" minnum="0"/>
             <DE name="tanmedia" type="AN" maxsize="32" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKTAN</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
@@ -4601,35 +4599,32 @@
             <DE name="orderhash" type="Bin" maxsize="256" minnum="0"/>
             <DE name="orderref" type="AN" maxsize="35" minnum="0"/>
             <DE name="challenge" type="AN" maxsize="2048" minnum="0"/>
-            <DE name="challenge_hhd_uc" type="Bin" maxsize="0" minnum="0" />
+            <DE name="challenge_hhd_uc" type="Bin" maxsize="0" minnum="0"/>
             <DEG type="ChallengeValidity" minnum="0"/>
             <DE name="listidx" type="AN" maxsize="20" minnum="0"/>
             <DE name="ben" type="AN" maxsize="99" minnum="0"/>
             <DE name="tanmedia" type="AN" maxsize="32" minnum="0"/>
-            
+
             <valids path="process">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HITAN</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <SEGdef id="TAN2StepPar5">
             &GVP2;
             <DEG type="ParTAN2Step5" name="ParTAN2Step"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITANS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
         <!--  willuhn 2011-05-16 END HKTAN/HITAN/HITANS Version 5 -->
-
-
-
 
 
         <SEGdef id="TANListList1" needsRequestTag="1"> <!-- 2.2 -->
@@ -4659,36 +4654,36 @@
         </SEGdef>
         <SEGdef id="TANListListPar1">
             &GVP2;
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HITAZS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="TermSammelLast3"> <!-- 3.0 -->
             &SammelUser3;
-            
+
             <value path="SegHead.code">HKSLE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermSammelLastRes3">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HISLE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermSammelLastPar3">
             &GVP2;
             <DEG type="ParTermSammelLast"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISLES</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermSammelLastDel3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
@@ -4703,13 +4698,13 @@
         </SEGdef>
         <SEGdef id="TermSammelLastDelPar3">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HISLLS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermSammelLastList3">  <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -4717,7 +4712,7 @@
             <DE name="to" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKSLB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -4729,41 +4724,41 @@
             <DE name="execdate" type="Date"/>
             <DE name="ordercount" type="Num" maxsize="5"/>
             <DEG type="BTG" name="sum"/>
-            
+
             <value path="SegHead.code">HISLB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermSammelLastListPar3">
             &GVP;
             <DEG type="ParTermSammelLastList"/>
-            
+
             <value path="SegHead.code">HISLBS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermSammelUeb3"> <!-- 3.0 -->
             &SammelUser3;
-            
+
             <value path="SegHead.code">HKTSE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermSammelUebRes3">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITSE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermSammelUebPar3">
             &GVP2;
             <DEG type="ParTermSammelUeb"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITSES</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermSammelUebDel3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
@@ -4778,13 +4773,13 @@
         </SEGdef>
         <SEGdef id="TermSammelUebDelPar3">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITSLS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermSammelUebList3">  <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -4792,7 +4787,7 @@
             <DE name="to" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKTSB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -4804,83 +4799,83 @@
             <DE name="execdate" type="Date"/>
             <DE name="ordercount" type="Num" maxsize="5"/>
             <DEG type="BTG" name="sum"/>
-            
+
             <value path="SegHead.code">HITSB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermSammelUebListPar3">
             &GVP;
             <DEG type="ParTermSammelUebList"/>
-            
+
             <value path="SegHead.code">HITSBS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUeb2"> <!-- 2.01 -->
             &SingleInlandUser1;
-            
+
             <value path="SegHead.code">HKTUE</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="TermUebRes2" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITUE</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="TermUebPar2">
             &GVP;
             <DEG type="ParTermUeb"/>
-            
+
             <value path="SegHead.code">HITUES</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUeb3"> <!-- 2.2 -->
             &SingleInlandUser3;
-            
+
             <value path="SegHead.code">HKTUE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermUebRes3" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITUE</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermUebPar3">
             &GVP;
             <DEG type="ParTermUeb"/>
-            
+
             <value path="SegHead.code">HITUES</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUeb4"> <!-- 3.0 -->
             &SingleInlandUser4;
-            
+
             <value path="SegHead.code">HKTUE</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="TermUebRes4" needsRequestTag="1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITUE</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="TermUebPar4">
             &GVP2;
             <DEG type="ParTermUeb"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITUES</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebDel1"> <!-- 2.01 -->
             &SingleInlandUser1;
 
@@ -4893,7 +4888,7 @@
             <value path="SegHead.code">HITULS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebDel2"> <!-- 2.2 -->
             &SingleInlandUser3;
 
@@ -4906,7 +4901,7 @@
             <value path="SegHead.code">HITULS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebDel3"> <!-- 3.0 -->
             &SingleInlandUser4;
 
@@ -4915,16 +4910,16 @@
         </SEGdef>
         <SEGdef id="TermUebDelPar3">
             &GVP2;
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HITULS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebEdit2"> <!-- 2.01 -->
             &SingleInlandUser1;
-            
+
             <value path="SegHead.code">HKTUA</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -4932,21 +4927,21 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITUA</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="TermUebEditPar2">
             &GVP;
             <DEG type="ParTermUebEdit"/>
-            
+
             <value path="SegHead.code">HITUAS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebEdit3"> <!-- 2.2 -->
             &SingleInlandUser3;
-            
+
             <value path="SegHead.code">HKTUA</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -4954,21 +4949,21 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITUA</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="TermUebEditPar3">
             &GVP;
             <DEG type="ParTermUebEdit"/>
-            
+
             <value path="SegHead.code">HITUAS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebEdit4"> <!-- 3.0 -->
             &SingleInlandUser4;
-            
+
             <value path="SegHead.code">HKTUA</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
@@ -4976,20 +4971,20 @@
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99"/>
             <DE name="orderidold" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HITUA</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
         <SEGdef id="TermUebEditPar4">
             &GVP2;
             <DEG type="ParTermUebEdit"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITUAS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebList1"> <!-- 2.01 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="KTV"/>
@@ -4997,24 +4992,24 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKTUB</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        <SEGdef id="TermUebListRes1"> 
+        <SEGdef id="TermUebListRes1">
             &SingleInlandInst1;
-            
+
             <value path="SegHead.code">HITUB</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        <SEGdef id="TermUebListPar1"> 
+        <SEGdef id="TermUebListPar1">
             &GVP;
             <DEG type="ParTermUebList"/>
-            
+
             <value path="SegHead.code">HITUBS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebList2"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="KTV"/>
@@ -5022,24 +5017,24 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKTUB</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        <SEGdef id="TermUebListRes2"> 
+        <SEGdef id="TermUebListRes2">
             &SingleInlandInst3;
-            
+
             <value path="SegHead.code">HITUB</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        <SEGdef id="TermUebListPar2"> 
+        <SEGdef id="TermUebListPar2">
             &GVP;
             <DEG type="ParTermUebList"/>
-            
+
             <value path="SegHead.code">HITUBS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="TermUebList3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="KTV"/>
@@ -5047,26 +5042,26 @@
             <DE name="enddate" type="Date" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKTUB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="TermUebListRes3"> 
+        <SEGdef id="TermUebListRes3">
             &SingleInlandInst4;
-            
+
             <value path="SegHead.code">HITUB</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="TermUebListPar3"> 
+        <SEGdef id="TermUebListPar3">
             &GVP2;
             <DEG type="ParTermUebList"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HITUBS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="Ueb2"> <!-- 2.01 -->
             &SingleInlandUser1;
 
@@ -5080,7 +5075,7 @@
             <value path="SegHead.code">HIUEBS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="Ueb3"> <!-- 2.1 -->
             &SingleInlandUser2;
 
@@ -5094,7 +5089,7 @@
             <value path="SegHead.code">HIUEBS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="Ueb4"> <!-- 2.2 -->
             &SingleInlandUser3;
 
@@ -5108,7 +5103,7 @@
             <value path="SegHead.code">HIUEBS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="Ueb5"> <!-- 3.0 -->
             &SingleInlandUser4;
 
@@ -5124,10 +5119,10 @@
             <value path="SegHead.code">HIUEBS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="UebEil1"> <!-- 3-0 -->
             &SingleInlandUser4;
-            
+
             <value path="SegHead.code">HKEIL</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -5169,7 +5164,7 @@
             <value path="SegHead.code">HIAOMS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="UebForeign2"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="My"/>
@@ -5200,10 +5195,10 @@
             <value path="SegHead.code">HIAOMS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="UebGar1"> <!-- 3-0 -->
             &SingleInlandUser4;
-            
+
             <value path="SegHead.code">HKGUB</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -5220,7 +5215,7 @@
             <DE name="addkey" type="Dig" minsize="3" maxsize="3" minnum="0"/>
             <DEG type="usage3" name="usage" minnum="0"/>
             <DEG type="Timestamp" minnum="0"/>
-            
+
             <value path="SegHead.code">HIGUB</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -5239,19 +5234,19 @@
             <DEG type="KTVInt" name="My"/>
             <DE name="sepadescr" type="AN" maxsize="256"/>
             <DE name="sepapain" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HKCCS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="UebSEPAPar1">
             &GVP2;
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HICCSS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- BEGIN SEPA-Lastschrift CORE -->
         <!-- Request -->
         <SEGdef id="LastSEPA1">
@@ -5259,20 +5254,20 @@
             <DEG type="KTVInt" name="My"/>
             <DE name="sepadescr" type="AN" maxsize="256"/>
             <DE name="sepapain" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HKDSE</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- Response -->
         <SEGdef id="LastSEPARes1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDSE</value>
-            <value path="SegHead.version">1</value>                
+            <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- BPD -->
         <SEGdef id="LastSEPAPar1">
             &GVP2;
@@ -5282,7 +5277,7 @@
             <value path="SegHead.version">1</value>
         </SEGdef>
         <!-- END SEPA-Lastschrift CORE -->
-        
+
         <!-- BEGIN SEPA-Lastschrift COR1 -->
         <!-- Request -->
         <SEGdef id="LastCOR1SEPA1">
@@ -5290,20 +5285,20 @@
             <DEG type="KTVInt" name="My"/>
             <DE name="sepadescr" type="AN" maxsize="256"/>
             <DE name="sepapain" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HKDSC</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- Response -->
         <SEGdef id="LastCOR1SEPARes1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIDSC</value>
-            <value path="SegHead.version">1</value>                
+            <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- BPD -->
         <SEGdef id="LastCOR1SEPAPar1">
             &GVP2;
@@ -5313,7 +5308,7 @@
             <value path="SegHead.version">1</value>
         </SEGdef>
         <!-- END SEPA-Lastschrift COR1 -->
-        
+
         <!-- BEGIN SEPA-Lastschrift B2B -->
         <!-- Request -->
         <SEGdef id="LastB2BSEPA1">
@@ -5321,20 +5316,20 @@
             <DEG type="KTVInt" name="My"/>
             <DE name="sepadescr" type="AN" maxsize="256"/>
             <DE name="sepapain" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HKBSE</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- Response -->
         <SEGdef id="LastB2BSEPARes1">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="orderid" type="AN" maxsize="99" minnum="0"/>
-            
+
             <value path="SegHead.code">HIBSE</value>
-            <value path="SegHead.version">1</value>                
+            <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <!-- BPD -->
         <SEGdef id="LastB2BSEPAPar1">
             &GVP2;
@@ -5344,7 +5339,7 @@
             <value path="SegHead.version">1</value>
         </SEGdef>
         <!-- END SEPA-Lastschrift B2B -->
-        
+
         <SEGdef id="Umb1"> <!-- 2.2 -->
             &SingleInlandUser3;
 
@@ -5358,7 +5353,7 @@
             <value path="SegHead.code">HIUMBS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="Umb2"> <!-- 3.0 -->
             &SingleInlandUser4;
 
@@ -5374,34 +5369,34 @@
             <value path="SegHead.code">HIUMBS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="Vormerkposten1">
-            <DEG type="SegHeadUser" name="SegHead" />
-            <DEG type="KTV3" name="My" />
-            <DE name="allaccounts" type="JN" />
+            <DEG type="SegHeadUser" name="SegHead"/>
+            <DEG type="KTV3" name="My"/>
+            <DE name="allaccounts" type="JN"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-          
+
             <value path="SegHead.code">HKVMK</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="VormerkpostenRes1">
-            <DEG type="SegHeadInst" name="SegHead" />
-            <DE name="mt942" type="Bin" maxsize="0" />
-          
+            <DEG type="SegHeadInst" name="SegHead"/>
+            <DE name="mt942" type="Bin" maxsize="0"/>
+
             <value path="SegHead.code">HIVMK</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="VormerkpostenPar1">
             &GVP2;
             <DEG type="ParVormerkposten"/>
-          
+
             &SecClassValids;
-          
+
             <value path="SegHead.code">HIVMKS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="TemplatePar">
             &GVP;
         </SEGdef>
@@ -5426,49 +5421,49 @@
             <DEG type="KTO" name="Depot"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKWPD</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        <SEGdef id="WPDepotListRes2"> 
+        <SEGdef id="WPDepotListRes2">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="data571" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HIWPD</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        <SEGdef id="WPDepotListPar2"> 
+        <SEGdef id="WPDepotListPar2">
             &GVP;
             <DEG type="ParWPDepotList1" name="ParWPDepotList"/>
-            
+
             <value path="SegHead.code">HIWPDS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotList3">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="Depot"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKWPD</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="WPDepotListRes3"> 
+        <SEGdef id="WPDepotListRes3">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="data535" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HIWPD</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        <SEGdef id="WPDepotListPar3"> 
+        <SEGdef id="WPDepotListPar3">
             &GVP;
             <DEG type="ParWPDepotList1" name="ParWPDepotList"/>
-            
+
             <value path="SegHead.code">HIWPDS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotList4"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot"/>
@@ -5476,25 +5471,25 @@
             <DE name="quality" type="Num" maxsize="1" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKWPD</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        <SEGdef id="WPDepotListRes4"> 
+        <SEGdef id="WPDepotListRes4">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="data571" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HIWPD</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        <SEGdef id="WPDepotListPar4"> 
+        <SEGdef id="WPDepotListPar4">
             &GVP;
             <DEG type="ParWPDepotList2" name="ParWPDepotList"/>
-            
+
             <value path="SegHead.code">HIWPDS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotList5">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot"/>
@@ -5502,25 +5497,25 @@
             <DE name="quality" type="Num" maxsize="1" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKWPD</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        <SEGdef id="WPDepotListRes5"> 
+        <SEGdef id="WPDepotListRes5">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="data535" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HIWPD</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        <SEGdef id="WPDepotListPar5"> 
+        <SEGdef id="WPDepotListPar5">
             &GVP;
             <DEG type="ParWPDepotList2" name="ParWPDepotList"/>
-            
+
             <value path="SegHead.code">HIWPDS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotList6"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="Depot"/>
@@ -5528,27 +5523,27 @@
             <DE name="quality" type="Num" maxsize="1" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <value path="SegHead.code">HKWPD</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        <SEGdef id="WPDepotListRes6"> 
+        <SEGdef id="WPDepotListRes6">
             <DEG type="SegHeadInst" name="SegHead"/>
             <DE name="data535" type="Bin" maxsize="0"/>
-            
+
             <value path="SegHead.code">HIWPD</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        <SEGdef id="WPDepotListPar6"> 
+        <SEGdef id="WPDepotListPar6">
             &GVP2;
             <DEG type="ParWPDepotList2" name="ParWPDepotList"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIWPDS</value>
             <value path="SegHead.version">6</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotUms1" needsRequestTag="1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="Depot" minnum="0"/>
@@ -5575,7 +5570,7 @@
             <value path="SegHead.code">HIWDUS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotUms2" needsRequestTag="1">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTO" name="Depot" minnum="0"/>
@@ -5602,7 +5597,7 @@
             <value path="SegHead.code">HIWDUS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotUms3"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot"/>
@@ -5630,7 +5625,7 @@
             <value path="SegHead.code">HIWDUS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotUms4">
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot"/>
@@ -5658,7 +5653,7 @@
             <value path="SegHead.code">HIWDUS</value>
             <value path="SegHead.version">4</value>
         </SEGdef>
-        
+
         <SEGdef id="WPDepotUms5"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="Depot"/>
@@ -5682,13 +5677,13 @@
         <SEGdef id="WPDepotUmsPar5">
             &GVP2;
             <DEG type="ParWPDepotUms"/>
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HIWDUS</value>
             <value path="SegHead.version">5</value>
         </SEGdef>
-        
+
         <SEGdef id="WPInfoList1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="WPRef"/>
@@ -5714,7 +5709,7 @@
             <value path="SegHead.code">HIWPIS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="WPInfoList2"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot" minnum="0"/>
@@ -5742,7 +5737,7 @@
             <value path="SegHead.code">HIWPIS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="WPInfoList3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="Depot" minnum="0"/>
@@ -5766,13 +5761,13 @@
         <SEGdef id="WPInfoListPar3">
             &GVP2;
             <DEG type="ParWPInfoList"/>
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HIWPIS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="WPKursList1" needsRequestTag="1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="WPRef" minnum="0"/>
@@ -5799,7 +5794,7 @@
             <value path="SegHead.code">HIWPKS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="WPKursList2" needsRequestTag="1"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot" minnum="0"/>
@@ -5809,7 +5804,7 @@
             <DE name="kursquality" type="Num" maxsize="1" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <valids path="kursquality">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -5859,7 +5854,7 @@
             <value path="SegHead.code">HIWPKS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="WPKursList3" needsRequestTag="1"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="Depot" minnum="0"/>
@@ -5869,7 +5864,7 @@
             <DE name="kursquality" type="Num" maxsize="1" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <valids path="kursquality">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -5915,13 +5910,13 @@
         <SEGdef id="WPKursListPar3">
             &GVP2;
             <DEG type="ParWPKursList2" name="ParWPKursList"/>
-            
+
             &SecClassValids;
 
             <value path="SegHead.code">HIWPKS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="WPRefList1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="search" type="AN" maxsize="34" minnum="0"/>
@@ -5932,13 +5927,13 @@
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <valids path="region">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKWPR</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -5956,11 +5951,11 @@
         <SEGdef id="WPRefListPar1">
             &GVP;
             <DEG type="ParWPRefList"/>
-            
+
             <value path="SegHead.code">HIWPRS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="WPRefList2"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="search" type="AN" maxsize="99" minnum="0"/>
@@ -5971,13 +5966,13 @@
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <valids path="region">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKWPR</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -5995,11 +5990,11 @@
         <SEGdef id="WPRefListPar2">
             &GVP;
             <DEG type="ParWPRefList"/>
-            
+
             <value path="SegHead.code">HIWPRS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="WPRefList3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DE name="search" type="AN" maxsize="99" minnum="0"/>
@@ -6010,13 +6005,13 @@
             <DE name="boerse" type="AN" minsize="4" maxsize="4" minnum="0"/>
             <DE name="maxentries" type="Num" maxsize="4" minnum="0"/>
             <DE name="offset" type="AN" maxsize="35" minnum="0"/>
-            
+
             <valids path="region">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HKWPR</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -6034,17 +6029,17 @@
         <SEGdef id="WPRefListPar3">
             &GVP2;
             <DEG type="ParWPRefList"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIWPRS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
-        
+
         <SEGdef id="WPStammList1"> <!-- 2.1 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="WPRef"/>
-            
+
             <value path="SegHead.code">HKWSD</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
@@ -6076,7 +6071,7 @@
             <DE name="group" type="Num" maxsize="3" minnum="0"/>
             <DE name="info" type="AN" maxsize="2048" minnum="0"/>
             <DEG type="WPBInfo1" name="WPBInfo" minnum="0" maxnum="99"/>
-            
+
             <valids path="region">
                 <validvalue>0</validvalue>
                 <validvalue>1</validvalue>
@@ -6099,22 +6094,22 @@
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIWSD</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
         <SEGdef id="WPStammListPar1">
             &GVP;
-            
+
             <value path="SegHead.code">HIWSDS</value>
             <value path="SegHead.version">1</value>
         </SEGdef>
-        
+
         <SEGdef id="WPStammList2"> <!-- 2.2 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV2" name="Depot" minnum="0"/>
             <DEG type="WPRef"/>
-            
+
             <value path="SegHead.code">HKWSD</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
@@ -6138,7 +6133,7 @@
             <DEG type="WPStammFonds" minnum="0"/>
             <DEG type="WPStammOptions" minnum="0"/>
             <DEG type="WPBInfo2" name="WPBInfo" minnum="0" maxnum="99"/>
-            
+
             <valids path="notizeinheit">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -6159,23 +6154,23 @@
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIWSD</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
         <SEGdef id="WPStammListPar2">
             &GVP;
             <DEG type="ParWPStammList"/>
-            
+
             <value path="SegHead.code">HIWSDS</value>
             <value path="SegHead.version">2</value>
         </SEGdef>
-        
+
         <SEGdef id="WPStammList3"> <!-- 3.0 -->
             <DEG type="SegHeadUser" name="SegHead"/>
             <DEG type="KTV3" name="Depot" minnum="0"/>
             <DEG type="WPRef"/>
-            
+
             <value path="SegHead.code">HKWSD</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -6199,7 +6194,7 @@
             <DEG type="WPStammFonds" minnum="0"/>
             <DEG type="WPStammOptions" minnum="0"/>
             <DEG type="WPBInfo2" name="WPBInfo" minnum="0" maxnum="99"/>
-            
+
             <valids path="notizeinheit">
                 <validvalue>1</validvalue>
                 <validvalue>2</validvalue>
@@ -6220,16 +6215,16 @@
                 <validvalue>3</validvalue>
                 <validvalue>4</validvalue>
             </valids>
-            
+
             <value path="SegHead.code">HIWSD</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
         <SEGdef id="WPStammListPar3">
             &GVP2;
             <DEG type="ParWPStammList"/>
-            
+
             &SecClassValids;
-            
+
             <value path="SegHead.code">HIWSDS</value>
             <value path="SegHead.version">3</value>
         </SEGdef>
@@ -6251,7 +6246,7 @@
         </SFdef>
 
         <!-- end of administrative sfs -->
-        
+
         <SFdef id="GV">
             <SEG type="AccInfo1" minnum="0"/>
             <SEG type="AccInfo2" minnum="0"/>
@@ -6322,7 +6317,7 @@
             <SEG type="LastObjection1" minnum="0"/>
             <SEG type="LastObjection2" minnum="0"/>
             <SEG type="OrderHistory1" minnum="0"/>
-	        <SEG type="Receipt1" minnum="0"/>
+            <SEG type="Receipt1" minnum="0"/>
             <SEG type="Saldo3" minnum="0"/>
             <SEG type="Saldo4" minnum="0"/>
             <SEG type="Saldo5" minnum="0"/>
@@ -6401,7 +6396,7 @@
             <SEG type="WPStammList2" minnum="0"/>
             <SEG type="WPStammList3" minnum="0"/>
         </SFdef>
-        
+
         <SFdef id="GVRes">
             <SEG type="AccInfoRes1" minnum="0"/>
             <SEG type="AccInfoRes2" minnum="0"/>
@@ -6508,14 +6503,14 @@
             <SEG type="WPStammListRes2" minnum="0"/>
             <SEG type="WPStammListRes3" minnum="0"/>
         </SFdef>
-        
+
         <SFdef id="Params">
             <SEG type="AccInfoPar1" minnum="0"/>
             <SEG type="AccInfoPar2" minnum="0"/>
             <SEG type="CardListPar1" minnum="0"/>
             <SEG type="CardListPar2" minnum="0"/>
-	        <SEG type="ChangePINPar1" minnum="0" />
-	        <SEG type="ChangePINOldPar1" minnum="0" />
+            <SEG type="ChangePINPar1" minnum="0"/>
+            <SEG type="ChangePINOldPar1" minnum="0"/>
             <SEG type="CommListPar2" minnum="0"/>
             <SEG type="CommListPar3" minnum="0"/>
             <SEG type="CommListPar4" minnum="0"/>
@@ -6658,10 +6653,10 @@
             <SEG type="WPStammListPar1" minnum="0"/>
             <SEG type="WPStammListPar2" minnum="0"/>
             <SEG type="WPStammListPar3" minnum="0"/>
-            <SEG type="Template2DPar" minnum="0"/> 
-            <SEG type="TemplateDPar" minnum="0"/> 
-            <SEG type="Template2Par" minnum="0"/> 
-            <SEG type="TemplatePar" minnum="0"/> 
+            <SEG type="Template2DPar" minnum="0"/>
+            <SEG type="TemplateDPar" minnum="0"/>
+            <SEG type="Template2Par" minnum="0"/>
+            <SEG type="TemplatePar" minnum="0"/>
         </SFdef>
     </SFs>
 

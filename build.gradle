@@ -28,8 +28,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    compileOnly 'javax.xml.bind:jaxb-api:2.3.1'
+    compileOnly 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
     // test dependencies
     testImplementation "junit:junit:4.12"
